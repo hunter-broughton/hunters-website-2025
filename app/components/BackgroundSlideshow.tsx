@@ -8,7 +8,7 @@ const HeroBackgroundImage = () => {
     <div className="fixed inset-0 z-[-1]">
       {/* Full-screen background image */}
       <Image
-        src="/assets/headshot.jpeg"
+        src="/assets/headshot.jpg"
         alt="Hero background"
         fill
         className="object-cover"
