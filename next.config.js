@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  output: "export",
   trailingSlash: true,
   images: {
-    domains: ['firebasestorage.googleapis.com'],
+    domains: ["firebasestorage.googleapis.com"],
     unoptimized: true,
   },
-  basePath: '',
-}
+  basePath: "",
+};
 
-module.exports = nextConfig 
+module.exports = nextConfig;

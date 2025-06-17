@@ -14,7 +14,7 @@ const HeroImage = () => {
     >
       {/* Hero image */}
       <Image
-        src="/assets/IMG_6811.jpeg"
+        src="/assets/headshot.jpeg"
         alt="Hunter Broughton"
         fill
         className="object-cover transition-transform duration-700 group-hover:scale-105"
