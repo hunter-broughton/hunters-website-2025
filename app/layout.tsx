@@ -1,79 +1,88 @@
 // app/layout.tsx  (or /src/app/layout.tsx in /app router)
 
-import './globals.css';
-import type { Metadata, Viewport } from 'next';
-import React from 'react';
-import { Inter } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/react';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import React from "react";
+import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 /*  -- VISUAL / THEMING --------------------------------------------- */
 export const viewport: Viewport = {
-  themeColor: '#1a1b26',
+  themeColor: "#1a1b26",
 };
 
 /*  -- SEO / SOCIAL -------------------------------------------------- */
 export const metadata: Metadata = {
-  title: 'Hunter Broughton • Bay Area Hardware Hacker & Full-Stack Dev',
+  title: "Hunter Broughton • Bay Area Hardware Hacker & Full-Stack Dev",
   description:
-    "Hey, I'm Ryan — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
+    "Hey, I'm Hunter — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
   keywords: [
-    'Ryan Kaelle',
-    'Bay Area engineer',
-    'hardware hacker',
-    'embedded systems',
-    'IoT',
-    'full-stack developer',
-    'blockchain developer',
-    'DePIN',
-    'University of Michigan',
-    'Silicon Valley tech'
+    "Hunter Broughton",
+    "Software Engineer",
+    "Programmer",
+    "Web-Systems",
+    "Firmware Engineer",
+    "full-stack developer",
+    "University of Michigan",
+    "Seattle | Bay Area",
   ],
-  authors: [{ name: 'Ryan Kaelle', url: 'https://rkaelle.com' }],
-  creator: 'Ryan Kaelle',
-  manifest: '/manifest.json',
-  alternates: { canonical: 'https://rkaelle.com' },
+  authors: [
+    {
+      name: "Hunter Broughton",
+      url: "https://hunter-broughton.github.io/hunters-website-2025",
+    },
+  ],
+  creator: "Hunter Broughton",
+  manifest: "/manifest.json",
+  alternates: {
+    canonical: "https://hunter-broughton.github.io/hunters-website-2025",
+  },
 
   /* -- Open Graph (Facebook/LinkedIn etc.) -- */
   openGraph: {
-    title: 'Ryan Kaelle • Bay Area Hardware Hacker & Full-Stack Dev',
+    title: "Hunter Broughton • Full-Stack Developer and Engineer",
     description:
-      "Rising junior at UMich building bleeding-edge hardware, web apps & crypto tools in Silicon Valley.",
-    url: 'https://rkaelle.com',
-    siteName: 'Ryan Kaelle',
+      "CS Major at University of Michigan building full-stack apps, efficient firmware, and ML systems.",
+    url: "https://hunter-broughton.github.io/hunters-website-2025",
+    siteName: "Hunter Broughton",
     images: [
       {
-        url: '/assets/ryankaelle_cropped.png',
+        url: "/assets/headshot.jpeg",
         width: 1200,
         height: 630,
-        alt: 'Ryan Kaelle working on a PCB schematic'
-      }
+        alt: "Hunter Broughton Profile",
+      },
     ],
-    locale: 'en_US',
-    type: 'profile'
+    locale: "en_US",
+    type: "profile",
   },
 
   /* -- Twitter / X Card -- */
   twitter: {
-    card: 'summary_large_image',
-    title: 'Ryan Kaelle • Bay Area Hardware Hacker & Full-Stack Dev',
+    card: "summary_large_image",
+    title: "Hunter Broughton • Full-Stack Developer and Engineer",
     description:
-      "Hey, I'm Ryan — Bay-Area-based junior @UMich building hardware, full-stack apps & blockchain infra.",
-    images: ['/assets/ryankaelle_cropped.png'],
-    creator: '@your_handle'   // optional: add if you have one
+      "Hey, I'm Hunter — CS Major at University of Michigan building full-stack apps, efficient firmware, and ML systems.",
+    images: ["/assets/headshot.jpeg"],
+    creator: "@your_handle", // optional: add if you have one
   },
 
   /* -- Favicon bundle -- */
   icons: {
-    icon: '/icons/favicon.ico',
-    apple: '/icons/apple-touch-icon.png'
-  }
+    icon: "/icons/favicon.ico",
+    apple: "/icons/apple-touch-icon.png",
+  },
 };
 
 /* ------------- ROOT LAYOUT ---------------------------------------- */
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
@@ -87,24 +96,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: 'Ryan Kaelle',
-              jobTitle: 'Hardware Engineer & Full-Stack Developer',
-              affiliation: 'University of Michigan',
-              alumniOf: 'University of Michigan',
-              url: 'https://rkaelle.com',
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Hunter Broughton",
+              jobTitle: "Hardware Engineer & Full-Stack Developer",
+              affiliation: "University of Michigan",
+              alumniOf: "University of Michigan",
+              url: "https://hunter-broughton.github.io/hunters-website-2025",
               sameAs: [
-                'https://github.com/rkaelle',
-                'https://www.linkedin.com/in/ryankaelle/'
+                "https://github.com/hunter-broughton",
+                "https://www.linkedin.com/in/hunter-broughton/",
               ],
               address: {
-                '@type': 'PostalAddress',
-                addressLocality: 'San Francisco Bay Area',
-                addressRegion: 'CA',
-                addressCountry: 'USA'
-              }
-            })
+                "@type": "PostalAddress",
+                addressLocality: "Seattle",
+                addressRegion: "WA",
+                addressCountry: "USA",
+              },
+            }),
           }}
         />
       </head>
