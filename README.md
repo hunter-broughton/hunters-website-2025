@@ -2,7 +2,7 @@
   hunterbroughton.com
 </h1>
 <p align="center">
-  The new <a href="https://hunterbroughton.com" target="_blank">rkaelle.com</a> built with React.js.
+  The new <a href="https://hunterbroughton.com" target="_blank">hunterbroughton.com</a> built with React.js.
 </p>
 
 
