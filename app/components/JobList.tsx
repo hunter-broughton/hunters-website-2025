@@ -153,7 +153,9 @@ const JobList = () => {
               key={job.company}
               onClick={() => setSelectedJob(index)}
               className={`${
-                isMobile ? "px-2 py-1 min-w-[60px]" : "px-4 py-2 min-w-[200px]"
+                isMobile
+                  ? "px-3 py-2 text-xs min-w-[120px]"
+                  : "px-4 py-2 min-w-[200px]"
               } text-left font-tech text-sm border ${
                 selectedJob === index
                   ? "border-michigan-maize text-michigan-maize bg-michigan-maize/10"
@@ -164,7 +166,7 @@ const JobList = () => {
               <span className="text-michigan-maize/50 mr-1">{`0${
                 index + 1
               }.`}</span>
-              <span className="hidden md:inline">{job.company}</span>
+              <span className={isMobile ? "truncate" : ""}>{job.company}</span>
             </motion.button>
           ))}
         </div>

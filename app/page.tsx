@@ -431,13 +431,13 @@ const Home = () => {
       <SideNav />
 
       {/* Rest of the content with adjusted padding for the terminal header */}
-      <div className="pt-12 md:pt-24 relative z-[10]">
+      <div className="pt-20 md:pt-24 relative z-[10]">
         {/* Hero Section */}
         <section
           id="home"
           className="min-h-screen flex items-center justify-center relative px-4 md:px-8"
         >
-          <div className="max-w-7xl w-full mt-[-10vh] sm:mt-0">
+          <div className="max-w-7xl w-full mt-4 sm:mt-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Left side - Text content */}
               <motion.div
