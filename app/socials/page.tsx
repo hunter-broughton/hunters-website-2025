@@ -47,8 +47,8 @@ const SocialsPage = () => {
               className="relative w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden border-2 border-neon-blue/30"
             >
               <Image
-                src="/assets/headshot.jpg"
-                alt="Ryan Kaelle"
+                src="/assets/headshot.jpeg"
+                alt="Hunter Broughton"
                 fill
                 className="object-cover"
               />
