@@ -1,16 +1,22 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 const generateRandomChar = () => {
   return chars[Math.floor(Math.random() * chars.length)];
 };
 
-const SpinningText = ({ finalText, index }: { finalText: string; index: number }) => {
-  const [currentText, setCurrentText] = useState('');
+const SpinningText = ({
+  finalText,
+  index,
+}: {
+  finalText: string;
+  index: number;
+}) => {
+  const [currentText, setCurrentText] = useState("");
   const [isSpinning, setIsSpinning] = useState(false);
 
   useEffect(() => {
@@ -19,15 +25,17 @@ const SpinningText = ({ finalText, index }: { finalText: string; index: number }
       setIsSpinning(true);
       let spinCount = 0;
       const maxSpins = 15; // Number of spins before settling
-      
+
       const interval = setInterval(() => {
         spinCount++;
-        setCurrentText(prev => {
-          const newText = 'RK_' + Array(4)
-            .fill(0)
-            .map(() => generateRandomChar())
-            .join('');
-          
+        setCurrentText((prev) => {
+          const newText =
+            "Hunter_" +
+            Array(4)
+              .fill(0)
+              .map(() => generateRandomChar())
+              .join("");
+
           if (spinCount >= maxSpins) {
             clearInterval(interval);
             setIsSpinning(false);
@@ -46,13 +54,13 @@ const SpinningText = ({ finalText, index }: { finalText: string; index: number }
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       className={`font-tech text-sm ${
-        isSpinning 
-          ? index % 3 === 0 
-            ? 'text-nord-aurora-1' 
+        isSpinning
+          ? index % 3 === 0
+            ? "text-nord-aurora-1"
             : index % 3 === 1
-            ? 'text-nord-aurora-3'
-            : 'text-nord-aurora-2'
-          : 'text-nord-polar-4/70'
+            ? "text-nord-aurora-3"
+            : "text-nord-aurora-2"
+          : "text-nord-polar-4/70"
       }`}
     >
       <span>{currentText}</span>
@@ -68,9 +76,21 @@ const CypherText = () => {
   useEffect(() => {
     setMounted(true);
     setTexts([
-      'RK_' + Array(4).fill(0).map(() => generateRandomChar()).join(''),
-      'RK_' + Array(4).fill(0).map(() => generateRandomChar()).join(''),
-      'RK_' + Array(4).fill(0).map(() => generateRandomChar()).join('')
+      "Hunter_" +
+        Array(4)
+          .fill(0)
+          .map(() => generateRandomChar())
+          .join(""),
+      "Hunter_" +
+        Array(4)
+          .fill(0)
+          .map(() => generateRandomChar())
+          .join(""),
+      "Hunter_" +
+        Array(4)
+          .fill(0)
+          .map(() => generateRandomChar())
+          .join(""),
     ]);
   }, []);
 
@@ -79,12 +99,14 @@ const CypherText = () => {
 
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * 3);
-      setTexts(prev => {
+      setTexts((prev) => {
         const newTexts = [...prev];
-        newTexts[randomIndex] = 'RK_' + Array(4)
-          .fill(0)
-          .map(() => generateRandomChar())
-          .join('');
+        newTexts[randomIndex] =
+          "Hunter_" +
+          Array(4)
+            .fill(0)
+            .map(() => generateRandomChar())
+            .join("");
         return newTexts;
       });
     }, 2000); // Change one text every 2 seconds
@@ -103,4 +125,4 @@ const CypherText = () => {
   );
 };
 
-export default CypherText; 
+export default CypherText;

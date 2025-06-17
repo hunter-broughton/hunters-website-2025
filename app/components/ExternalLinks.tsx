@@ -1,15 +1,21 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowTopRightOnSquareIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowTopRightOnSquareIcon,
+  CodeBracketIcon,
+} from "@heroicons/react/24/outline";
 
 interface ExternalLinksProps {
   githubLink?: string;
   openLink?: string;
 }
 
-const ExternalLinks: React.FC<ExternalLinksProps> = ({ githubLink, openLink }) => {
+const ExternalLinks: React.FC<ExternalLinksProps> = ({
+  githubLink,
+  openLink,
+}) => {
   return (
     <div className="flex gap-3">
       {githubLink && (
@@ -40,4 +46,4 @@ const ExternalLinks: React.FC<ExternalLinksProps> = ({ githubLink, openLink }) =
   );
 };
 
-export default ExternalLinks; 
+export default ExternalLinks;

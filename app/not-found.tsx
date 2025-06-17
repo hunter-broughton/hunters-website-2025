@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { CommandLineIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
-import TypewriterText from '@/app/components/TypewriterText';
+import React from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { CommandLineIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import TypewriterText from "@/app/components/TypewriterText";
 
 export default function NotFound() {
   return (
@@ -21,7 +21,7 @@ export default function NotFound() {
       </div>
 
       {/* Return Home Button */}
-      <Link 
+      <Link
         href="/"
         className="fixed top-16 left-8 py-2 px-4 bg-nord-polar-2/80 border border-neon-blue/30 rounded-sm text-neon-blue font-tech flex items-center gap-2 hover:bg-neon-blue/20 transition-colors z-50"
       >
@@ -37,7 +37,7 @@ export default function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center space-y-8 max-w-2xl mx-auto"
         >
-          <motion.h1 
+          <motion.h1
             className="text-8xl font-cyber text-neon-blue"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -45,7 +45,7 @@ export default function NotFound() {
           >
             404
           </motion.h1>
-          
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -59,7 +59,8 @@ export default function NotFound() {
               Sorry, I haven't made this page yet.
             </p>
             <p className="text-cyber-white/60 font-tech">
-              But don't worry, you can find plenty of other things on my homepage.
+              But don't worry, you can find plenty of other things on my
+              homepage.
             </p>
           </motion.div>
 
@@ -79,4 +80,4 @@ export default function NotFound() {
       </main>
     </div>
   );
-} 
+}

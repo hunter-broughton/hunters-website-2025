@@ -1,89 +1,131 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import FadeInSection from './FadeInSection';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import FadeInSection from "./FadeInSection";
+import ExternalLinks from "./ExternalLinks";
 
 interface Job {
+  company: string;
   jobTitle: string;
   duration: string;
+  location: string;
   desc: (string | JSX.Element)[];
+  companyLink?: string;
+  githubLink?: string;
 }
 
-interface JobCategory {
-  [key: string]: Job;
-}
-
-interface JobCategories {
-  [key: string]: JobCategory;
-}
-
-const experienceItems: JobCategories = {
-  "Technical": {
-    "Zipline": {
-      jobTitle: "Avionics EE Intern",
-      duration: "May 2025 - August 2025",
-      desc: [
-        "Designed and tested thermal behavior of avionics components in a custom designed heat & windspeed controlled chamber",
-        "Tested RF signature of avionics components using a vector network analyzer",
-        "Used Altium to design a new power distribution unit (PDU) for the propulsion system",
-      ],
-    },
-    "Z Lab": {
-      jobTitle: "Swarm Intelligence Robotics Chassis Team Lead",
-      duration: "January 2024 - Present",
-      desc: [
-        "Lead chassis team in integrating LiDAR, depth camera, and IMU for SLAM and real-time navigation using ROS.",
-        "Developed sensor fusion algorithms in Python, optimizing environmental awareness and autonomous decision-making.",
-        "Designed power distribution and control systems, ensuring stable operation of high-power motors and embedded systems.",
-        "Managed sensor calibration, data acquisition, and cross-tean collaboration for to deliver standardized components."
-      ],
-    },
-    "HELIOS": {
-      jobTitle: "Co-Founder",
-      duration: "November 2023 - Present",
-      desc: [
-        "Co-founded the company, securing $15k+ in funding; designed and maintained the company website; filed a provisional patent (63/547158) for aviation technology.",
-        "Researched advanced energy storage and propulsion technologies, optimized aircraft performance, and integrated advanced components into prototypes.",
-        "Identified target markets (commercial airlines, private jets, cargo airlines), delivered stakeholder presentations, and crafted technical documentation and code."
-      ],
-    },
-    "Ace Hardware": {
-      jobTitle: "Sales Associate",
-      duration: "May 2024 - August 2024",
-      desc: [
-        "Assisted customers with problem-solving, product recommendations, and prototyping solutions to meet their needs.",
-        "Managed inventory, ensuring accurate stock levels and proficiency in using various specialty tools.",
-        "Contributed to a team-oriented environment, achieving store sales targets and high customer satisfaction."
-      ],
-    },
+const experienceItems: Job[] = [
+  {
+    company: "Credo Semiconductor",
+    jobTitle: "System and Software Engineering Intern",
+    duration: "May 2025 - August 2025",
+    location: "San Jose, CA",
+    companyLink: "https://credosemi.com/",
+    desc: [
+      <>
+        Developed features for the new{" "}
+        <span className="text-neon-blue font-bold">PCIe</span> software: Pilot
+        using <span className="text-neon-blue font-bold">Vue</span>,{" "}
+        <span className="text-neon-blue font-bold">Vuetify</span>,{" "}
+        <span className="text-neon-blue font-bold">JavaScript</span>,{" "}
+        <span className="text-neon-blue font-bold">Python</span>, and{" "}
+        <span className="text-neon-blue font-bold">APIs</span>
+      </>,
+      <>
+        Implemented efficient algorithms for{" "}
+        <span className="text-neon-blue font-bold">Linecard-SDK</span> with{" "}
+        <span className="text-neon-blue font-bold">Python</span> and{" "}
+        <span className="text-neon-blue font-bold">PyTest</span>
+      </>,
+      <>
+        Programmed{" "}
+        <span className="text-neon-blue font-bold">S-parameter analysis</span>{" "}
+        automation and{" "}
+        <span className="text-neon-blue font-bold">
+          Proportional-Integral-Derivative Controllers
+        </span>{" "}
+        for the optical team
+      </>,
+      <>
+        Gained hands-on experience with{" "}
+        <span className="text-neon-blue font-bold">
+          Thermoelectric Temperature Controllers (TC-720)
+        </span>{" "}
+        and a{" "}
+        <span className="text-neon-blue font-bold">
+          Vector Network Analyzer
+        </span>
+      </>,
+    ],
   },
-  "Crypto": {
-    "Michigan Blockchain Club": {
-      jobTitle: "Executive Board Member & Investment Team Member",
-      duration: "August 2023 - Present",
-      desc: [
-        "Lead recruitment initiatives, increasing active membership to over 100 students.",
-        "Manage a 35 ETH investment portfolio, overseeing strategic positions.",
-        "Organize the Midwest Blockchain Conference — sourced speakers, sponsors, and coordinated with 35+ student organizations and 16 companies; achieved over 1,000 signups, making it one of the largest student-run events nationwide.",
-        "Source developer projects, hackathons, and events to enhance club offerings and member engagement."
-      ],
-    },
-    "Renaud Partners": {
-      jobTitle: "Research Analyst",
-      duration: "May 2024 - June 2024",
-      desc: [
-        "Engaged in venture capital outreach and project sourcing at a crypto go-to-market firm (G2M).",
-        "Developed and maintained a comprehensive resource database.",
-        "Communicated with clients and collaborated with industry expert Geoff Renaud."
-      ],
-    },
-  }
-};
+  {
+    company: "Vloggi",
+    jobTitle: "Software Developer Intern",
+    duration: "June 2024 - August 2024",
+    location: "Sydney, Australia",
+    companyLink: "https://vloggi.com/",
+    desc: [
+      <>
+        Engineered full-stack features for Vloggi, a platform that offers{" "}
+        <span className="text-neon-blue font-bold">MP4</span> data collection
+        and management for companies
+      </>,
+      <>
+        Developed and optimized web interfaces to optimize product usage using{" "}
+        <span className="text-neon-blue font-bold">React</span> and{" "}
+        <span className="text-neon-blue font-bold">TypeScript</span>
+      </>,
+      <>
+        Integrated configurable{" "}
+        <span className="text-neon-blue font-bold">CSS</span> components to
+        address diverse client needs on the Vloggi platform
+      </>,
+      <>
+        Integrated Vloggi's front-end with a{" "}
+        <span className="text-neon-blue font-bold">MySQL</span> backend using{" "}
+        <span className="text-neon-blue font-bold">Node.js</span> and deployed
+        it using <span className="text-neon-blue font-bold">AWS</span> and{" "}
+        <span className="text-neon-blue font-bold">Docker</span>
+      </>,
+    ],
+  },
+  {
+    company: "SparkRacing",
+    jobTitle: "Data Engineer",
+    duration: "January 2024 - May 2024",
+    location: "Ann Arbor, MI",
+    companyLink: "https://spark.engin.umich.edu/",
+    desc: [
+      <>
+        Created a system design to convert{" "}
+        <span className="text-neon-blue font-bold">16-bit diagnostic data</span>{" "}
+        into a readable,{" "}
+        <span className="text-neon-blue font-bold">real-time message</span> for
+        the driver
+      </>,
+      <>
+        Coded the{" "}
+        <span className="text-neon-blue font-bold">Bike Diagnostic system</span>{" "}
+        using <span className="text-neon-blue font-bold">Python</span> and the{" "}
+        <span className="text-neon-blue font-bold">Pandas</span> library
+      </>,
+      <>
+        Tested the software by implementing{" "}
+        <span className="text-neon-blue font-bold">unit tests</span> and program
+        test files
+      </>,
+      <>
+        Implemented the software into our{" "}
+        <span className="text-neon-blue font-bold">185+ MPH</span> race winning
+        bike
+      </>,
+    ],
+  },
+];
 
 const JobList = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Technical");
-  const [selectedJob, setSelectedJob] = useState(Object.keys(experienceItems["Technical"])[0]);
+  const [selectedJob, setSelectedJob] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -91,80 +133,77 @@ const JobList = () => {
       setIsMobile(window.innerWidth < 768);
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setSelectedJob(Object.keys(experienceItems[category])[0]);
-  };
 
   return (
     <div className="relative">
-      {/* Category Tabs */}
-      <div className={`flex ${isMobile ? 'justify-center' : 'justify-start'} gap-4 mb-8`}>
-        {Object.keys(experienceItems).map((category) => (
-          <motion.button
-            key={category}
-            onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-2 font-tech text-sm border ${
-              selectedCategory === category
-                ? 'border-neon-blue text-neon-blue bg-neon-blue/10'
-                : 'border-cyber-white/20 text-cyber-white/60 hover:border-neon-blue/50'
-            } transition-colors`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {category}
-          </motion.button>
-        ))}
-      </div>
-
-      <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-8`}>
+      <div className={`flex ${isMobile ? "flex-col" : "flex-row"} gap-8`}>
         {/* Job Navigation */}
-        <div className={`${isMobile ? 'flex flex-wrap justify-center gap-2' : 'flex flex-col gap-4'}`}>
-          {Object.keys(experienceItems[selectedCategory]).map((job, index) => (
+        <div
+          className={`${
+            isMobile
+              ? "flex flex-wrap justify-center gap-2"
+              : "flex flex-col gap-4"
+          }`}
+        >
+          {experienceItems.map((job, index) => (
             <motion.button
-              key={job}
-              onClick={() => setSelectedJob(job)}
+              key={job.company}
+              onClick={() => setSelectedJob(index)}
               className={`${
-                isMobile 
-                  ? 'px-2 py-1 min-w-[60px]' 
-                  : 'px-4 py-2 min-w-[200px]'
+                isMobile ? "px-2 py-1 min-w-[60px]" : "px-4 py-2 min-w-[200px]"
               } text-left font-tech text-sm border ${
-                selectedJob === job
-                  ? 'border-matrix-green text-matrix-green bg-matrix-green/10'
-                  : 'border-cyber-white/20 text-cyber-white/60 hover:border-matrix-green/50'
+                selectedJob === index
+                  ? "border-michigan-maize text-michigan-maize bg-michigan-maize/10"
+                  : "border-cyber-white/20 text-cyber-white/60 hover:border-michigan-maize/50"
               } transition-colors`}
               whileHover={{ x: isMobile ? 0 : 4 }}
             >
-              <span className="text-matrix-green/50 mr-1">{`0${index + 1}.`}</span>
-              <span className="hidden md:inline">{job}</span>
+              <span className="text-michigan-maize/50 mr-1">{`0${
+                index + 1
+              }.`}</span>
+              <span className="hidden md:inline">{job.company}</span>
             </motion.button>
           ))}
         </div>
 
         {/* Job Details */}
         <motion.div
-          key={`${selectedCategory}-${selectedJob}`}
+          key={selectedJob}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
           className="flex-1 space-y-4"
         >
           <div className="space-y-1">
-            <h3 className="text-xl font-cyber text-neon-blue">
-              {experienceItems[selectedCategory][selectedJob].jobTitle}
-            </h3>
-            <p className="text-matrix-green font-tech">@ {selectedJob}</p>
-            <p className="text-cyber-white/60 font-tech text-sm">
-              {experienceItems[selectedCategory][selectedJob].duration}
-            </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-cyber text-neon-blue">
+                  {experienceItems[selectedJob].jobTitle}
+                </h3>
+                <p className="text-michigan-maize font-tech">
+                  @ {experienceItems[selectedJob].company}
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                  <p className="text-cyber-white/60 font-tech text-sm">
+                    {experienceItems[selectedJob].duration}
+                  </p>
+                  <p className="text-cyber-white/60 font-tech text-sm">
+                    📍 {experienceItems[selectedJob].location}
+                  </p>
+                </div>
+              </div>
+              <ExternalLinks
+                githubLink={experienceItems[selectedJob].githubLink}
+                openLink={experienceItems[selectedJob].companyLink}
+              />
+            </div>
           </div>
 
           <ul className="space-y-4">
-            {experienceItems[selectedCategory][selectedJob].desc.map((item, index) => (
+            {experienceItems[selectedJob].desc.map((item, index) => (
               <motion.li
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
@@ -172,7 +211,7 @@ const JobList = () => {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-2 text-cyber-white/80"
               >
-                <span className="text-matrix-green mt-1.5">▹</span>
+                <span className="text-michigan-maize mt-1.5">▹</span>
                 <span className="flex-1">{item}</span>
               </motion.li>
             ))}
@@ -183,4 +222,4 @@ const JobList = () => {
   );
 };
 
-export default JobList; 
+export default JobList;

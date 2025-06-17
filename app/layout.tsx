@@ -16,7 +16,7 @@ export const viewport: Viewport = {
 
 /*  -- SEO / SOCIAL -------------------------------------------------- */
 export const metadata: Metadata = {
-  title: 'Ryan Kaelle • Bay Area Hardware Hacker & Full-Stack Dev',
+  title: 'Hunter Broughton • Bay Area Hardware Hacker & Full-Stack Dev',
   description:
     "Hey, I'm Ryan — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
   keywords: [
