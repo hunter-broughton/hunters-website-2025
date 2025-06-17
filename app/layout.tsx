@@ -16,6 +16,9 @@ export const viewport: Viewport = {
 
 /*  -- SEO / SOCIAL -------------------------------------------------- */
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    "https://hunter-broughton.github.io/hunters-website-2025"
+  ),
   title: "Hunter Broughton • Bay Area Hardware Hacker & Full-Stack Dev",
   description:
     "Hey, I'm Hunter — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
