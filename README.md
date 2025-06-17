@@ -1,11 +1,10 @@
 <h1 align="center">
-  ryankaelle.dev
+  hunterbroughton.com
 </h1>
 <p align="center">
-  The latest version of <a href="https://rkaelle.com" target="_blank">rkaelle.com</a> built with React.js.
+  The new <a href="https://hunterbroughton.com" target="_blank">rkaelle.com</a> built with React.js.
 </p>
 
-<img width="1306" alt="Site Screenshot" src="/site_screenshot.png">
 
 ## set-up
 
