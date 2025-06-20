@@ -21,6 +21,21 @@ interface SkillNode {
 const SkillsConstellation = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [algorithmState, setAlgorithmState] = useState<{
+    isRunning: boolean;
+    type: "prim" | "kruskal" | null;
+    step: number;
+    mstEdges: Array<{ from: string; to: string; weight: number }>;
+    visitedNodes: Set<string>;
+    highlightedEdge: { from: string; to: string } | null;
+  }>({
+    isRunning: false,
+    type: null,
+    step: 0,
+    mstEdges: [],
+    visitedNodes: new Set(),
+    highlightedEdge: null,
+  });
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside to deselect skill
@@ -288,7 +303,7 @@ const SkillsConstellation = () => {
       level: 75,
       category: "tool",
       x: 35,
-      y: 85,
+      y: 82,
       connections: ["python", "pandas"],
       usedIn: {
         projects: [],
@@ -506,13 +521,334 @@ const SkillsConstellation = () => {
     return isConnected(skillId, targetSkill!);
   };
 
+  // Algorithm implementations
+  const calculateEdgeWeight = (skill1: SkillNode, skill2: SkillNode) => {
+    // Calculate distance between nodes as weight
+    const pos1 = getNodePosition(skill1);
+    const pos2 = getNodePosition(skill2);
+    return Math.sqrt(
+      Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2)
+    );
+  };
+
+  const getAllEdges = () => {
+    const edges: Array<{
+      from: string;
+      to: string;
+      weight: number;
+      skill1: SkillNode;
+      skill2: SkillNode;
+    }> = [];
+
+    skills.forEach((skill) => {
+      skill.connections.forEach((connId) => {
+        const connectedSkill = skills.find((s) => s.id === connId);
+        if (connectedSkill) {
+          // Avoid duplicate edges by ensuring consistent ordering
+          if (skill.id < connId) {
+            edges.push({
+              from: skill.id,
+              to: connId,
+              weight: calculateEdgeWeight(skill, connectedSkill),
+              skill1: skill,
+              skill2: connectedSkill,
+            });
+          }
+        }
+      });
+    });
+
+    return edges.sort((a, b) => a.weight - b.weight);
+  };
+
+  const runPrimAlgorithm = async () => {
+    if (algorithmState.isRunning) {
+      return;
+    }
+
+    setAlgorithmState((prev) => ({
+      ...prev,
+      isRunning: true,
+      type: "prim",
+      step: 0,
+      mstEdges: [],
+      visitedNodes: new Set(),
+      highlightedEdge: null,
+    }));
+
+    const allEdges = getAllEdges();
+    const mstEdges: Array<{ from: string; to: string; weight: number }> = [];
+    const visitedNodes = new Set<string>();
+
+    // Start with TypeScript node (well connected and central)
+    visitedNodes.add("ts");
+
+    while (
+      visitedNodes.size < skills.length &&
+      mstEdges.length < skills.length - 1
+    ) {
+      // Find minimum weight edge connecting visited to unvisited nodes
+      let minEdge: (typeof allEdges)[0] | null = null;
+
+      for (const edge of allEdges) {
+        const fromVisited = visitedNodes.has(edge.from);
+        const toVisited = visitedNodes.has(edge.to);
+
+        // Edge connects visited to unvisited
+        if (fromVisited !== toVisited) {
+          if (!minEdge || edge.weight < minEdge.weight) {
+            minEdge = edge;
+          }
+        }
+      }
+
+      if (minEdge) {
+        // Highlight the edge being added
+        setAlgorithmState((prev) => ({
+          ...prev,
+          highlightedEdge: { from: minEdge!.from, to: minEdge!.to },
+        }));
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Add edge to MST
+        mstEdges.push({
+          from: minEdge.from,
+          to: minEdge.to,
+          weight: minEdge.weight,
+        });
+        visitedNodes.add(minEdge.from);
+        visitedNodes.add(minEdge.to);
+
+        setAlgorithmState((prev) => ({
+          ...prev,
+          mstEdges: [...mstEdges],
+          visitedNodes: new Set(visitedNodes),
+          highlightedEdge: null,
+        }));
+
+        await new Promise((resolve) => setTimeout(resolve, 400));
+      } else {
+        break;
+      }
+    }
+
+    // Algorithm complete
+    setTimeout(() => {
+      setAlgorithmState((prev) => ({ ...prev, isRunning: false }));
+    }, 1500);
+  };
+
+  const runKruskalAlgorithm = async () => {
+    if (algorithmState.isRunning) {
+      return;
+    }
+
+    setAlgorithmState((prev) => ({
+      ...prev,
+      isRunning: true,
+      type: "kruskal",
+      step: 0,
+      mstEdges: [],
+      visitedNodes: new Set(),
+      highlightedEdge: null,
+    }));
+
+    const allEdges = getAllEdges();
+    const mstEdges: Array<{ from: string; to: string; weight: number }> = [];
+
+    // Union-Find data structure
+    const parent = new Map<string, string>();
+    const rank = new Map<string, number>();
+
+    // Initialize union-find
+    skills.forEach((skill) => {
+      parent.set(skill.id, skill.id);
+      rank.set(skill.id, 0);
+    });
+
+    const find = (x: string): string => {
+      if (parent.get(x) !== x) {
+        parent.set(x, find(parent.get(x)!));
+      }
+      return parent.get(x)!;
+    };
+
+    const union = (x: string, y: string): boolean => {
+      const rootX = find(x);
+      const rootY = find(y);
+
+      if (rootX === rootY) return false;
+
+      const rankX = rank.get(rootX)!;
+      const rankY = rank.get(rootY)!;
+
+      if (rankX < rankY) {
+        parent.set(rootX, rootY);
+      } else if (rankX > rankY) {
+        parent.set(rootY, rootX);
+      } else {
+        parent.set(rootY, rootX);
+        rank.set(rootX, rankX + 1);
+      }
+
+      return true;
+    };
+
+    // Process edges in order of weight
+    for (const edge of allEdges) {
+      if (mstEdges.length >= skills.length - 1) break;
+
+      // Highlight the edge being considered
+      setAlgorithmState((prev) => ({
+        ...prev,
+        highlightedEdge: { from: edge.from, to: edge.to },
+      }));
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      // Check if adding this edge creates a cycle
+      if (union(edge.from, edge.to)) {
+        // Edge accepted - add to MST
+        mstEdges.push({ from: edge.from, to: edge.to, weight: edge.weight });
+
+        const visitedNodes = new Set<string>();
+        mstEdges.forEach((e) => {
+          visitedNodes.add(e.from);
+          visitedNodes.add(e.to);
+        });
+
+        setAlgorithmState((prev) => ({
+          ...prev,
+          mstEdges: [...mstEdges],
+          visitedNodes: new Set(visitedNodes),
+          highlightedEdge: null,
+        }));
+
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      } else {
+        // Edge rejected - creates cycle
+        setAlgorithmState((prev) => ({ ...prev, highlightedEdge: null }));
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+    }
+
+    // Algorithm complete
+    setTimeout(() => {
+      setAlgorithmState((prev) => ({ ...prev, isRunning: false }));
+    }, 1500);
+  };
+
+  const resetAlgorithm = () => {
+    setAlgorithmState({
+      isRunning: false,
+      type: null,
+      step: 0,
+      mstEdges: [],
+      visitedNodes: new Set(),
+      highlightedEdge: null,
+    });
+  };
+
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[80vh] md:min-h-[80vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
-        <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-5 md:pt-5 pb-6 md:pb-8 px-3 md:px-4">
-          Hover or click nodes to explore my skills and their connections!
-        </p>
+      <div className="relative w-full min-h-[98vh] md:min-h-[98vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg backdrop-blur-sm">
+        {/* Header with Title and Algorithm Controls */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-6 border-b border-neon-blue/20 relative z-10">
+          <div className="mb-4 md:mb-0">
+            <h2 className="text-cyber-white font-tech text-xl md:text-2xl font-bold mb-2">
+              Skills Constellation
+            </h2>
+            <p className="text-cyber-white/70 font-tech text-sm md:text-base">
+              Hover or click nodes to explore my skills and their connections!
+            </p>
+          </div>
+
+          {/* Algorithm Control Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 relative z-20">
+            <div className="flex gap-2">
+              <button
+                onClick={runPrimAlgorithm}
+                disabled={algorithmState.isRunning}
+                className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border relative z-30 ${
+                  algorithmState.isRunning
+                    ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
+                    : algorithmState.type === "prim"
+                    ? "bg-michigan-maize/20 border-michigan-maize text-michigan-maize hover:bg-michigan-maize/30"
+                    : "bg-neon-blue/20 border-neon-blue text-neon-blue hover:bg-neon-blue/30 hover:border-neon-blue/80"
+                }`}
+              >
+                {algorithmState.isRunning && algorithmState.type === "prim" ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 border-2 border-michigan-maize border-t-transparent rounded-full animate-spin"></div>
+                    Prim's
+                  </div>
+                ) : (
+                  "Prim's MST"
+                )}
+              </button>
+
+              <button
+                onClick={runKruskalAlgorithm}
+                disabled={algorithmState.isRunning}
+                className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border relative z-30 ${
+                  algorithmState.isRunning
+                    ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
+                    : algorithmState.type === "kruskal"
+                    ? "bg-cyber-green/20 border-cyber-green text-cyber-green hover:bg-cyber-green/30"
+                    : "bg-neon-purple/20 border-neon-purple text-neon-purple hover:bg-neon-purple/30 hover:border-neon-purple/80"
+                }`}
+              >
+                {algorithmState.isRunning &&
+                algorithmState.type === "kruskal" ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 border-2 border-cyber-green border-t-transparent rounded-full animate-spin"></div>
+                    Kruskal's
+                  </div>
+                ) : (
+                  "Kruskal's MST"
+                )}
+              </button>
+            </div>
+
+            <button
+              onClick={resetAlgorithm}
+              disabled={algorithmState.isRunning}
+              className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border relative z-30 ${
+                algorithmState.isRunning
+                  ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
+                  : "bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/30 hover:border-red-500/80"
+              }`}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
+        {/* Algorithm Status Display */}
+        {algorithmState.isRunning && (
+          <div className="absolute top-20 md:top-24 left-4 right-4 z-30">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-cyber-black/90 border border-neon-blue/50 rounded-lg p-3 backdrop-blur-sm"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-neon-blue rounded-full animate-pulse"></div>
+                  <span className="text-cyber-white font-tech text-sm">
+                    Running{" "}
+                    {algorithmState.type === "prim" ? "Prim's" : "Kruskal's"}{" "}
+                    Algorithm...
+                  </span>
+                </div>
+                <div className="text-neon-blue font-tech text-xs">
+                  MST Edges: {algorithmState.mstEdges.length}/
+                  {skills.length - 1}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
 
         {/* Cyberpunk grid background */}
         <div
@@ -563,8 +899,8 @@ const SkillsConstellation = () => {
                   typeof window !== "undefined" && window.innerWidth < 768;
 
                 if (isMobile) {
-                  // On mobile, always position at top to avoid node overlap
-                  return "top-2 left-2 right-2";
+                  // On mobile, position below header to avoid algorithm controls
+                  return "top-32 left-2 right-2";
                 } else {
                   // Desktop positioning - more sophisticated logic to avoid all nodes
                   const { x, y } = skill;
@@ -757,7 +1093,7 @@ const SkillsConstellation = () => {
               ? "0 0 1200 1200" // Reduced viewBox for mobile with tighter spacing
               : "0 0 1200 1000" // Standard viewBox for desktop
           }
-          className="w-full h-full absolute top-6 md:top-8 inset-x-0 bottom-0"
+          className="w-full h-full absolute top-24 md:top-28 inset-x-0 bottom-0"
           style={{
             minHeight:
               typeof window !== "undefined" && window.innerWidth < 768
@@ -785,10 +1121,54 @@ const SkillsConstellation = () => {
                 const x2 = pos2.x;
                 const y2 = pos2.y;
 
-                const isHighlighted = shouldHighlightConnection(
-                  skill.id,
-                  connId
+                // Check if this edge is part of MST or highlighted
+                const isMSTEdge = algorithmState.mstEdges.some(
+                  (edge) =>
+                    (edge.from === skill.id && edge.to === connId) ||
+                    (edge.from === connId && edge.to === skill.id)
                 );
+
+                const isHighlightedEdge =
+                  algorithmState.highlightedEdge &&
+                  ((algorithmState.highlightedEdge.from === skill.id &&
+                    algorithmState.highlightedEdge.to === connId) ||
+                    (algorithmState.highlightedEdge.from === connId &&
+                      algorithmState.highlightedEdge.to === skill.id));
+
+                const isRegularHighlight =
+                  !algorithmState.isRunning &&
+                  !algorithmState.mstEdges.length &&
+                  shouldHighlightConnection(skill.id, connId);
+
+                // Determine edge color and style
+                let strokeColor = "rgba(255, 255, 255, 0.2)";
+                let strokeWidth = 2;
+                let strokeOpacity = 0.3;
+
+                if (isHighlightedEdge) {
+                  // Currently being processed by algorithm
+                  strokeColor =
+                    algorithmState.type === "prim" ? "#FFCB05" : "#00FF94";
+                  strokeWidth = 4;
+                  strokeOpacity = 1;
+                } else if (isMSTEdge) {
+                  // Part of the MST
+                  strokeColor =
+                    algorithmState.type === "prim" ? "#FFCB05" : "#00FF94";
+                  strokeWidth = 3;
+                  strokeOpacity = 0.9;
+                } else if (isRegularHighlight) {
+                  // Regular skill hover/selection highlight
+                  strokeColor = categoryColors[skill.category];
+                  strokeWidth = 3;
+                  strokeOpacity = 0.8;
+                } else if (
+                  algorithmState.isRunning ||
+                  algorithmState.mstEdges.length > 0
+                ) {
+                  // Fade non-MST edges during algorithm
+                  strokeOpacity = 0.1;
+                }
 
                 return (
                   <motion.line
@@ -797,17 +1177,28 @@ const SkillsConstellation = () => {
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke={
-                      isHighlighted
-                        ? categoryColors[skill.category]
-                        : "rgba(255, 255, 255, 0.2)"
-                    }
-                    strokeWidth={isHighlighted ? 3 : 2}
-                    strokeOpacity={isHighlighted ? 0.8 : 0.3}
-                    className="transition-all duration-300"
+                    stroke={strokeColor}
+                    strokeWidth={strokeWidth}
+                    strokeOpacity={strokeOpacity}
+                    className="transition-all duration-500"
                     initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.5 }}
+                    animate={{
+                      pathLength: 1,
+                      opacity: 1,
+                      stroke: strokeColor,
+                      strokeWidth: strokeWidth,
+                      strokeOpacity: strokeOpacity,
+                    }}
+                    transition={{
+                      duration: isHighlightedEdge ? 0.3 : 1,
+                      delay: isHighlightedEdge ? 0 : 0.5,
+                    }}
+                    style={{
+                      filter:
+                        isMSTEdge || isHighlightedEdge
+                          ? "drop-shadow(0 0 4px currentColor)"
+                          : "none",
+                    }}
                   />
                 );
               })
@@ -823,22 +1214,42 @@ const SkillsConstellation = () => {
               const dimensions = getNodeDimensions(skill);
               const isHovered = hoveredSkill === skill.id;
               const isSelected = selectedSkill === skill.id;
-              const isHighlighted = shouldHighlightNode(skill.id);
+              const isHighlighted =
+                !algorithmState.isRunning && !algorithmState.mstEdges.length
+                  ? shouldHighlightNode(skill.id)
+                  : true;
               const isActive = isHovered || isSelected;
+              const isInMST = algorithmState.visitedNodes.has(skill.id);
+              const isMSTActive =
+                algorithmState.isRunning || algorithmState.mstEdges.length > 0;
 
               return (
                 <g key={skill.id}>
                   {/* Node background with glow effect */}
                   <motion.g
                     initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: isHighlighted ? 1 : 0.4 }}
+                    animate={{
+                      scale: 1,
+                      opacity: isMSTActive
+                        ? isInMST
+                          ? 1
+                          : 0.3
+                        : isHighlighted
+                        ? 1
+                        : 0.4,
+                    }}
                     transition={{ duration: 0.5, delay: index * 0.05 }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="cursor-pointer"
-                    onMouseEnter={() => setHoveredSkill(skill.id)}
-                    onMouseLeave={() => setHoveredSkill(null)}
+                    whileHover={{ scale: isMSTActive ? 1 : 1.1 }}
+                    whileTap={{ scale: isMSTActive ? 1 : 0.95 }}
+                    className={
+                      isMSTActive ? "cursor-default" : "cursor-pointer"
+                    }
+                    onMouseEnter={() =>
+                      !isMSTActive && setHoveredSkill(skill.id)
+                    }
+                    onMouseLeave={() => !isMSTActive && setHoveredSkill(null)}
                     onClick={() =>
+                      !isMSTActive &&
                       setSelectedSkill(
                         selectedSkill === skill.id ? null : skill.id
                       )
@@ -871,7 +1282,13 @@ const SkillsConstellation = () => {
                       height={dimensions.height}
                       rx={dimensions.rx}
                       fill={
-                        isActive
+                        isMSTActive && isInMST
+                          ? `rgba(${
+                              algorithmState.type === "prim"
+                                ? "255, 203, 5"
+                                : "0, 255, 148"
+                            }, 0.3)`
+                          : isActive && !isMSTActive
                           ? `rgba(${
                               skill.category === "language"
                                 ? "51, 153, 255"
@@ -884,12 +1301,28 @@ const SkillsConstellation = () => {
                           : "rgba(255, 255, 255, 0.05)"
                       }
                       stroke={
-                        isActive
+                        isMSTActive && isInMST
+                          ? algorithmState.type === "prim"
+                            ? "#FFCB05"
+                            : "#00FF94"
+                          : isActive && !isMSTActive
                           ? categoryColors[skill.category]
                           : "rgba(255, 255, 255, 0.2)"
                       }
-                      strokeWidth={isActive ? 3 : 2}
-                      strokeOpacity={isActive ? 0.8 : 0.3}
+                      strokeWidth={
+                        isMSTActive && isInMST
+                          ? 3
+                          : isActive && !isMSTActive
+                          ? 3
+                          : 2
+                      }
+                      strokeOpacity={
+                        isMSTActive && isInMST
+                          ? 0.9
+                          : isActive && !isMSTActive
+                          ? 0.8
+                          : 0.3
+                      }
                       className="transition-all duration-300"
                       whileHover={{
                         fill: `rgba(${

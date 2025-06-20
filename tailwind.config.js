@@ -37,6 +37,9 @@ module.exports = {
         "cyber-black": "#1B2951", // Lighter background
         "cyber-white": "#F8FAFB", // Light text
         "neon-blue": "#3399FF", // Bright Michigan blue
+        "neon-purple": "#FF6B9D", // Neon purple for algorithms
+        "cyber-green": "#00FF94", // Cyber green for Kruskal's
+        "michigan-maize": "#FFCB05", // Michigan maize for Prim's
         "matrix-green": "#FFCB05", // Michigan maize instead of green
         "tech-gray": "#2D3E63", // Medium blue-gray
       },
