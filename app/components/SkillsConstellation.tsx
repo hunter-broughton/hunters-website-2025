@@ -407,13 +407,13 @@ const SkillsConstellation = () => {
 
   const getNodeDimensions = (skill: SkillNode) => {
     const textLength = skill.name.length;
-    // Larger nodes for better text readability
-    const baseWidth = Math.max(120, textLength * 10 + 30);
-    const baseHeight = 45;
+    // Significantly larger nodes for better mobile readability
+    const baseWidth = Math.max(140, textLength * 12 + 40);
+    const baseHeight = 55;
     return {
       width: baseWidth,
       height: baseHeight,
-      rx: 6,
+      rx: 8,
     };
   };
 
@@ -444,8 +444,8 @@ const SkillsConstellation = () => {
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[60vh] md:min-h-[70vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
-        <p className="text-cyber-white/70 font-tech text-xs md:text-lg text-center pt-2 md:pt-6 pb-1 md:pb-3 px-2 md:px-4">
+      <div className="relative w-full min-h-[70vh] md:min-h-[70vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
+        <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-3 md:pt-6 pb-2 md:pb-3 px-3 md:px-4">
           Hover or click nodes to explore my skills and their connections!
         </p>
 
@@ -787,7 +787,7 @@ const SkillsConstellation = () => {
                     textAnchor="middle"
                     dominantBaseline="central"
                     className="font-tech font-bold pointer-events-none select-none"
-                    fontSize="18"
+                    fontSize="20"
                     fill="#FFFFFF"
                     fillOpacity={0.95}
                     initial={{ opacity: 0 }}

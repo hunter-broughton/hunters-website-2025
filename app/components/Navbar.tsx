@@ -59,7 +59,7 @@ const Navbar = () => {
       <AnimatePresence>
         {visible && (
           <motion.nav
-            className="fixed w-full py-4 md:py-6 px-4 md:px-8 flex justify-center md:justify-between items-center z-40 bg-cyber-black/50 backdrop-blur-sm top-12"
+            className="fixed w-full py-3 md:py-6 px-3 md:px-8 flex justify-center md:justify-between items-center z-40 bg-cyber-black/50 backdrop-blur-sm top-12"
             initial={{ y: 0 }}
             animate={{ y: 0 }}
             exit={{ y: -100 }}
@@ -73,12 +73,12 @@ const Navbar = () => {
               <span className="text-matrix-green/50">/</span>
               <span className="text-cyber-white/30">Broughton</span>
             </motion.div>
-            <div className="flex gap-4 md:gap-8 text-xs md:text-sm tracking-widest font-tech">
+            <div className="flex gap-3 md:gap-8 text-xs md:text-sm tracking-widest font-tech flex-wrap justify-center">
               {navItems.map((item) => (
                 <motion.a
                   key={item.label}
                   href={item.href}
-                  className="hover:text-neon-blue transition-colors"
+                  className="hover:text-neon-blue transition-colors whitespace-nowrap"
                   whileHover={{ y: -2 }}
                 >
                   {item.label}

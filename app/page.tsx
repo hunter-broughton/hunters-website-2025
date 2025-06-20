@@ -360,14 +360,17 @@ const Home = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="bg-michigan-dark/95 border border-tech-gray rounded-lg p-4 font-mono backdrop-blur-sm"
+                    className="bg-michigan-dark/95 border border-tech-gray rounded-lg p-3 md:p-4 font-mono backdrop-blur-sm overflow-x-auto"
                   >
-                    <div className="flex items-center gap-2 text-sm text-cyber-white/60 mb-2">
+                    <div className="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-cyber-white/60 mb-2 whitespace-nowrap">
                       <span className="text-michigan-maize">
                         hunter@umich-dev
                       </span>
                       <span>:~/portfolio$</span>
-                      <span>git log --oneline | head -1</span>
+                      <span className="hidden sm:inline">
+                        git log --oneline | head -1
+                      </span>
+                      <span className="sm:hidden">git log</span>
                     </div>
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -380,7 +383,7 @@ const Home = () => {
                   </motion.div>
 
                   <motion.div
-                    className="flex items-center gap-1 text-sm md:text-base font-tech"
+                    className="flex items-start gap-1 text-xs md:text-base font-tech flex-wrap"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6 }}
