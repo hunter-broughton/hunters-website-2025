@@ -407,9 +407,12 @@ const SkillsConstellation = () => {
 
   const getNodeDimensions = (skill: SkillNode) => {
     const textLength = skill.name.length;
-    // Significantly larger nodes for better mobile readability
-    const baseWidth = Math.max(140, textLength * 12 + 40);
-    const baseHeight = 55;
+    // Much larger nodes for mobile, smaller for desktop
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const baseWidth = isMobile 
+      ? Math.max(180, textLength * 15 + 50) 
+      : Math.max(140, textLength * 12 + 40);
+    const baseHeight = isMobile ? 70 : 55;
     return {
       width: baseWidth,
       height: baseHeight,
@@ -444,7 +447,7 @@ const SkillsConstellation = () => {
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[70vh] md:min-h-[70vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
+      <div className="relative w-full min-h-[80vh] md:min-h-[70vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
         <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-3 md:pt-6 pb-2 md:pb-3 px-3 md:px-4">
           Hover or click nodes to explore my skills and their connections!
         </p>
@@ -492,16 +495,25 @@ const SkillsConstellation = () => {
                 const skill = skills.find(
                   (s) => s.id === (hoveredSkill || selectedSkill)
                 );
-                if (!skill)
-                  return "top-1 left-1 right-1 md:top-4 md:right-4 md:left-auto";
+                if (!skill) return "top-1 left-1 right-1";
 
-                // If node is in the right half, position tooltip on the left
-                if (skill.x > 50) {
-                  return "top-1 left-1 md:top-4 md:left-4 md:right-auto";
+                // Mobile-first positioning to avoid overlap
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                
+                if (isMobile) {
+                  // On mobile, always position at top center to avoid node overlap
+                  return "top-2 left-2 right-2";
+                } else {
+                  // Desktop positioning based on node location
+                  if (skill.x > 70) {
+                    return "top-4 left-4 max-w-sm";
+                  } else if (skill.x < 30) {
+                    return "top-4 right-4 max-w-sm";
+                  } else {
+                    return "top-4 left-1/2 transform -translate-x-1/2 max-w-sm";
+                  }
                 }
-                // Otherwise position on the right (default)
-                return "top-1 left-1 right-1 md:top-4 md:right-4 md:left-auto";
-              })()} bg-cyber-black/95 border border-neon-blue/50 rounded-lg p-3 md:p-6 max-w-xs md:max-w-md backdrop-blur-sm z-20 text-sm md:text-base`}
+              })()} bg-cyber-black/95 border border-neon-blue/50 rounded-lg p-3 md:p-4 backdrop-blur-sm z-20 text-xs md:text-sm`}
             >
               {(() => {
                 // Priority: hoveredSkill takes precedence over selectedSkill
@@ -511,13 +523,13 @@ const SkillsConstellation = () => {
                 if (!skill) return null;
 
                 return (
-                  <div className="space-y-4">
+                  <div className="space-y-2 md:space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-cyber-white font-tech text-xl font-bold">
+                      <h3 className="text-cyber-white font-tech text-base md:text-xl font-bold">
                         {skill.name}
                       </h3>
                       <div
-                        className={`px-3 py-1 rounded-full text-sm font-semibold`}
+                        className={`px-2 py-1 rounded-full text-xs font-semibold`}
                         style={{
                           backgroundColor: categoryColors[skill.category],
                           color: "#000",
@@ -527,41 +539,47 @@ const SkillsConstellation = () => {
                       </div>
                     </div>
 
-                    {/* Used In */}
-                    <div className="space-y-3">
+                    {/* Used In - More compact on mobile */}
+                    <div className="space-y-2 md:space-y-3">
                       {skill.usedIn.projects &&
                         skill.usedIn.projects.length > 0 && (
                           <div>
-                            <h4 className="text-michigan-maize font-tech font-semibold text-sm mb-1">
+                            <h4 className="text-michigan-maize font-tech font-semibold text-xs md:text-sm mb-1">
                               Projects
                             </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {skill.usedIn.projects.map((project) => (
+                            <div className="flex flex-wrap gap-1 md:gap-2">
+                              {skill.usedIn.projects.slice(0, 3).map((project) => (
                                 <span
                                   key={project}
-                                  className="px-2 py-1 bg-michigan-maize/20 text-michigan-maize text-xs rounded font-tech border border-michigan-maize/30"
+                                  className="px-1.5 py-0.5 md:px-2 md:py-1 bg-michigan-maize/20 text-michigan-maize text-xs rounded font-tech border border-michigan-maize/30"
                                 >
                                   {project}
                                 </span>
                               ))}
+                              {skill.usedIn.projects.length > 3 && (
+                                <span className="text-michigan-maize/60 text-xs">+{skill.usedIn.projects.length - 3}</span>
+                              )}
                             </div>
                           </div>
                         )}
 
                       {skill.usedIn.jobs && skill.usedIn.jobs.length > 0 && (
                         <div>
-                          <h4 className="text-cyber-green font-tech font-semibold text-sm mb-1">
+                          <h4 className="text-cyber-green font-tech font-semibold text-xs md:text-sm mb-1">
                             Experience
                           </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {skill.usedIn.jobs.map((job) => (
+                          <div className="flex flex-wrap gap-1 md:gap-2">
+                            {skill.usedIn.jobs.slice(0, 2).map((job) => (
                               <span
                                 key={job}
-                                className="px-2 py-1 bg-cyber-green/20 text-cyber-green text-xs rounded font-tech border border-cyber-green/30"
+                                className="px-1.5 py-0.5 md:px-2 md:py-1 bg-cyber-green/20 text-cyber-green text-xs rounded font-tech border border-cyber-green/30"
                               >
                                 {job}
                               </span>
                             ))}
+                            {skill.usedIn.jobs.length > 2 && (
+                              <span className="text-cyber-green/60 text-xs">+{skill.usedIn.jobs.length - 2}</span>
+                            )}
                           </div>
                         </div>
                       )}
@@ -569,31 +587,34 @@ const SkillsConstellation = () => {
                       {skill.usedIn.classes &&
                         skill.usedIn.classes.length > 0 && (
                           <div>
-                            <h4 className="text-neon-blue font-tech font-semibold text-sm mb-1">
+                            <h4 className="text-neon-blue font-tech font-semibold text-xs md:text-sm mb-1">
                               Coursework
                             </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {skill.usedIn.classes.map((course) => (
+                            <div className="flex flex-wrap gap-1 md:gap-2">
+                              {skill.usedIn.classes.slice(0, 3).map((course) => (
                                 <span
                                   key={course}
-                                  className="px-2 py-1 bg-neon-blue/20 text-neon-blue text-xs rounded font-tech border border-neon-blue/30"
+                                  className="px-1.5 py-0.5 md:px-2 md:py-1 bg-neon-blue/20 text-neon-blue text-xs rounded font-tech border border-neon-blue/30"
                                 >
                                   {course}
                                 </span>
                               ))}
+                              {skill.usedIn.classes.length > 3 && (
+                                <span className="text-neon-blue/60 text-xs">+{skill.usedIn.classes.length - 3}</span>
+                              )}
                             </div>
                           </div>
                         )}
                     </div>
 
-                    {/* Connected Technologies */}
+                    {/* Connected Technologies - Hide on mobile if too many connections */}
                     {skill.connections.length > 0 && (
-                      <div className="pt-2 border-t border-cyber-white/20">
+                      <div className="pt-2 border-t border-cyber-white/20 hidden md:block">
                         <h4 className="text-cyber-white/90 font-tech font-semibold text-sm mb-2">
                           Connected Technologies
                         </h4>
                         <div className="flex flex-wrap gap-2">
-                          {skill.connections.map((connId) => {
+                          {skill.connections.slice(0, 4).map((connId) => {
                             const connectedSkill = skills.find(
                               (s) => s.id === connId
                             );
@@ -607,6 +628,9 @@ const SkillsConstellation = () => {
                               </span>
                             ) : null;
                           })}
+                          {skill.connections.length > 4 && (
+                            <span className="text-cyber-white/60 text-xs">+{skill.connections.length - 4}</span>
+                          )}
                         </div>
                       </div>
                     )}
@@ -787,7 +811,7 @@ const SkillsConstellation = () => {
                     textAnchor="middle"
                     dominantBaseline="central"
                     className="font-tech font-bold pointer-events-none select-none"
-                    fontSize="20"
+                    fontSize={typeof window !== 'undefined' && window.innerWidth < 768 ? "24" : "20"}
                     fill="#FFFFFF"
                     fillOpacity={0.95}
                     initial={{ opacity: 0 }}

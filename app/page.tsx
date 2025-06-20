@@ -411,10 +411,10 @@ const Home = () => {
                   </p>
                   <p className="text-cyber-white/60 font-tech text-sm md:text-base leading-relaxed">
                     I solve complex, real-world problems using efficient,
-                    high-impact software. From machine learning algorithms and
-                    resilient web systems to financial modeling and forecasts, I
-                    build code that's fast, readable, and ready for whatever's
-                    next.{" "}
+                    high-impact software. From machine learning and resilient
+                    web systems to financial modeling and forecasts, I develop
+                    efficient, cleanly structured code that's built to last and
+                    ready to scale.{" "}
                     <span className="text-neon-blue">
                       {" "}
                       I'm currently searching for an internship opportunity for
@@ -503,31 +503,33 @@ const Home = () => {
                   Hey, I'm <span className="text-neon-blue">Hunter</span> — a
                   passionate developer who loves building innovative solutions.
                   I'm a CS and Econ major at the University of Michigan and most
-                  days you'll find me coding, tinkering with side projects, and
-                  diving into something that piques my interest in tech. I
-                  thrive on challenges and enjoy creating software that makes a
+                  days you'll find me coding, building side projects, and diving
+                  into something that piques my interest in tech. I thrive on
+                  challenges and enjoy creating software that makes a
                   difference. Whether it's a web app, a machine learning model,
-                  or a complex algorithm, I'm always eager to learn and grow in
-                  my craft.
+                  or firmware for embedded systems, I'm always eager to learn
+                  and grow in my craft.
                 </p>
 
                 <p className="text-cyber-white/80 text-base leading-relaxed">
                   I'm interested in{" "}
                   <span className="text-neon-blue">full-stack development</span>
-                  , AI, computing hardware, and leveraging them to create user
-                  experiences that matter. I enjoy working on projects that
-                  combine <em>creativity</em> and <em>purpose</em> with{" "}
-                  <em>technical rigor</em>, and I'm always searching for new
-                  challenges.
+                  , AI/ML, computing hardware, and leveraging all of them to
+                  create user experiences that matter. I enjoy working on
+                  projects that combine <em>creativity</em> and <em>purpose</em>{" "}
+                  with <em>technical rigor</em>, and I'm always searching for
+                  new challenges.
                 </p>
 
                 <p className="text-cyber-white/80 text-base leading-relaxed">
                   When I'm not coding, you can find me backpacking in
-                  Washington, singing and playing the guitar, struggling to
-                  learn how to love running, or constantly tweaking my golf
-                  swing. There's always a new challenge calling and a vision
-                  waiting to become reality. Want to build something amazing
-                  together?{" "}
+                  Washington, playing the guitar, struggling to learn how to
+                  love running, or constantly tweaking my golf swing. From big
+                  ideas, to clean execution, I love turning a vision into
+                  reality.{" "}
+                  <span className="text-michigan-maize">
+                    Hiring? Collaborating? Just Curious?
+                  </span>{" "}
                   <a
                     href="/socials"
                     className="text-neon-blue hover:text-michigan-maize transition-colors hover:no-underline"
