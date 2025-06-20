@@ -70,8 +70,9 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
             >
               <span className="text-neon-blue">Hunter</span>
-              <span className="text-matrix-green/50">/</span>
-              <span className="text-cyber-white/30">Broughton</span>
+              <span className="text-matrix-green/50">&lt;</span>
+              <span className="text-michigan-maize">Developer</span>
+              <span className="text-matrix-green/50">/&gt;</span>
             </motion.div>
             <div className="flex gap-3 md:gap-8 text-xs md:text-sm tracking-widest font-tech flex-wrap justify-center">
               {navItems.map((item) => (

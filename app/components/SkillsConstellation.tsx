@@ -54,7 +54,7 @@ const SkillsConstellation = () => {
       level: 95,
       category: "language",
       x: 12,
-      y: 15,
+      y: 12,
       connections: ["react", "node", "express", "ts", "tailwind", "vue"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
@@ -68,7 +68,7 @@ const SkillsConstellation = () => {
       level: 90,
       category: "language",
       x: 35,
-      y: 12,
+      y: 8,
       connections: ["pytorch", "pandas", "fastapi", "pytest", "pyvisa"],
       usedIn: {
         projects: [
@@ -86,7 +86,7 @@ const SkillsConstellation = () => {
       level: 88,
       category: "language",
       x: 58,
-      y: 15,
+      y: 12,
       connections: ["js", "react", "vue"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
@@ -100,7 +100,7 @@ const SkillsConstellation = () => {
       level: 85,
       category: "language",
       x: 80,
-      y: 12,
+      y: 8,
       connections: ["C", "embedded"],
       usedIn: {
         projects: [],
@@ -116,7 +116,7 @@ const SkillsConstellation = () => {
       level: 80,
       category: "language",
       x: 12,
-      y: 35,
+      y: 28,
       connections: ["cpp", "embedded"],
       usedIn: {
         projects: [],
@@ -130,7 +130,7 @@ const SkillsConstellation = () => {
       level: 80,
       category: "language",
       x: 35,
-      y: 38,
+      y: 32,
       connections: [],
       usedIn: {
         projects: ["Searching Through a Grid"],
@@ -144,7 +144,7 @@ const SkillsConstellation = () => {
       level: 80,
       category: "framework",
       x: 58,
-      y: 35,
+      y: 28,
       connections: ["js", "ts", "vuetify"],
       usedIn: {
         projects: [],
@@ -158,7 +158,7 @@ const SkillsConstellation = () => {
       level: 70,
       category: "framework",
       x: 80,
-      y: 38,
+      y: 32,
       connections: ["python"],
       usedIn: {
         projects: ["S-Parameter Automation"],
@@ -174,7 +174,7 @@ const SkillsConstellation = () => {
       level: 92,
       category: "framework",
       x: 12,
-      y: 58,
+      y: 48,
       connections: ["js", "ts", "tailwind"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
@@ -188,7 +188,7 @@ const SkillsConstellation = () => {
       level: 87,
       category: "framework",
       x: 35,
-      y: 61,
+      y: 52,
       connections: ["js", "ts", "express"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink"],
@@ -202,7 +202,7 @@ const SkillsConstellation = () => {
       level: 85,
       category: "framework",
       x: 58,
-      y: 58,
+      y: 48,
       connections: ["node", "mongodb"],
       usedIn: {
         projects: ["ThriftSwipe"],
@@ -216,7 +216,7 @@ const SkillsConstellation = () => {
       level: 82,
       category: "framework",
       x: 80,
-      y: 61,
+      y: 52,
       connections: ["python", "ai"],
       usedIn: {
         projects: [],
@@ -232,7 +232,7 @@ const SkillsConstellation = () => {
       level: 90,
       category: "framework",
       x: 12,
-      y: 81,
+      y: 68,
       connections: ["react"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink"],
@@ -246,7 +246,7 @@ const SkillsConstellation = () => {
       level: 88,
       category: "tool",
       x: 35,
-      y: 84,
+      y: 72,
       connections: ["github"],
       usedIn: {
         projects: ["All Projects"],
@@ -260,7 +260,7 @@ const SkillsConstellation = () => {
       level: 83,
       category: "tool",
       x: 58,
-      y: 81,
+      y: 68,
       connections: ["express", "node"],
       usedIn: {
         projects: ["ThriftSwipe"],
@@ -274,7 +274,7 @@ const SkillsConstellation = () => {
       level: 80,
       category: "tool",
       x: 80,
-      y: 84,
+      y: 72,
       connections: ["python"],
       usedIn: {
         projects: ["S-Parameter Analysis"],
@@ -287,8 +287,8 @@ const SkillsConstellation = () => {
       name: "NumPy",
       level: 75,
       category: "tool",
-      x: 12,
-      y: 105,
+      x: 35,
+      y: 85,
       connections: ["python", "pandas"],
       usedIn: {
         projects: [],
@@ -297,14 +297,14 @@ const SkillsConstellation = () => {
       },
     },
 
-    // Additional skills - distributed to avoid overlap
+    // Additional skills - better mobile distribution
     {
       id: "fastapi",
       name: "FastAPI",
       level: 78,
       category: "framework",
       x: 92,
-      y: 25,
+      y: 15,
       connections: ["python"],
       usedIn: {
         projects: [],
@@ -318,7 +318,7 @@ const SkillsConstellation = () => {
       level: 75,
       category: "framework",
       x: 92,
-      y: 48,
+      y: 35,
       connections: ["vue"],
       usedIn: {
         projects: [],
@@ -332,7 +332,7 @@ const SkillsConstellation = () => {
       level: 80,
       category: "framework",
       x: 92,
-      y: 71,
+      y: 55,
       connections: ["python"],
       usedIn: {
         projects: ["S-Parameter Automation", "HTTPie Authentication"],
@@ -346,7 +346,7 @@ const SkillsConstellation = () => {
       level: 75,
       category: "tool",
       x: 5,
-      y: 25,
+      y: 15,
       connections: [],
       usedIn: {
         projects: [],
@@ -360,7 +360,7 @@ const SkillsConstellation = () => {
       level: 85,
       category: "tool",
       x: 5,
-      y: 48,
+      y: 35,
       connections: ["git"],
       usedIn: {
         projects: ["All Projects"],
@@ -374,7 +374,7 @@ const SkillsConstellation = () => {
       level: 78,
       category: "concept",
       x: 5,
-      y: 71,
+      y: 55,
       connections: ["pytorch", "python"],
       usedIn: {
         projects: ["ThriftSwipe"],
@@ -388,7 +388,7 @@ const SkillsConstellation = () => {
       level: 75,
       category: "concept",
       x: 5,
-      y: 94,
+      y: 75,
       connections: ["cpp", "C"],
       usedIn: {
         projects: [],
@@ -447,8 +447,8 @@ const SkillsConstellation = () => {
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[80vh] md:min-h-[70vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
-        <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-3 md:pt-6 pb-2 md:pb-3 px-3 md:px-4">
+      <div className="relative w-full min-h-[80vh] md:min-h-[80vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
+        <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-5 md:pt-5 pb-6 md:pb-8 px-3 md:px-4">
           Hover or click nodes to explore my skills and their connections!
         </p>
 
@@ -690,8 +690,8 @@ const SkillsConstellation = () => {
 
         {/* SVG Constellation - Responsive Scale */}
         <svg
-          viewBox="0 0 1200 800"
-          className="w-full h-full absolute inset-0"
+          viewBox="0 0 1200 1000"
+          className="w-full h-full absolute top-6 md:top-8 inset-x-0 bottom-0"
           style={{ minHeight: "400px" }}
           onClick={(e) => {
             // Clear selection when clicking on empty SVG area
@@ -708,9 +708,9 @@ const SkillsConstellation = () => {
                 if (!connectedSkill) return null;
 
                 const x1 = (skill.x / 100) * 1200;
-                const y1 = (skill.y / 100) * 800;
+                const y1 = (skill.y / 100) * 1000;
                 const x2 = (connectedSkill.x / 100) * 1200;
-                const y2 = (connectedSkill.y / 100) * 800;
+                const y2 = (connectedSkill.y / 100) * 1000;
 
                 const isHighlighted = shouldHighlightConnection(
                   skill.id,
@@ -745,7 +745,7 @@ const SkillsConstellation = () => {
           <g>
             {skills.map((skill, index) => {
               const centerX = (skill.x / 100) * 1200;
-              const centerY = (skill.y / 100) * 800;
+              const centerY = (skill.y / 100) * 1000;
               const dimensions = getNodeDimensions(skill);
               const isHovered = hoveredSkill === skill.id;
               const isSelected = selectedSkill === skill.id;
