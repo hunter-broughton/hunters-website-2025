@@ -407,12 +407,12 @@ const SkillsConstellation = () => {
 
   const getNodeDimensions = (skill: SkillNode) => {
     const textLength = skill.name.length;
-    // Much larger nodes for mobile, smaller for desktop
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const baseWidth = isMobile 
-      ? Math.max(180, textLength * 15 + 50) 
+    // Twice as large nodes for mobile, normal for desktop
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const baseWidth = isMobile
+      ? Math.max(360, textLength * 30 + 100) // Doubled from 180 and 15
       : Math.max(140, textLength * 12 + 40);
-    const baseHeight = isMobile ? 70 : 55;
+    const baseHeight = isMobile ? 140 : 55; // Doubled from 70
     return {
       width: baseWidth,
       height: baseHeight,
@@ -497,20 +497,29 @@ const SkillsConstellation = () => {
                 );
                 if (!skill) return "top-1 left-1 right-1";
 
-                // Mobile-first positioning to avoid overlap
-                const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-                
+                const isMobile =
+                  typeof window !== "undefined" && window.innerWidth < 768;
+
                 if (isMobile) {
-                  // On mobile, always position at top center to avoid node overlap
+                  // On mobile, always position at top to avoid node overlap
                   return "top-2 left-2 right-2";
                 } else {
-                  // Desktop positioning based on node location
-                  if (skill.x > 70) {
-                    return "top-4 left-4 max-w-sm";
-                  } else if (skill.x < 30) {
+                  // Desktop positioning - more sophisticated logic to avoid all nodes
+                  const { x, y } = skill;
+
+                  // Divide screen into quadrants and position tooltip opposite to node
+                  if (x <= 50 && y <= 50) {
+                    // Top-left quadrant: position tooltip bottom-right
+                    return "bottom-4 right-4 max-w-sm";
+                  } else if (x > 50 && y <= 50) {
+                    // Top-right quadrant: position tooltip bottom-left
+                    return "bottom-4 left-4 max-w-sm";
+                  } else if (x <= 50 && y > 50) {
+                    // Bottom-left quadrant: position tooltip top-right
                     return "top-4 right-4 max-w-sm";
                   } else {
-                    return "top-4 left-1/2 transform -translate-x-1/2 max-w-sm";
+                    // Bottom-right quadrant: position tooltip top-left
+                    return "top-4 left-4 max-w-sm";
                   }
                 }
               })()} bg-cyber-black/95 border border-neon-blue/50 rounded-lg p-3 md:p-4 backdrop-blur-sm z-20 text-xs md:text-sm`}
@@ -548,17 +557,29 @@ const SkillsConstellation = () => {
                               Projects
                             </h4>
                             <div className="flex flex-wrap gap-1 md:gap-2">
-                              {skill.usedIn.projects.slice(0, 3).map((project) => (
-                                <span
-                                  key={project}
-                                  className="px-1.5 py-0.5 md:px-2 md:py-1 bg-michigan-maize/20 text-michigan-maize text-xs rounded font-tech border border-michigan-maize/30"
-                                >
-                                  {project}
-                                </span>
-                              ))}
-                              {skill.usedIn.projects.length > 3 && (
-                                <span className="text-michigan-maize/60 text-xs">+{skill.usedIn.projects.length - 3}</span>
-                              )}
+                              {skill.usedIn.projects
+                                .slice(
+                                  0,
+                                  typeof window !== "undefined" &&
+                                    window.innerWidth < 768
+                                    ? 2
+                                    : skill.usedIn.projects.length
+                                )
+                                .map((project) => (
+                                  <span
+                                    key={project}
+                                    className="px-1.5 py-0.5 md:px-2 md:py-1 bg-michigan-maize/20 text-michigan-maize text-xs rounded font-tech border border-michigan-maize/30"
+                                  >
+                                    {project}
+                                  </span>
+                                ))}
+                              {typeof window !== "undefined" &&
+                                window.innerWidth < 768 &&
+                                skill.usedIn.projects.length > 2 && (
+                                  <span className="text-michigan-maize/60 text-xs">
+                                    +{skill.usedIn.projects.length - 2}
+                                  </span>
+                                )}
                             </div>
                           </div>
                         )}
@@ -569,17 +590,29 @@ const SkillsConstellation = () => {
                             Experience
                           </h4>
                           <div className="flex flex-wrap gap-1 md:gap-2">
-                            {skill.usedIn.jobs.slice(0, 2).map((job) => (
-                              <span
-                                key={job}
-                                className="px-1.5 py-0.5 md:px-2 md:py-1 bg-cyber-green/20 text-cyber-green text-xs rounded font-tech border border-cyber-green/30"
-                              >
-                                {job}
-                              </span>
-                            ))}
-                            {skill.usedIn.jobs.length > 2 && (
-                              <span className="text-cyber-green/60 text-xs">+{skill.usedIn.jobs.length - 2}</span>
-                            )}
+                            {skill.usedIn.jobs
+                              .slice(
+                                0,
+                                typeof window !== "undefined" &&
+                                  window.innerWidth < 768
+                                  ? 1
+                                  : skill.usedIn.jobs.length
+                              )
+                              .map((job) => (
+                                <span
+                                  key={job}
+                                  className="px-1.5 py-0.5 md:px-2 md:py-1 bg-cyber-green/20 text-cyber-green text-xs rounded font-tech border border-cyber-green/30"
+                                >
+                                  {job}
+                                </span>
+                              ))}
+                            {typeof window !== "undefined" &&
+                              window.innerWidth < 768 &&
+                              skill.usedIn.jobs.length > 1 && (
+                                <span className="text-cyber-green/60 text-xs">
+                                  +{skill.usedIn.jobs.length - 1}
+                                </span>
+                              )}
                           </div>
                         </div>
                       )}
@@ -591,23 +624,35 @@ const SkillsConstellation = () => {
                               Coursework
                             </h4>
                             <div className="flex flex-wrap gap-1 md:gap-2">
-                              {skill.usedIn.classes.slice(0, 3).map((course) => (
-                                <span
-                                  key={course}
-                                  className="px-1.5 py-0.5 md:px-2 md:py-1 bg-neon-blue/20 text-neon-blue text-xs rounded font-tech border border-neon-blue/30"
-                                >
-                                  {course}
-                                </span>
-                              ))}
-                              {skill.usedIn.classes.length > 3 && (
-                                <span className="text-neon-blue/60 text-xs">+{skill.usedIn.classes.length - 3}</span>
-                              )}
+                              {skill.usedIn.classes
+                                .slice(
+                                  0,
+                                  typeof window !== "undefined" &&
+                                    window.innerWidth < 768
+                                    ? 2
+                                    : skill.usedIn.classes.length
+                                )
+                                .map((course) => (
+                                  <span
+                                    key={course}
+                                    className="px-1.5 py-0.5 md:px-2 md:py-1 bg-neon-blue/20 text-neon-blue text-xs rounded font-tech border border-neon-blue/30"
+                                  >
+                                    {course}
+                                  </span>
+                                ))}
+                              {typeof window !== "undefined" &&
+                                window.innerWidth < 768 &&
+                                skill.usedIn.classes.length > 2 && (
+                                  <span className="text-neon-blue/60 text-xs">
+                                    +{skill.usedIn.classes.length - 2}
+                                  </span>
+                                )}
                             </div>
                           </div>
                         )}
                     </div>
 
-                    {/* Connected Technologies - Hide on mobile if too many connections */}
+                    {/* Connected Technologies - Desktop only */}
                     {skill.connections.length > 0 && (
                       <div className="pt-2 border-t border-cyber-white/20 hidden md:block">
                         <h4 className="text-cyber-white/90 font-tech font-semibold text-sm mb-2">
@@ -629,7 +674,9 @@ const SkillsConstellation = () => {
                             ) : null;
                           })}
                           {skill.connections.length > 4 && (
-                            <span className="text-cyber-white/60 text-xs">+{skill.connections.length - 4}</span>
+                            <span className="text-cyber-white/60 text-xs">
+                              +{skill.connections.length - 4}
+                            </span>
                           )}
                         </div>
                       </div>
@@ -811,7 +858,11 @@ const SkillsConstellation = () => {
                     textAnchor="middle"
                     dominantBaseline="central"
                     className="font-tech font-bold pointer-events-none select-none"
-                    fontSize={typeof window !== 'undefined' && window.innerWidth < 768 ? "24" : "20"}
+                    fontSize={
+                      typeof window !== "undefined" && window.innerWidth < 768
+                        ? "48"
+                        : "20"
+                    }
                     fill="#FFFFFF"
                     fillOpacity={0.95}
                     initial={{ opacity: 0 }}
