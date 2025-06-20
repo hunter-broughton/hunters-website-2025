@@ -59,14 +59,14 @@ const HeroTypewriter = () => {
 
   return (
     <div className="relative">
-      <span className="text-4xl md:text-6xl lg:text-7xl font-cyber tracking-tight">
-        <span className="text-cyber-white">{prefix}</span>
+      <span className="text-2xl md:text-4xl lg:text-6xl font-mono tracking-wide">
+        <span className="text-cyber-white/80">{prefix}</span>
         <span className="text-neon-blue">
           {displayText.slice(prefix.length)}
         </span>
         <span
-          className={`inline-block w-[2px] h-[1em] ml-[2px] ${
-            showCursor ? "bg-neon-blue animate-pulse" : "opacity-0"
+          className={`inline-block w-[2px] h-[1em] ml-[1px] ${
+            showCursor ? "bg-michigan-maize animate-pulse" : "opacity-0"
           }`}
         />
       </span>

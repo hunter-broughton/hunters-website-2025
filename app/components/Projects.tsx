@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -12,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import FadeInSection from "./FadeInSection";
 import ExternalLinks from "./ExternalLinks";
+import GlitchCard from "./GlitchCard";
 import Image from "next/image";
 
 interface SpotlightProject {
@@ -232,25 +231,26 @@ const Projects = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries(projects).map(([key, project], index) => (
           <FadeInSection key={key} delay={`${index * 100}ms`}>
-            <motion.div
-              className="p-6 border border-cyber-white/20 hover:border-neon-blue bg-cyber-black/50 backdrop-blur-sm transition-colors h-[320px] flex flex-col"
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <FolderIcon className="w-8 h-8 text-matrix-green" />
-                <ExternalLinks
-                  githubLink={project.link}
-                  openLink={project.open}
-                />
+            <GlitchCard className="h-[320px]" glitchIntensity="low">
+              <div className="p-6 border border-cyber-white/20 hover:border-neon-blue bg-cyber-black/50 backdrop-blur-sm transition-colors h-full flex flex-col">
+                <div className="flex items-start justify-between mb-4">
+                  <FolderIcon className="w-8 h-8 text-matrix-green" />
+                  <ExternalLinks
+                    githubLink={project.link}
+                    openLink={project.open}
+                  />
+                </div>
+                <h3 className="text-xl font-cyber text-neon-blue mb-2">
+                  {key}
+                </h3>
+                <p className="text-cyber-white/70 mb-4 text-sm line-clamp-4 flex-grow">
+                  {project.desc}
+                </p>
+                <p className="text-matrix-green font-tech text-xs mt-auto">
+                  {project.techStack}
+                </p>
               </div>
-              <h3 className="text-xl font-cyber text-neon-blue mb-2">{key}</h3>
-              <p className="text-cyber-white/70 mb-4 text-sm line-clamp-4 flex-grow">
-                {project.desc}
-              </p>
-              <p className="text-matrix-green font-tech text-xs mt-auto">
-                {project.techStack}
-              </p>
-            </motion.div>
+            </GlitchCard>
           </FadeInSection>
         ))}
       </div>

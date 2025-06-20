@@ -13,6 +13,7 @@ interface Job {
   desc: (string | JSX.Element)[];
   companyLink?: string;
   githubLink?: string;
+  logo?: string;
 }
 
 const experienceItems: Job[] = [
@@ -22,6 +23,7 @@ const experienceItems: Job[] = [
     duration: "May 2025 - August 2025",
     location: "San Jose, CA",
     companyLink: "https://credosemi.com/",
+    logo: "/assets/credo.jpg",
     desc: [
       <>
         Developed features for the new{" "}
@@ -65,6 +67,7 @@ const experienceItems: Job[] = [
     duration: "June 2024 - August 2024",
     location: "Sydney, Australia",
     companyLink: "https://vloggi.com/",
+    logo: "/assets/Vloggi-logo-square.jpg",
     desc: [
       <>
         Engineered full-stack features for Vloggi, a platform that offers{" "}
@@ -96,6 +99,7 @@ const experienceItems: Job[] = [
     duration: "January 2024 - May 2024",
     location: "Ann Arbor, MI",
     companyLink: "https://spark.engin.umich.edu/",
+    logo: "/assets/spark.png",
     desc: [
       <>
         Created a system design to convert{" "}
@@ -181,20 +185,42 @@ const JobList = () => {
         >
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-cyber text-neon-blue">
-                  {experienceItems[selectedJob].jobTitle}
-                </h3>
-                <p className="text-michigan-maize font-tech">
-                  @ {experienceItems[selectedJob].company}
-                </p>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                  <p className="text-cyber-white/60 font-tech text-sm">
-                    {experienceItems[selectedJob].duration}
+              <div className="flex items-start gap-4">
+                {/* Company Logo */}
+                {experienceItems[selectedJob].logo && (
+                  <div className="flex-shrink-0">
+                    <img
+                      src={experienceItems[selectedJob].logo}
+                      alt={`${experienceItems[selectedJob].company} logo`}
+                      className="w-16 h-16 md:w-20 md:h-20 object-contain rounded-lg border border-cyber-white/20 bg-cyber-white/5 p-2 cursor-pointer hover:border-michigan-maize/50 transition-colors"
+                      onClick={() => {
+                        if (experienceItems[selectedJob].companyLink) {
+                          window.open(
+                            experienceItems[selectedJob].companyLink,
+                            "_blank"
+                          );
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* Job Info */}
+                <div>
+                  <h3 className="text-xl font-cyber text-neon-blue">
+                    {experienceItems[selectedJob].jobTitle}
+                  </h3>
+                  <p className="text-michigan-maize font-tech">
+                    @ {experienceItems[selectedJob].company}
                   </p>
-                  <p className="text-cyber-white/60 font-tech text-sm">
-                    📍 {experienceItems[selectedJob].location}
-                  </p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                    <p className="text-cyber-white/60 font-tech text-sm">
+                      {experienceItems[selectedJob].duration}
+                    </p>
+                    <p className="text-cyber-white/60 font-tech text-sm">
+                      📍 {experienceItems[selectedJob].location}
+                    </p>
+                  </div>
                 </div>
               </div>
               <ExternalLinks

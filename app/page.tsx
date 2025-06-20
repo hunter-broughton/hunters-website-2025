@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
   ArrowRightIcon,
   CodeBracketIcon,
@@ -19,6 +19,15 @@ import LastCommit from "./components/LastCommit";
 import ExternalLinks from "./components/ExternalLinks";
 import HeroImage from "./components/HeroImage";
 import AboutSlideshow from "./components/AboutSlideshow";
+import ParticleSystem from "./components/ParticleSystem";
+import GlitchCard from "./components/GlitchCard";
+import { GeometricBackground } from "./components/GeometricShapes";
+import SkillsConstellation from "./components/SkillsConstellation";
+import DataStream, {
+  HolographicText,
+  ScanLine,
+} from "./components/CyberpunkEffects";
+import PageLoader from "./components/PageLoader";
 
 const techStack = [
   "Full-Stack Development",
@@ -44,7 +53,6 @@ const languageStack = [
   "SQL (PostgreSQL • MySQL • SQLite)",
   "HTML/CSS",
   "MongoDB (Mongoose • Express)",
-  "Git",
 ];
 
 const TypewriterText = ({
@@ -110,7 +118,7 @@ const SideNav = () => {
     );
 
     // Observe all sections except contact
-    ["home", "about", "experience", "education", "projects"].forEach(
+    ["home", "about", "skills", "experience", "education", "projects"].forEach(
       (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) observer.observe(element);
@@ -123,6 +131,7 @@ const SideNav = () => {
   const sections = [
     { id: "home", href: "#home" },
     { id: "about", href: "#about" },
+    { id: "skills", href: "#skills" },
     { id: "experience", href: "#experience" },
     { id: "education", href: "#education" },
     { id: "projects", href: "#projects" },
@@ -167,11 +176,19 @@ const SideNav = () => {
 };
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [showArrow, setShowArrow] = useState(true);
   const [fadingOut, setFadingOut] = useState(false);
   const [selectedCourseCategory, setSelectedCourseCategory] = useState<
     "CS" | "ECON"
   >("CS");
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure client-side only rendering for loading animation
+  useEffect(() => {
+    setIsMounted(true);
+    setIsLoading(true);
+  }, []);
 
   // Course data organized by category
   const coursework: Record<
@@ -285,151 +302,34 @@ const Home = () => {
 
   return (
     <main className="min-h-screen bg-michigan-dark text-michigan-white overflow-hidden relative">
-      {/* Static Cyberpunk Circuit Background */}
+      {/* Page Loader with AnimatePresence - only render on client */}
+      <AnimatePresence>
+        {isMounted && isLoading && (
+          <PageLoader onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Enhanced Background Layers */}
       <div className="fixed inset-0 overflow-hidden z-[1]">
-        {/* Main circuit grid */}
+        {/* Static Cyberpunk Circuit Background */}
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,203,5,0.12)_1px,transparent_1px),linear-gradient(0deg,rgba(255,203,5,0.12)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
         {/* Diagonal circuit traces */}
         <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(51,153,255,0.08)_1px,transparent_1px),linear-gradient(-45deg,rgba(51,153,255,0.08)_1px,transparent_1px)] bg-[size:120px_120px]" />
 
-        {/* Circuit nodes and junctions */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-            radial-gradient(circle at 60px 60px, rgba(255,203,5,0.18) 2px, transparent 2px),
-            radial-gradient(circle at 120px 120px, rgba(51,153,255,0.15) 1.5px, transparent 1.5px),
-            radial-gradient(circle at 30px 90px, rgba(255,203,5,0.12) 1px, transparent 1px),
-            radial-gradient(circle at 180px 30px, rgba(51,153,255,0.1) 1px, transparent 1px)
-          `,
-            backgroundSize: "120px 120px, 180px 180px, 90px 90px, 150px 150px",
-          }}
-        />
-
-        {/* Sharp cyberpunk geometric pattern */}
-        <div className="absolute inset-0 opacity-35">
-          {/* Angular circuit boards pattern */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-              url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffcb05' stroke-width='0.5' stroke-opacity='0.15'%3E%3Cpath d='M10 10 L30 10 L35 15 L35 25 L30 30 L50 30 L55 35 L55 45 L50 50 L70 50 L70 70'/%3E%3Cpath d='M50 10 L70 10 L70 30'/%3E%3Cpath d='M10 50 L30 50 L30 70'/%3E%3C/g%3E%3Cg fill='%2333aaff' fill-opacity='0.08'%3E%3Crect x='15' y='15' width='4' height='4'/%3E%3Crect x='45' y='35' width='4' height='4'/%3E%3Crect x='25' y='55' width='4' height='4'/%3E%3C/g%3E%3C/svg%3E")
-            `,
-              backgroundSize: "80px 80px",
-            }}
-          />
-
-          {/* Tech grid overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-              url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2333aaff' stroke-width='0.3' stroke-opacity='0.12'%3E%3Cpath d='M0 20 L40 20 M20 0 L20 40'/%3E%3Cpath d='M10 10 L30 10 L30 30 L10 30 Z'/%3E%3C/g%3E%3Cg fill='%23ffcb05' fill-opacity='0.06'%3E%3Ccircle cx='20' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E")
-            `,
-              backgroundSize: "40px 40px",
-            }}
-          />
-        </div>
-
-        {/* Sharp angular data streams */}
-        <div className="absolute inset-0 opacity-25">
-          {/* Digital data flow lines */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-              repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 20px,
-                rgba(51,153,255,0.15) 21px,
-                rgba(51,153,255,0.25) 22px,
-                rgba(255,203,5,0.12) 23px,
-                transparent 24px,
-                transparent 50px
-              )
-            `,
-            }}
-          />
-
-          {/* Sharp diagonal circuit traces */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-              repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 30px,
-                rgba(255,203,5,0.1) 31px,
-                rgba(255,203,5,0.18) 32px,
-                rgba(51,153,255,0.08) 33px,
-                transparent 34px,
-                transparent 70px
-              ),
-              repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 25px,
-                rgba(51,153,255,0.06) 26px,
-                rgba(51,153,255,0.12) 27px,
-                transparent 28px,
-                transparent 60px
-              )
-            `,
-            }}
-          />
-        </div>
-
-        {/* Sharp matrix-style data points with geometric shapes */}
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(255,203,5,0.2) 1px, transparent 1px),
-            radial-gradient(circle at 75% 75%, rgba(51,153,255,0.18) 1px, transparent 1px),
-            radial-gradient(circle at 50% 10%, rgba(255,203,5,0.12) 0.5px, transparent 0.5px),
-            radial-gradient(circle at 20% 80%, rgba(51,153,255,0.12) 0.5px, transparent 0.5px),
-            radial-gradient(circle at 80% 20%, rgba(255,203,5,0.1) 0.5px, transparent 0.5px),
-            radial-gradient(circle at 10% 50%, rgba(51,153,255,0.1) 0.5px, transparent 0.5px),
-            linear-gradient(45deg, transparent 49%, rgba(255,203,5,0.03) 50%, transparent 51%),
-            linear-gradient(-45deg, transparent 49%, rgba(51,153,255,0.03) 50%, transparent 51%)
-          `,
-            backgroundSize:
-              "80px 80px, 90px 90px, 40px 40px, 35px 35px, 55px 55px, 45px 45px, 120px 120px, 130px 130px",
-          }}
-        />
-
-        {/* Angular geometric accent overlays */}
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-              url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffcb05' stroke-width='0.5' stroke-opacity='0.08'%3E%3Cpolygon points='100,20 180,60 180,140 100,180 20,140 20,60'/%3E%3Cpolygon points='100,40 160,70 160,130 100,160 40,130 40,70'/%3E%3C/g%3E%3Cg fill='none' stroke='%2333aaff' stroke-width='0.3' stroke-opacity='0.06'%3E%3Cpath d='M50 50 L150 50 L175 100 L150 150 L50 150 L25 100 Z'/%3E%3C/g%3E%3C/svg%3E")
-            `,
-              backgroundSize: "200px 200px",
-              backgroundPosition: "25% 25%",
-            }}
-          />
-        </div>
-
-        {/* Static accent glows */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-michigan-maize/6 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/5 w-80 h-80 bg-neon-blue/8 rounded-full blur-3xl" />
-        <div className="absolute top-2/3 right-1/6 w-64 h-64 bg-michigan-maize/4 rounded-full blur-2xl" />
+        {/* Geometric shapes background */}
+        <GeometricBackground density="low" />
 
         {/* Enhanced fade overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-michigan-dark/40 via-michigan-dark/20 to-michigan-dark/60" />
         <div className="absolute inset-0 bg-gradient-to-r from-michigan-dark/30 via-transparent to-michigan-dark/30" />
       </div>
+
+      {/* Interactive Particle System - client-side only */}
+      {isMounted && <ParticleSystem />}
+
       <ScrollProgress />
-
       <Navbar />
-
-      <SideNav />
-
       {/* Rest of the content with adjusted padding for the terminal header */}
       <div className="pt-20 md:pt-24 relative z-[10]">
         {/* Hero Section */}
@@ -452,28 +352,48 @@ const Home = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    &lt; system.init() /&gt;
+                    &lt; npm run dev --port=3000 /&gt;
                   </motion.p>
+
+                  {/* Terminal Container */}
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="relative z-50"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="bg-michigan-dark/95 border border-tech-gray rounded-lg p-4 font-mono backdrop-blur-sm"
                   >
-                    <HeroTypewriter />
+                    <div className="flex items-center gap-2 text-sm text-cyber-white/60 mb-2">
+                      <span className="text-michigan-maize">
+                        hunter@umich-dev
+                      </span>
+                      <span>:~/portfolio$</span>
+                      <span>git log --oneline | head -1</span>
+                    </div>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                      className="relative z-50"
+                    >
+                      <HeroTypewriter />
+                    </motion.div>
                   </motion.div>
+
                   <motion.div
                     className="flex items-center gap-1 text-sm md:text-base font-tech"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
+                    transition={{ delay: 0.6 }}
                   >
                     <span className="text-cyber-white/40">&lt;</span>
-                    <span className="text-neon-blue">id</span>
-                    <span className="text-cyber-white/40">=</span>
-                    <span className="text-michigan-maize">"hunter-001"</span>
-                    <span className="text-cyber-white/40">/</span>
-                    <span className="text-cyber-white/40">&gt;</span>
+                    <span className="text-neon-blue">dev</span>
+                    <span className="text-cyber-white/40"> </span>
+                    <span className="text-cyber-white/40">stack=</span>
+                    <span className="text-michigan-maize">
+                      "react|node|python"
+                    </span>
+                    <span className="text-cyber-white/40"> </span>
+                    <span className="text-cyber-white/40">/&gt;</span>
                   </motion.div>
                 </div>
 
@@ -524,7 +444,7 @@ const Home = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.2 }}
                   >
-                    <LastCommit />
+                    {isMounted && <LastCommit />}
                   </motion.div>
                 </motion.div>
               </motion.div>
@@ -543,7 +463,7 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
           >
-            <CypherText />
+            {isMounted && <CypherText />}
           </motion.div>
 
           {/* Scroll Indicator */}
@@ -575,95 +495,69 @@ const Home = () => {
               <h2 className="text-4xl font-display text-michigan-maize">
                 / about me
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-6">
-                  <p className="text-cyber-white/80 text-base">
-                    Hey, I'm <span className="text-neon-blue">Hunter</span> — a
-                    passionate developer who loves building innovative
-                    solutions. I'm a CS and Econ major at the University of
-                    Michigan and most days you'll find me coding, tinkering with
-                    side projects, and diving into something that piques my
-                    interest in tech. I thrive on challenges and enjoy creating
-                    software that makes a difference. Whether it's a web app, a
-                    machine learning model, or a complex algorithm, I'm always
-                    eager to learn and grow in my craft.
-                    <span className="text-neon-blue"> </span>
-                  </p>
+              <div className="space-y-6 max-w-none">
+                <p className="text-cyber-white/80 text-base leading-relaxed">
+                  Hey, I'm <span className="text-neon-blue">Hunter</span> — a
+                  passionate developer who loves building innovative solutions.
+                  I'm a CS and Econ major at the University of Michigan and most
+                  days you'll find me coding, tinkering with side projects, and
+                  diving into something that piques my interest in tech. I
+                  thrive on challenges and enjoy creating software that makes a
+                  difference. Whether it's a web app, a machine learning model,
+                  or a complex algorithm, I'm always eager to learn and grow in
+                  my craft.
+                </p>
 
-                  <p className="text-cyber-white/80 text-base">
-                    I'm interested in{" "}
-                    <span className="text-neon-blue">
-                      full-stack development
-                    </span>
-                    , AI, computing hardware, and leveraging them to create user
-                    experiences that matter. I enjoy working on projects that
-                    combine <em>creativity</em> and <em>purpose</em> with{" "}
-                    <em>technical rigor</em>, and I'm always searching for new
-                    challenges.
-                  </p>
+                <p className="text-cyber-white/80 text-base leading-relaxed">
+                  I'm interested in{" "}
+                  <span className="text-neon-blue">full-stack development</span>
+                  , AI, computing hardware, and leveraging them to create user
+                  experiences that matter. I enjoy working on projects that
+                  combine <em>creativity</em> and <em>purpose</em> with{" "}
+                  <em>technical rigor</em>, and I'm always searching for new
+                  challenges.
+                </p>
 
-                  <p className="text-cyber-white/80 text-base">
-                    When I'm not coding, you can find me backpacking in
-                    Washington, singing and playing the guitar, struggling to
-                    learn how to love running, or constantly tweaking my golf
-                    swing. There's always a new challenge calling and a vision
-                    waiting to become reality. Want to build something amazing
-                    together?{" "}
-                    <a
-                      href="/socials"
-                      className="text-neon-blue hover:text-michigan-maize transition-colors hover:no-underline"
-                    >
-                      Lets connect!
-                    </a>
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-tech text-michigan-maize mb-4">
-                    Technologies
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="text-neon-blue mb-2">Focus Areas</h4>
-                      <ul className="space-y-2">
-                        {techStack.map((tech, i) => (
-                          <motion.li
-                            key={tech}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="flex items-start gap-2 text-cyber-white/70"
-                          >
-                            <CircleStackIcon className="w-4 h-4 text-michigan-maize flex-shrink-0 mt-0.5" />
-                            <span>{tech}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="text-neon-blue mb-2">Languages</h4>
-                      <ul className="space-y-2">
-                        {languageStack.map((lang, i) => (
-                          <motion.li
-                            key={lang}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="flex items-start gap-2 text-cyber-white/70"
-                          >
-                            <CodeBracketIcon className="w-4 h-4 text-michigan-maize flex-shrink-0 mt-0.5" />
-                            <span>{lang}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <p className="text-cyber-white/80 text-base leading-relaxed">
+                  When I'm not coding, you can find me backpacking in
+                  Washington, singing and playing the guitar, struggling to
+                  learn how to love running, or constantly tweaking my golf
+                  swing. There's always a new challenge calling and a vision
+                  waiting to become reality. Want to build something amazing
+                  together?{" "}
+                  <a
+                    href="/socials"
+                    className="text-neon-blue hover:text-michigan-maize transition-colors hover:no-underline"
+                  >
+                    Lets connect!
+                  </a>
+                </p>
               </div>
 
               {/* Personal Photos Slideshow */}
               <div className="mt-12">
                 <AboutSlideshow />
               </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section
+          id="skills"
+          className="min-h-screen flex items-center relative px-8 py-20"
+        >
+          <div className="max-w-6xl mx-auto w-full">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <h2 className="text-4xl font-display text-michigan-maize">
+                / technologies & skills
+              </h2>
+              <SkillsConstellation />
             </motion.div>
           </div>
         </section>
@@ -706,89 +600,91 @@ const Home = () => {
 
               <div className="space-y-8">
                 {/* University */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-michigan-light/20 border border-michigan-blue/20 rounded-sm p-6 hover:border-michigan-maize/30 transition-colors"
-                >
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                    <div>
-                      <h3 className="text-xl font-cyber text-cyber-white mb-1">
-                        University of Michigan
-                      </h3>
-                      <p className="text-neon-blue font-tech">
-                        Bachelor of Science in Computer Science and Economics
-                      </p>
-                    </div>
-                    <span className="text-michigan-maize font-tech text-sm mt-2 md:mt-0">
-                      August 2023 - December 2026
-                    </span>
-                  </div>
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-neon-blue font-tech">
-                        Relevant Coursework
-                      </h4>
-                      <div className="flex gap-2">
-                        <motion.button
-                          onClick={() => setSelectedCourseCategory("CS")}
-                          className={`px-3 py-1 font-tech text-sm border transition-all ${
-                            selectedCourseCategory === "CS"
-                              ? "border-michigan-maize text-michigan-maize bg-michigan-maize/10"
-                              : "border-cyber-white/20 text-cyber-white/60 hover:border-michigan-maize/50"
-                          }`}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          Computer Science
-                        </motion.button>
-                        <motion.button
-                          onClick={() => setSelectedCourseCategory("ECON")}
-                          className={`px-3 py-1 font-tech text-sm border transition-all ${
-                            selectedCourseCategory === "ECON"
-                              ? "border-michigan-maize text-michigan-maize bg-michigan-maize/10"
-                              : "border-cyber-white/20 text-cyber-white/60 hover:border-michigan-maize/50"
-                          }`}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          Economics
-                        </motion.button>
+                <GlitchCard glitchIntensity="low">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-michigan-light/20 border border-michigan-blue/20 rounded-sm p-6 hover:border-michigan-maize/30 transition-colors"
+                  >
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                      <div>
+                        <h3 className="text-xl font-cyber text-cyber-white mb-1">
+                          University of Michigan
+                        </h3>
+                        <p className="text-neon-blue font-tech">
+                          Bachelor of Science in Computer Science and Economics
+                        </p>
                       </div>
+                      <span className="text-michigan-maize font-tech text-sm mt-2 md:mt-0">
+                        August 2023 - December 2026
+                      </span>
                     </div>
-                    <motion.div
-                      key={selectedCourseCategory}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="grid grid-cols-2 md:grid-cols-3 gap-3"
-                    >
-                      {coursework[selectedCourseCategory].map(
-                        (course, index) => (
-                          <motion.a
-                            key={course.number}
-                            href={course.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            className="bg-michigan-blue/20 border border-michigan-maize/20 rounded-sm p-3 hover:border-michigan-maize/50 hover:bg-michigan-maize/10 transition-all cursor-pointer group"
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-neon-blue font-tech">
+                          Relevant Coursework
+                        </h4>
+                        <div className="flex gap-2">
+                          <motion.button
+                            onClick={() => setSelectedCourseCategory("CS")}
+                            className={`px-3 py-1 font-tech text-sm border transition-all ${
+                              selectedCourseCategory === "CS"
+                                ? "border-michigan-maize text-michigan-maize bg-michigan-maize/10"
+                                : "border-cyber-white/20 text-cyber-white/60 hover:border-michigan-maize/50"
+                            }`}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                           >
-                            <div className="text-michigan-maize font-tech text-sm mb-1 group-hover:text-michigan-maize-light transition-colors">
-                              {course.number}
-                            </div>
-                            <div className="text-cyber-white/80 text-sm leading-tight group-hover:text-cyber-white transition-colors">
-                              {course.name}
-                            </div>
-                          </motion.a>
-                        )
-                      )}
-                    </motion.div>
-                  </div>
-                </motion.div>
+                            Computer Science
+                          </motion.button>
+                          <motion.button
+                            onClick={() => setSelectedCourseCategory("ECON")}
+                            className={`px-3 py-1 font-tech text-sm border transition-all ${
+                              selectedCourseCategory === "ECON"
+                                ? "border-michigan-maize text-michigan-maize bg-michigan-maize/10"
+                                : "border-cyber-white/20 text-cyber-white/60 hover:border-michigan-maize/50"
+                            }`}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            Economics
+                          </motion.button>
+                        </div>
+                      </div>
+                      <motion.div
+                        key={selectedCourseCategory}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="grid grid-cols-2 md:grid-cols-3 gap-3"
+                      >
+                        {coursework[selectedCourseCategory].map(
+                          (course, index) => (
+                            <motion.a
+                              key={course.number}
+                              href={course.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: index * 0.1 }}
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              className="bg-michigan-blue/20 border border-michigan-maize/20 rounded-sm p-3 hover:border-michigan-maize/50 hover:bg-michigan-maize/10 transition-all cursor-pointer group"
+                            >
+                              <div className="text-michigan-maize font-tech text-sm mb-1 group-hover:text-michigan-maize-light transition-colors">
+                                {course.number}
+                              </div>
+                              <div className="text-cyber-white/80 text-sm leading-tight group-hover:text-cyber-white transition-colors">
+                                {course.name}
+                              </div>
+                            </motion.a>
+                          )
+                        )}
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </GlitchCard>
 
                 {/* Academic Projects */}
                 <motion.div
@@ -902,21 +798,31 @@ const Home = () => {
       >
         <motion.a
           href="/socials"
-          className="py-3 px-6 bg-neon-blue/10 border border-neon-blue/30 rounded-sm text-neon-blue font-tech items-center gap-3 hover:bg-neon-blue/20 transition-colors flex"
-          whileHover={{ scale: 1.05 }}
+          className="py-3 px-6 bg-neon-blue/10 border border-neon-blue/30 rounded-sm text-neon-blue font-tech items-center gap-3 hover:bg-neon-blue/20 hover:border-neon-blue/60 hover:shadow-[0_0_20px_rgba(51,153,255,0.3)] transition-all duration-300 flex group"
+          whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
         >
           <div className="flex items-center gap-3">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
             </svg>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
             </svg>
-            <EnvelopeIcon className="w-5 h-5" />
-            <ChatBubbleLeftRightIcon className="w-5 h-5" />
+            <EnvelopeIcon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+            <ChatBubbleLeftRightIcon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
           </div>
-          <span className="ml-2">Get in Touch →</span>
+          <span className="ml-2 group-hover:text-michigan-maize transition-colors duration-300">
+            Get in Touch →
+          </span>
         </motion.a>
       </motion.div>
     </main>
