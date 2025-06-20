@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "deploy": "npm run export && touch out/.nojekyll && git add -f out/ && git commit -m \"Deploy to gh-pages\" && git subtree push --prefix out hunters-website-2025 gh-pages"
+    "deploy": "npm run export && cp CNAME out/ && touch out/.nojekyll && git add -f out/ && git commit -m \"Deploy to gh-pages\" && git subtree push --prefix out hunters-website-2025 gh-pages"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
