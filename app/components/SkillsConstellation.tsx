@@ -423,39 +423,42 @@ const SkillsConstellation = () => {
   // Mobile-specific coordinates for better spacing on narrow screens
   const getMobileCoordinates = (skillId: string): { x: number; y: number } => {
     const mobileCoords: Record<string, { x: number; y: number }> = {
-      // First column - Languages (much more vertical spacing)
-      js: { x: 15, y: 5 },
-      python: { x: 15, y: 35 },
-      ts: { x: 15, y: 65 },
-      cpp: { x: 15, y: 95 },
-      C: { x: 15, y: 125 },
-      java: { x: 15, y: 155 },
+      // Mobile Layout - 3 column design with tighter vertical spacing
+      // Reduced spacing to 10-12 units between nodes to fit mobile viewport
 
-      // Second column - Major Frameworks (much more vertical spacing)
-      react: { x: 50, y: 15 },
-      node: { x: 50, y: 45 },
-      express: { x: 50, y: 75 },
-      vue: { x: 50, y: 105 },
-      pytorch: { x: 50, y: 135 },
-      fastapi: { x: 50, y: 165 },
+      // First column - Languages
+      js: { x: 15, y: 6 },
+      python: { x: 15, y: 18 },
+      ts: { x: 15, y: 30 },
+      cpp: { x: 15, y: 42 },
+      C: { x: 15, y: 54 },
+      java: { x: 15, y: 66 },
 
-      // Third column - Tools & Libraries (much more vertical spacing)
-      tailwind: { x: 85, y: 5 },
-      git: { x: 85, y: 35 },
-      mongodb: { x: 85, y: 65 },
-      pandas: { x: 85, y: 95 },
-      numpy: { x: 85, y: 125 },
-      pyvisa: { x: 85, y: 155 },
+      // Second column - Major Frameworks (center column)
+      react: { x: 50, y: 8 },
+      node: { x: 50, y: 20 },
+      express: { x: 50, y: 32 },
+      vue: { x: 50, y: 44 },
+      pytorch: { x: 50, y: 56 },
+      fastapi: { x: 50, y: 68 },
 
-      // Fourth row - Additional tools (much more spaced out)
-      docker: { x: 15, y: 185 },
-      github: { x: 50, y: 195 },
-      vuetify: { x: 85, y: 185 },
+      // Third column - Tools & Libraries (right column)
+      tailwind: { x: 85, y: 6 },
+      git: { x: 85, y: 18 },
+      mongodb: { x: 85, y: 30 },
+      pandas: { x: 85, y: 42 },
+      numpy: { x: 85, y: 54 },
+      pyvisa: { x: 85, y: 66 },
 
-      // Fifth row - Concepts (bottom with much more spacing)
-      pytest: { x: 15, y: 215 },
-      ai: { x: 50, y: 225 },
-      embedded: { x: 85, y: 215 },
+      // Bottom section - Additional tools (spread across full width)
+      docker: { x: 15, y: 78 },
+      github: { x: 50, y: 80 },
+      vuetify: { x: 85, y: 78 },
+
+      // Final section - Concepts (bottom row)
+      pytest: { x: 15, y: 90 },
+      ai: { x: 50, y: 92 },
+      embedded: { x: 85, y: 90 },
     };
 
     return mobileCoords[skillId] || { x: 50, y: 50 };
@@ -468,7 +471,7 @@ const SkillsConstellation = () => {
       const mobileCoords = getMobileCoordinates(skill.id);
       return {
         x: (mobileCoords.x / 100) * 1200,
-        y: (mobileCoords.y / 100) * 2500, // Use 2500 height for mobile viewBox with much more spacing
+        y: (mobileCoords.y / 100) * 1200, // Reduced from 1600 to 1200 for tighter spacing
       };
     } else {
       // Use original desktop coordinates
@@ -506,7 +509,7 @@ const SkillsConstellation = () => {
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[100vh] md:min-h-[80vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
+      <div className="relative w-full min-h-[80vh] md:min-h-[80vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
         <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-5 md:pt-5 pb-6 md:pb-8 px-3 md:px-4">
           Hover or click nodes to explore my skills and their connections!
         </p>
@@ -751,14 +754,14 @@ const SkillsConstellation = () => {
         <svg
           viewBox={
             typeof window !== "undefined" && window.innerWidth < 768
-              ? "0 0 1200 2500" // Much taller viewBox for mobile with greatly increased spacing
+              ? "0 0 1200 1200" // Reduced viewBox for mobile with tighter spacing
               : "0 0 1200 1000" // Standard viewBox for desktop
           }
           className="w-full h-full absolute top-6 md:top-8 inset-x-0 bottom-0"
           style={{
             minHeight:
               typeof window !== "undefined" && window.innerWidth < 768
-                ? "1000px" // Much increased height for mobile with greatly increased spacing
+                ? "600px" // Reduced height for mobile with tighter spacing
                 : "400px",
           }}
           onClick={(e) => {
