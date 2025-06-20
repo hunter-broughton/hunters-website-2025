@@ -423,39 +423,39 @@ const SkillsConstellation = () => {
   // Mobile-specific coordinates for better spacing on narrow screens
   const getMobileCoordinates = (skillId: string): { x: number; y: number } => {
     const mobileCoords: Record<string, { x: number; y: number }> = {
-      // First column - Languages (spread out more vertically)
+      // First column - Languages (doubled vertical spacing)
       js: { x: 15, y: 5 },
-      python: { x: 15, y: 15 },
-      ts: { x: 15, y: 25 },
-      cpp: { x: 15, y: 35 },
-      C: { x: 15, y: 45 },
-      java: { x: 15, y: 55 },
+      python: { x: 15, y: 25 },
+      ts: { x: 15, y: 45 },
+      cpp: { x: 15, y: 65 },
+      C: { x: 15, y: 85 },
+      java: { x: 15, y: 105 },
 
-      // Second column - Major Frameworks (better vertical distribution)
-      react: { x: 50, y: 8 },
-      node: { x: 50, y: 18 },
-      express: { x: 50, y: 28 },
-      vue: { x: 50, y: 38 },
-      pytorch: { x: 50, y: 48 },
-      fastapi: { x: 50, y: 58 },
+      // Second column - Major Frameworks (doubled vertical spacing)
+      react: { x: 50, y: 10 },
+      node: { x: 50, y: 30 },
+      express: { x: 50, y: 50 },
+      vue: { x: 50, y: 70 },
+      pytorch: { x: 50, y: 90 },
+      fastapi: { x: 50, y: 110 },
 
-      // Third column - Tools & Libraries (spread out)
+      // Third column - Tools & Libraries (doubled vertical spacing)
       tailwind: { x: 85, y: 5 },
-      git: { x: 85, y: 15 },
-      mongodb: { x: 85, y: 25 },
-      pandas: { x: 85, y: 35 },
-      numpy: { x: 85, y: 45 },
-      pyvisa: { x: 85, y: 55 },
+      git: { x: 85, y: 25 },
+      mongodb: { x: 85, y: 45 },
+      pandas: { x: 85, y: 65 },
+      numpy: { x: 85, y: 85 },
+      pyvisa: { x: 85, y: 105 },
 
-      // Fourth row - Additional tools (more space)
-      docker: { x: 15, y: 65 },
-      github: { x: 50, y: 68 },
-      vuetify: { x: 85, y: 65 },
+      // Fourth row - Additional tools (more spaced out)
+      docker: { x: 15, y: 125 },
+      github: { x: 50, y: 130 },
+      vuetify: { x: 85, y: 125 },
 
-      // Fifth row - Concepts (bottom)
-      pytest: { x: 15, y: 75 },
-      ai: { x: 50, y: 78 },
-      embedded: { x: 85, y: 75 },
+      // Fifth row - Concepts (bottom with more spacing)
+      pytest: { x: 15, y: 145 },
+      ai: { x: 50, y: 150 },
+      embedded: { x: 85, y: 145 },
     };
 
     return mobileCoords[skillId] || { x: 50, y: 50 };
@@ -468,7 +468,7 @@ const SkillsConstellation = () => {
       const mobileCoords = getMobileCoordinates(skill.id);
       return {
         x: (mobileCoords.x / 100) * 1200,
-        y: (mobileCoords.y / 100) * 1200, // Use 1200 height for mobile viewBox
+        y: (mobileCoords.y / 100) * 1800, // Use 1800 height for mobile viewBox with doubled spacing
       };
     } else {
       // Use original desktop coordinates
@@ -751,14 +751,14 @@ const SkillsConstellation = () => {
         <svg
           viewBox={
             typeof window !== "undefined" && window.innerWidth < 768
-              ? "0 0 1200 1200" // Taller viewBox for mobile
+              ? "0 0 1200 1800" // Much taller viewBox for mobile with doubled spacing
               : "0 0 1200 1000" // Standard viewBox for desktop
           }
           className="w-full h-full absolute top-6 md:top-8 inset-x-0 bottom-0"
           style={{
             minHeight:
               typeof window !== "undefined" && window.innerWidth < 768
-                ? "600px"
+                ? "800px" // Increased height for mobile with doubled spacing
                 : "400px",
           }}
           onClick={(e) => {
