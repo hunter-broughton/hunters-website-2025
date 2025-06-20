@@ -420,6 +420,65 @@ const SkillsConstellation = () => {
     };
   };
 
+  // Mobile-specific coordinates for better spacing on narrow screens
+  const getMobileCoordinates = (skillId: string): { x: number; y: number } => {
+    const mobileCoords: Record<string, { x: number; y: number }> = {
+      // First column - Languages (spread out more vertically)
+      js: { x: 15, y: 5 },
+      python: { x: 15, y: 15 },
+      ts: { x: 15, y: 25 },
+      cpp: { x: 15, y: 35 },
+      C: { x: 15, y: 45 },
+      java: { x: 15, y: 55 },
+
+      // Second column - Major Frameworks (better vertical distribution)
+      react: { x: 50, y: 8 },
+      node: { x: 50, y: 18 },
+      express: { x: 50, y: 28 },
+      vue: { x: 50, y: 38 },
+      pytorch: { x: 50, y: 48 },
+      fastapi: { x: 50, y: 58 },
+
+      // Third column - Tools & Libraries (spread out)
+      tailwind: { x: 85, y: 5 },
+      git: { x: 85, y: 15 },
+      mongodb: { x: 85, y: 25 },
+      pandas: { x: 85, y: 35 },
+      numpy: { x: 85, y: 45 },
+      pyvisa: { x: 85, y: 55 },
+
+      // Fourth row - Additional tools (more space)
+      docker: { x: 15, y: 65 },
+      github: { x: 50, y: 68 },
+      vuetify: { x: 85, y: 65 },
+
+      // Fifth row - Concepts (bottom)
+      pytest: { x: 15, y: 75 },
+      ai: { x: 50, y: 78 },
+      embedded: { x: 85, y: 75 },
+    };
+
+    return mobileCoords[skillId] || { x: 50, y: 50 };
+  };
+
+  const getNodePosition = (skill: SkillNode) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+    if (isMobile) {
+      const mobileCoords = getMobileCoordinates(skill.id);
+      return {
+        x: (mobileCoords.x / 100) * 1200,
+        y: (mobileCoords.y / 100) * 1200, // Use 1200 height for mobile viewBox
+      };
+    } else {
+      // Use original desktop coordinates
+      return {
+        x: (skill.x / 100) * 1200,
+        y: (skill.y / 100) * 1000,
+      };
+    }
+  };
+
   const isConnected = (skill1: string, skill2: string) => {
     const s1 = skills.find((s) => s.id === skill1);
     const s2 = skills.find((s) => s.id === skill2);
@@ -447,7 +506,7 @@ const SkillsConstellation = () => {
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[80vh] md:min-h-[80vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
+      <div className="relative w-full min-h-[100vh] md:min-h-[80vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg overflow-hidden backdrop-blur-sm">
         <p className="text-cyber-white/70 font-tech text-sm md:text-lg text-center pt-5 md:pt-5 pb-6 md:pb-8 px-3 md:px-4">
           Hover or click nodes to explore my skills and their connections!
         </p>
@@ -690,9 +749,18 @@ const SkillsConstellation = () => {
 
         {/* SVG Constellation - Responsive Scale */}
         <svg
-          viewBox="0 0 1200 1000"
+          viewBox={
+            typeof window !== "undefined" && window.innerWidth < 768
+              ? "0 0 1200 1200" // Taller viewBox for mobile
+              : "0 0 1200 1000" // Standard viewBox for desktop
+          }
           className="w-full h-full absolute top-6 md:top-8 inset-x-0 bottom-0"
-          style={{ minHeight: "400px" }}
+          style={{
+            minHeight:
+              typeof window !== "undefined" && window.innerWidth < 768
+                ? "600px"
+                : "400px",
+          }}
           onClick={(e) => {
             // Clear selection when clicking on empty SVG area
             if (e.target === e.currentTarget) {
@@ -707,10 +775,12 @@ const SkillsConstellation = () => {
                 const connectedSkill = skills.find((s) => s.id === connId);
                 if (!connectedSkill) return null;
 
-                const x1 = (skill.x / 100) * 1200;
-                const y1 = (skill.y / 100) * 1000;
-                const x2 = (connectedSkill.x / 100) * 1200;
-                const y2 = (connectedSkill.y / 100) * 1000;
+                const pos1 = getNodePosition(skill);
+                const pos2 = getNodePosition(connectedSkill);
+                const x1 = pos1.x;
+                const y1 = pos1.y;
+                const x2 = pos2.x;
+                const y2 = pos2.y;
 
                 const isHighlighted = shouldHighlightConnection(
                   skill.id,
@@ -744,8 +814,9 @@ const SkillsConstellation = () => {
           {/* Skill nodes */}
           <g>
             {skills.map((skill, index) => {
-              const centerX = (skill.x / 100) * 1200;
-              const centerY = (skill.y / 100) * 1000;
+              const position = getNodePosition(skill);
+              const centerX = position.x;
+              const centerY = position.y;
               const dimensions = getNodeDimensions(skill);
               const isHovered = hoveredSkill === skill.id;
               const isSelected = selectedSkill === skill.id;
