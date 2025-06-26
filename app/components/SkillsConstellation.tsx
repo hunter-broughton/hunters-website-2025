@@ -2,6 +2,30 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  SiJavascript,
+  SiPython,
+  SiTypescript,
+  SiCplusplus,
+  SiC,
+  SiVuedotjs,
+  SiReact,
+  SiNodedotjs,
+  SiExpress,
+  SiPytorch,
+  SiTailwindcss,
+  SiGit,
+  SiMongodb,
+  SiPandas,
+  SiNumpy,
+  SiFastapi,
+  SiVuetify,
+  SiPytest,
+  SiDocker,
+  SiGithub,
+} from "react-icons/si";
+import { FaJava, FaRobot } from "react-icons/fa";
+import { TbDeviceDesktopAnalytics } from "react-icons/tb";
 
 interface SkillNode {
   id: string;
@@ -21,6 +45,7 @@ interface SkillNode {
 const SkillsConstellation = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<"constellation" | "list">("list");
   const [algorithmState, setAlgorithmState] = useState<{
     isRunning: boolean;
     type: "prim" | "kruskal" | null;
@@ -116,7 +141,7 @@ const SkillsConstellation = () => {
       category: "language",
       x: 80,
       y: 8,
-      connections: ["C", "embedded"],
+      connections: ["C"],
       usedIn: {
         projects: [],
         jobs: ["Credo Semiconductor", "SparkRacing"],
@@ -132,7 +157,7 @@ const SkillsConstellation = () => {
       category: "language",
       x: 12,
       y: 28,
-      connections: ["cpp", "embedded"],
+      connections: ["cpp"],
       usedIn: {
         projects: [],
         jobs: ["Credo Semiconductor", "SparkRacing"],
@@ -397,20 +422,6 @@ const SkillsConstellation = () => {
         classes: ["EECS 492", "EECS 298"],
       },
     },
-    {
-      id: "embedded",
-      name: "Embedded Systems",
-      level: 75,
-      category: "concept",
-      x: 5,
-      y: 75,
-      connections: ["cpp", "C"],
-      usedIn: {
-        projects: [],
-        jobs: ["Credo Semiconductor", "SparkRacing"],
-        classes: [],
-      },
-    },
   ];
 
   const categoryColors = {
@@ -419,6 +430,189 @@ const SkillsConstellation = () => {
     tool: "#00FF94",
     concept: "#FF6B9D",
   };
+
+  // Skill icons mapping
+  const getSkillIcon = (skillId: string) => {
+    const iconProps = { size: 24, className: "text-current" };
+
+    switch (skillId) {
+      case "js":
+        return <SiJavascript {...iconProps} className="text-yellow-400" />;
+      case "python":
+        return <SiPython {...iconProps} className="text-blue-400" />;
+      case "ts":
+        return <SiTypescript {...iconProps} className="text-blue-600" />;
+      case "cpp":
+        return <SiCplusplus {...iconProps} className="text-blue-500" />;
+      case "C":
+        return <SiC {...iconProps} className="text-blue-600" />;
+      case "java":
+        return <FaJava {...iconProps} className="text-red-500" />;
+      case "vue":
+        return <SiVuedotjs {...iconProps} className="text-green-500" />;
+      case "pyvisa":
+        return (
+          <TbDeviceDesktopAnalytics
+            {...iconProps}
+            className="text-purple-400"
+          />
+        );
+      case "react":
+        return <SiReact {...iconProps} className="text-cyan-400" />;
+      case "node":
+        return <SiNodedotjs {...iconProps} className="text-green-500" />;
+      case "express":
+        return <SiExpress {...iconProps} className="text-gray-300" />;
+      case "pytorch":
+        return <SiPytorch {...iconProps} className="text-orange-500" />;
+      case "tailwind":
+        return <SiTailwindcss {...iconProps} className="text-teal-400" />;
+      case "git":
+        return <SiGit {...iconProps} className="text-orange-600" />;
+      case "mongodb":
+        return <SiMongodb {...iconProps} className="text-green-600" />;
+      case "pandas":
+        return <SiPandas {...iconProps} className="text-blue-300" />;
+      case "numpy":
+        return <SiNumpy {...iconProps} className="text-blue-500" />;
+      case "fastapi":
+        return <SiFastapi {...iconProps} className="text-green-400" />;
+      case "vuetify":
+        return <SiVuetify {...iconProps} className="text-blue-400" />;
+      case "pytest":
+        return <SiPytest {...iconProps} className="text-yellow-500" />;
+      case "docker":
+        return <SiDocker {...iconProps} className="text-blue-400" />;
+      case "github":
+        return <SiGithub {...iconProps} className="text-gray-300" />;
+      case "ai":
+        return <FaRobot {...iconProps} className="text-purple-500" />;
+      default:
+        return <SiJavascript {...iconProps} className="text-gray-400" />;
+    }
+  };
+
+  // Group skills by category for list view
+  const groupedSkills = skills.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {} as Record<string, SkillNode[]>);
+
+  // Sort skills within each category alphabetically
+  Object.keys(groupedSkills).forEach((category) => {
+    groupedSkills[category].sort((a, b) => a.name.localeCompare(b.name));
+  });
+
+  const renderListView = () => (
+    <div className="space-y-8">
+      {Object.entries(groupedSkills).map(([category, categorySkills]) => (
+        <div key={category} className="space-y-4">
+          <h3
+            className="text-xl md:text-2xl font-tech font-bold capitalize flex items-center gap-3"
+            style={{
+              color: categoryColors[category as keyof typeof categoryColors],
+            }}
+          >
+            <div
+              className="w-4 h-4 rounded-full"
+              style={{
+                backgroundColor:
+                  categoryColors[category as keyof typeof categoryColors],
+              }}
+            />
+            {category}s
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {categorySkills.map((skill) => (
+              <motion.div
+                key={skill.id}
+                className="group relative bg-cyber-black/50 border border-cyber-white/20 rounded-lg p-4 hover:border-neon-blue/50 transition-all duration-300 cursor-pointer backdrop-blur-sm"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() =>
+                  setSelectedSkill(selectedSkill === skill.id ? null : skill.id)
+                }
+                onMouseEnter={() => setHoveredSkill(skill.id)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                {/* Skill Header */}
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="text-2xl">{getSkillIcon(skill.id)}</div>
+                  <div className="flex-1">
+                    <h4 className="text-cyber-white font-tech font-semibold text-lg group-hover:text-neon-blue transition-colors">
+                      {skill.name}
+                    </h4>
+                  </div>
+                </div>
+
+                {/* Quick Stats */}
+                <div className="flex gap-2 text-xs">
+                  {skill.usedIn.projects &&
+                    skill.usedIn.projects.length > 0 && (
+                      <span className="px-2 py-1 bg-michigan-maize/20 text-michigan-maize rounded font-tech">
+                        {skill.usedIn.projects.length} Projects
+                      </span>
+                    )}
+                  {skill.usedIn.jobs && skill.usedIn.jobs.length > 0 && (
+                    <span className="px-2 py-1 bg-cyber-green/20 text-cyber-green rounded font-tech">
+                      {skill.usedIn.jobs.length} Jobs
+                    </span>
+                  )}
+                  {skill.usedIn.classes && skill.usedIn.classes.length > 0 && (
+                    <span className="px-2 py-1 bg-neon-blue/20 text-neon-blue rounded font-tech">
+                      {skill.usedIn.classes.length} Courses
+                    </span>
+                  )}
+                </div>
+
+                {/* Connections indicator */}
+                {skill.connections.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-cyber-white/10">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-cyber-white/60 font-tech">
+                        Connected to:
+                      </span>
+                      <div className="flex gap-1">
+                        {skill.connections.slice(0, 3).map((connId) => {
+                          const connectedSkill = skills.find(
+                            (s) => s.id === connId
+                          );
+                          return connectedSkill ? (
+                            <span key={connId} className="text-xs">
+                              {getSkillIcon(connId)}
+                            </span>
+                          ) : null;
+                        })}
+                        {skill.connections.length > 3 && (
+                          <span className="text-xs text-cyber-white/40">
+                            +{skill.connections.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Hover effect glow */}
+                <div
+                  className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background: `linear-gradient(45deg, ${
+                      categoryColors[skill.category]
+                    }22, transparent)`,
+                  }}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   const getNodeDimensions = (skill: SkillNode) => {
     const textLength = skill.name.length;
@@ -473,7 +667,6 @@ const SkillsConstellation = () => {
       // Final section - Concepts (bottom row)
       pytest: { x: 15, y: 90 },
       ai: { x: 50, y: 92 },
-      embedded: { x: 85, y: 90 },
     };
 
     return mobileCoords[skillId] || { x: 50, y: 50 };
@@ -750,83 +943,116 @@ const SkillsConstellation = () => {
 
   return (
     <div className="w-full space-y-8" ref={containerRef}>
-      {/* Main Skills Constellation Component - Full Section Size */}
-      <div className="relative w-full min-h-[98vh] md:min-h-[98vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg backdrop-blur-sm">
-        {/* Header with Title and Algorithm Controls */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-6 border-b border-neon-blue/20 relative z-10">
-          <div className="mb-4 md:mb-0">
+      {/* Main Skills Constellation Component - Adjusted for better mobile view */}
+      <div className="relative w-full min-h-[85vh] bg-gradient-to-br from-cyber-black via-cyber-black/90 to-cyber-black/80 border border-neon-blue/30 rounded-lg backdrop-blur-sm">
+        {/* Header with Title and Controls */}
+        <div className="flex flex-col space-y-3 md:space-y-4 p-3 md:p-6 border-b border-neon-blue/20 relative z-10">
+          {/* Title and Description */}
+          <div>
             <h2 className="text-cyber-white font-tech text-xl md:text-2xl font-bold mb-2">
-              Skills Constellation
+              Skills & Technologies
             </h2>
             <p className="text-cyber-white/70 font-tech text-sm md:text-base">
-              Hover or click nodes to explore my skills and their connections!
+              {viewMode === "constellation"
+                ? "Hover or click nodes to explore my skills and their connections!"
+                : "Click on any skill card to see detailed information and connections!"}
             </p>
           </div>
 
-          {/* Algorithm Control Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 relative z-20">
+          {/* View Toggle and Algorithm Controls */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            {/* View Mode Toggle */}
             <div className="flex gap-2">
               <button
-                onClick={runPrimAlgorithm}
-                disabled={algorithmState.isRunning}
-                className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border relative z-30 ${
-                  algorithmState.isRunning
-                    ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
-                    : algorithmState.type === "prim"
-                    ? "bg-michigan-maize/20 border-michigan-maize text-michigan-maize hover:bg-michigan-maize/30"
-                    : "bg-neon-blue/20 border-neon-blue text-neon-blue hover:bg-neon-blue/30 hover:border-neon-blue/80"
+                onClick={() => setViewMode("constellation")}
+                className={`px-4 py-2 rounded-lg font-tech text-sm font-semibold transition-all duration-300 border ${
+                  viewMode === "constellation"
+                    ? "bg-neon-blue/20 border-neon-blue text-neon-blue"
+                    : "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/70 hover:bg-cyber-white/20"
                 }`}
               >
-                {algorithmState.isRunning && algorithmState.type === "prim" ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 border-2 border-michigan-maize border-t-transparent rounded-full animate-spin"></div>
-                    Prim's
-                  </div>
-                ) : (
-                  "Prim's MST"
-                )}
+                🌌 Constellation
               </button>
-
               <button
-                onClick={runKruskalAlgorithm}
-                disabled={algorithmState.isRunning}
-                className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border relative z-30 ${
-                  algorithmState.isRunning
-                    ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
-                    : algorithmState.type === "kruskal"
-                    ? "bg-cyber-green/20 border-cyber-green text-cyber-green hover:bg-cyber-green/30"
-                    : "bg-neon-purple/20 border-neon-purple text-neon-purple hover:bg-neon-purple/30 hover:border-neon-purple/80"
+                onClick={() => setViewMode("list")}
+                className={`px-4 py-2 rounded-lg font-tech text-sm font-semibold transition-all duration-300 border ${
+                  viewMode === "list"
+                    ? "bg-neon-blue/20 border-neon-blue text-neon-blue"
+                    : "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/70 hover:bg-cyber-white/20"
                 }`}
               >
-                {algorithmState.isRunning &&
-                algorithmState.type === "kruskal" ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 border-2 border-cyber-green border-t-transparent rounded-full animate-spin"></div>
-                    Kruskal's
-                  </div>
-                ) : (
-                  "Kruskal's MST"
-                )}
+                📋 List View
               </button>
             </div>
 
-            <button
-              onClick={resetAlgorithm}
-              disabled={algorithmState.isRunning}
-              className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border relative z-30 ${
-                algorithmState.isRunning
-                  ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
-                  : "bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/30 hover:border-red-500/80"
-              }`}
-            >
-              Reset
-            </button>
+            {/* Algorithm Controls - Only show in constellation mode */}
+            {viewMode === "constellation" && (
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+                <div className="flex gap-2">
+                  <button
+                    onClick={runPrimAlgorithm}
+                    disabled={algorithmState.isRunning}
+                    className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border ${
+                      algorithmState.isRunning
+                        ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
+                        : algorithmState.type === "prim"
+                        ? "bg-michigan-maize/20 border-michigan-maize text-michigan-maize hover:bg-michigan-maize/30"
+                        : "bg-neon-blue/20 border-neon-blue text-neon-blue hover:bg-neon-blue/30 hover:border-neon-blue/80"
+                    }`}
+                  >
+                    {algorithmState.isRunning &&
+                    algorithmState.type === "prim" ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 border-2 border-michigan-maize border-t-transparent rounded-full animate-spin"></div>
+                        Prim's
+                      </div>
+                    ) : (
+                      "Prim's MST"
+                    )}
+                  </button>
+
+                  <button
+                    onClick={runKruskalAlgorithm}
+                    disabled={algorithmState.isRunning}
+                    className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border ${
+                      algorithmState.isRunning
+                        ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
+                        : algorithmState.type === "kruskal"
+                        ? "bg-cyber-green/20 border-cyber-green text-cyber-green hover:bg-cyber-green/30"
+                        : "bg-neon-purple/20 border-neon-purple text-neon-purple hover:bg-neon-purple/30 hover:border-neon-purple/80"
+                    }`}
+                  >
+                    {algorithmState.isRunning &&
+                    algorithmState.type === "kruskal" ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 border-2 border-cyber-green border-t-transparent rounded-full animate-spin"></div>
+                        Kruskal's
+                      </div>
+                    ) : (
+                      "Kruskal's MST"
+                    )}
+                  </button>
+                </div>
+
+                <button
+                  onClick={resetAlgorithm}
+                  disabled={algorithmState.isRunning}
+                  className={`px-3 py-2 md:px-4 md:py-2 rounded-lg font-tech text-xs md:text-sm font-semibold transition-all duration-300 border ${
+                    algorithmState.isRunning
+                      ? "bg-cyber-white/10 border-cyber-white/20 text-cyber-white/50 cursor-not-allowed"
+                      : "bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/30 hover:border-red-500/80"
+                  }`}
+                >
+                  Reset
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Algorithm Status Display */}
         {algorithmState.isRunning && (
-          <div className="absolute top-20 md:top-24 left-4 right-4 z-30">
+          <div className="absolute top-28 md:top-28 left-4 right-4 z-30">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -898,27 +1124,44 @@ const SkillsConstellation = () => {
                 const isMobile =
                   typeof window !== "undefined" && window.innerWidth < 768;
 
+                // For list view, check if skill is likely to be on the right edge
+                if (viewMode === "list") {
+                  if (isMobile) {
+                    return "top-48 left-2 right-2";
+                  } else {
+                    // Get the skill's position in its category array to determine grid position
+                    const category = skill.category;
+                    const categorySkills = groupedSkills[category] || [];
+                    const skillIndex = categorySkills.findIndex(
+                      (s) => s.id === skill.id
+                    );
+
+                    // Check screen size and grid columns
+                    const screenWidth =
+                      typeof window !== "undefined" ? window.innerWidth : 1200;
+                    let gridCols = 1;
+                    if (screenWidth >= 1280) gridCols = 4; // xl:grid-cols-4
+                    else if (screenWidth >= 1024)
+                      gridCols = 3; // lg:grid-cols-3
+                    else if (screenWidth >= 640) gridCols = 2; // sm:grid-cols-2
+
+                    // If skill is in rightmost column, position tooltip on left
+                    const isRightColumn =
+                      skillIndex % gridCols === gridCols - 1;
+
+                    return isRightColumn
+                      ? "top-4 left-4 max-w-sm"
+                      : "top-4 right-4 max-w-sm";
+                  }
+                }
+
+                // For constellation view, use consistent top-right positioning
                 if (isMobile) {
                   // On mobile, position below header to avoid algorithm controls
-                  return "top-32 left-2 right-2";
+                  return "top-40 left-2 right-2";
                 } else {
-                  // Desktop positioning - more sophisticated logic to avoid all nodes
-                  const { x, y } = skill;
-
-                  // Divide screen into quadrants and position tooltip opposite to node
-                  if (x <= 50 && y <= 50) {
-                    // Top-left quadrant: position tooltip bottom-right
-                    return "bottom-4 right-4 max-w-sm";
-                  } else if (x > 50 && y <= 50) {
-                    // Top-right quadrant: position tooltip bottom-left
-                    return "bottom-4 left-4 max-w-sm";
-                  } else if (x <= 50 && y > 50) {
-                    // Bottom-left quadrant: position tooltip top-right
-                    return "top-4 right-4 max-w-sm";
-                  } else {
-                    // Bottom-right quadrant: position tooltip top-left
-                    return "top-4 left-4 max-w-sm";
-                  }
+                  // Desktop positioning - always top-right for constellation view
+                  return "top-4 right-4 max-w-sm";
                 }
               })()} bg-cyber-black/95 border border-neon-blue/50 rounded-lg p-3 md:p-4 backdrop-blur-sm z-20 text-xs md:text-sm`}
             >
@@ -1086,313 +1329,404 @@ const SkillsConstellation = () => {
           )}
         </AnimatePresence>
 
-        {/* SVG Constellation - Responsive Scale */}
-        <svg
-          viewBox={
-            typeof window !== "undefined" && window.innerWidth < 768
-              ? "0 0 1200 1200" // Reduced viewBox for mobile with tighter spacing
-              : "0 0 1200 1000" // Standard viewBox for desktop
-          }
-          className="w-full h-full absolute top-24 md:top-28 inset-x-0 bottom-0"
-          style={{
-            minHeight:
+        {/* Main Content Area - Conditional Rendering */}
+        {viewMode === "constellation" ? (
+          /* SVG Constellation - Responsive Scale */
+          <svg
+            viewBox={
               typeof window !== "undefined" && window.innerWidth < 768
-                ? "600px" // Reduced height for mobile with tighter spacing
-                : "400px",
-          }}
-          onClick={(e) => {
-            // Clear selection when clicking on empty SVG area
-            if (e.target === e.currentTarget) {
-              setSelectedSkill(null);
+                ? "0 0 1200 1200" // Reduced viewBox for mobile with tighter spacing
+                : "0 0 1200 1000" // Standard viewBox for desktop
             }
-          }}
-        >
-          {/* Connection lines */}
-          <g className="opacity-60">
-            {skills.map((skill) =>
-              skill.connections.map((connId) => {
-                const connectedSkill = skills.find((s) => s.id === connId);
-                if (!connectedSkill) return null;
+            className="w-full h-full absolute top-36 md:top-32 inset-x-0 bottom-0"
+            style={{
+              minHeight:
+                typeof window !== "undefined" && window.innerWidth < 768
+                  ? "600px" // Reduced height for mobile with tighter spacing
+                  : "400px",
+            }}
+            onClick={(e) => {
+              // Clear selection when clicking on empty SVG area
+              if (e.target === e.currentTarget) {
+                setSelectedSkill(null);
+              }
+            }}
+          >
+            {/* Connection lines */}
+            <g className="opacity-60">
+              {skills.map((skill) =>
+                skill.connections.map((connId) => {
+                  const connectedSkill = skills.find((s) => s.id === connId);
+                  if (!connectedSkill) return null;
 
-                const pos1 = getNodePosition(skill);
-                const pos2 = getNodePosition(connectedSkill);
-                const x1 = pos1.x;
-                const y1 = pos1.y;
-                const x2 = pos2.x;
-                const y2 = pos2.y;
+                  const pos1 = getNodePosition(skill);
+                  const pos2 = getNodePosition(connectedSkill);
+                  const x1 = pos1.x;
+                  const y1 = pos1.y;
+                  const x2 = pos2.x;
+                  const y2 = pos2.y;
 
-                // Check if this edge is part of MST or highlighted
-                const isMSTEdge = algorithmState.mstEdges.some(
-                  (edge) =>
-                    (edge.from === skill.id && edge.to === connId) ||
-                    (edge.from === connId && edge.to === skill.id)
-                );
+                  // Check if this edge is part of MST or highlighted
+                  const isMSTEdge = algorithmState.mstEdges.some(
+                    (edge) =>
+                      (edge.from === skill.id && edge.to === connId) ||
+                      (edge.from === connId && edge.to === skill.id)
+                  );
 
-                const isHighlightedEdge =
-                  algorithmState.highlightedEdge &&
-                  ((algorithmState.highlightedEdge.from === skill.id &&
-                    algorithmState.highlightedEdge.to === connId) ||
-                    (algorithmState.highlightedEdge.from === connId &&
-                      algorithmState.highlightedEdge.to === skill.id));
+                  const isHighlightedEdge =
+                    algorithmState.highlightedEdge &&
+                    ((algorithmState.highlightedEdge.from === skill.id &&
+                      algorithmState.highlightedEdge.to === connId) ||
+                      (algorithmState.highlightedEdge.from === connId &&
+                        algorithmState.highlightedEdge.to === skill.id));
 
-                const isRegularHighlight =
-                  !algorithmState.isRunning &&
-                  !algorithmState.mstEdges.length &&
-                  shouldHighlightConnection(skill.id, connId);
+                  const isRegularHighlight =
+                    !algorithmState.isRunning &&
+                    !algorithmState.mstEdges.length &&
+                    shouldHighlightConnection(skill.id, connId);
 
-                // Determine edge color and style
-                let strokeColor = "rgba(255, 255, 255, 0.2)";
-                let strokeWidth = 2;
-                let strokeOpacity = 0.3;
+                  // Determine edge color and style
+                  let strokeColor = "rgba(255, 255, 255, 0.2)";
+                  let strokeWidth = 2;
+                  let strokeOpacity = 0.3;
 
-                if (isHighlightedEdge) {
-                  // Currently being processed by algorithm
-                  strokeColor =
-                    algorithmState.type === "prim" ? "#FFCB05" : "#00FF94";
-                  strokeWidth = 4;
-                  strokeOpacity = 1;
-                } else if (isMSTEdge) {
-                  // Part of the MST
-                  strokeColor =
-                    algorithmState.type === "prim" ? "#FFCB05" : "#00FF94";
-                  strokeWidth = 3;
-                  strokeOpacity = 0.9;
-                } else if (isRegularHighlight) {
-                  // Regular skill hover/selection highlight
-                  strokeColor = categoryColors[skill.category];
-                  strokeWidth = 3;
-                  strokeOpacity = 0.8;
-                } else if (
-                  algorithmState.isRunning ||
-                  algorithmState.mstEdges.length > 0
-                ) {
-                  // Fade non-MST edges during algorithm
-                  strokeOpacity = 0.1;
-                }
+                  if (isHighlightedEdge) {
+                    // Currently being processed by algorithm
+                    strokeColor =
+                      algorithmState.type === "prim" ? "#FFCB05" : "#00FF94";
+                    strokeWidth = 4;
+                    strokeOpacity = 1;
+                  } else if (isMSTEdge) {
+                    // Part of the MST
+                    strokeColor =
+                      algorithmState.type === "prim" ? "#FFCB05" : "#00FF94";
+                    strokeWidth = 3;
+                    strokeOpacity = 0.9;
+                  } else if (isRegularHighlight) {
+                    // Regular skill hover/selection highlight
+                    strokeColor = categoryColors[skill.category];
+                    strokeWidth = 3;
+                    strokeOpacity = 0.8;
+                  } else if (
+                    algorithmState.isRunning ||
+                    algorithmState.mstEdges.length > 0
+                  ) {
+                    // Fade non-MST edges during algorithm
+                    strokeOpacity = 0.1;
+                  }
 
-                return (
-                  <motion.line
-                    key={`${skill.id}-${connId}`}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke={strokeColor}
-                    strokeWidth={strokeWidth}
-                    strokeOpacity={strokeOpacity}
-                    className="transition-all duration-500"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{
-                      pathLength: 1,
-                      opacity: 1,
-                      stroke: strokeColor,
-                      strokeWidth: strokeWidth,
-                      strokeOpacity: strokeOpacity,
-                    }}
-                    transition={{
-                      duration: isHighlightedEdge ? 0.3 : 1,
-                      delay: isHighlightedEdge ? 0 : 0.5,
-                    }}
-                    style={{
-                      filter:
-                        isMSTEdge || isHighlightedEdge
-                          ? "drop-shadow(0 0 4px currentColor)"
-                          : "none",
-                    }}
-                  />
-                );
-              })
-            )}
-          </g>
-
-          {/* Skill nodes */}
-          <g>
-            {skills.map((skill, index) => {
-              const position = getNodePosition(skill);
-              const centerX = position.x;
-              const centerY = position.y;
-              const dimensions = getNodeDimensions(skill);
-              const isHovered = hoveredSkill === skill.id;
-              const isSelected = selectedSkill === skill.id;
-              const isHighlighted =
-                !algorithmState.isRunning && !algorithmState.mstEdges.length
-                  ? shouldHighlightNode(skill.id)
-                  : true;
-              const isActive = isHovered || isSelected;
-              const isInMST = algorithmState.visitedNodes.has(skill.id);
-              const isMSTActive =
-                algorithmState.isRunning || algorithmState.mstEdges.length > 0;
-
-              return (
-                <g key={skill.id}>
-                  {/* Node background with glow effect */}
-                  <motion.g
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{
-                      scale: 1,
-                      opacity: isMSTActive
-                        ? isInMST
-                          ? 1
-                          : 0.3
-                        : isHighlighted
-                        ? 1
-                        : 0.4,
-                    }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
-                    whileHover={{ scale: isMSTActive ? 1 : 1.1 }}
-                    whileTap={{ scale: isMSTActive ? 1 : 0.95 }}
-                    className={
-                      isMSTActive ? "cursor-default" : "cursor-pointer"
-                    }
-                    onMouseEnter={() =>
-                      !isMSTActive && setHoveredSkill(skill.id)
-                    }
-                    onMouseLeave={() => !isMSTActive && setHoveredSkill(null)}
-                    onClick={() =>
-                      !isMSTActive &&
-                      setSelectedSkill(
-                        selectedSkill === skill.id ? null : skill.id
-                      )
-                    }
-                  >
-                    {/* Outer glow */}
-                    {isActive && (
-                      <motion.rect
-                        x={centerX - dimensions.width / 2 - 4}
-                        y={centerY - dimensions.height / 2 - 4}
-                        width={dimensions.width + 8}
-                        height={dimensions.height + 8}
-                        rx={dimensions.rx + 2}
-                        fill="none"
-                        stroke={categoryColors[skill.category]}
-                        strokeWidth={2}
-                        strokeOpacity={0.6}
-                        className="animate-pulse"
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 0.6 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    )}
-
-                    {/* Main node */}
-                    <motion.rect
-                      x={centerX - dimensions.width / 2}
-                      y={centerY - dimensions.height / 2}
-                      width={dimensions.width}
-                      height={dimensions.height}
-                      rx={dimensions.rx}
-                      fill={
-                        isMSTActive && isInMST
-                          ? `rgba(${
-                              algorithmState.type === "prim"
-                                ? "255, 203, 5"
-                                : "0, 255, 148"
-                            }, 0.3)`
-                          : isActive && !isMSTActive
-                          ? `rgba(${
-                              skill.category === "language"
-                                ? "51, 153, 255"
-                                : skill.category === "framework"
-                                ? "255, 203, 5"
-                                : skill.category === "tool"
-                                ? "0, 255, 148"
-                                : "255, 107, 157"
-                            }, 0.2)`
-                          : "rgba(255, 255, 255, 0.05)"
-                      }
-                      stroke={
-                        isMSTActive && isInMST
-                          ? algorithmState.type === "prim"
-                            ? "#FFCB05"
-                            : "#00FF94"
-                          : isActive && !isMSTActive
-                          ? categoryColors[skill.category]
-                          : "rgba(255, 255, 255, 0.2)"
-                      }
-                      strokeWidth={
-                        isMSTActive && isInMST
-                          ? 3
-                          : isActive && !isMSTActive
-                          ? 3
-                          : 2
-                      }
-                      strokeOpacity={
-                        isMSTActive && isInMST
-                          ? 0.9
-                          : isActive && !isMSTActive
-                          ? 0.8
-                          : 0.3
-                      }
-                      className="transition-all duration-300"
-                      whileHover={{
-                        fill: `rgba(${
-                          skill.category === "language"
-                            ? "51, 153, 255"
-                            : skill.category === "framework"
-                            ? "255, 203, 5"
-                            : skill.category === "tool"
-                            ? "0, 255, 148"
-                            : "255, 107, 157"
-                        }, 0.3)`,
+                  return (
+                    <motion.line
+                      key={`${skill.id}-${connId}`}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke={strokeColor}
+                      strokeWidth={strokeWidth}
+                      strokeOpacity={strokeOpacity}
+                      className="transition-all duration-500"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{
+                        pathLength: 1,
+                        opacity: 1,
+                        stroke: strokeColor,
+                        strokeWidth: strokeWidth,
+                        strokeOpacity: strokeOpacity,
+                      }}
+                      transition={{
+                        duration: isHighlightedEdge ? 0.3 : 1,
+                        delay: isHighlightedEdge ? 0 : 0.5,
+                      }}
+                      style={{
+                        filter:
+                          isMSTEdge || isHighlightedEdge
+                            ? "drop-shadow(0 0 4px currentColor)"
+                            : "none",
                       }}
                     />
+                  );
+                })
+              )}
+            </g>
 
-                    {/* Inner scan line effect */}
-                    {isActive && (
-                      <motion.line
-                        x1={centerX - dimensions.width / 2 + 4}
-                        y1={centerY}
-                        x2={centerX + dimensions.width / 2 - 4}
-                        y2={centerY}
-                        stroke={categoryColors[skill.category]}
-                        strokeWidth={1}
-                        strokeOpacity={0.6}
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: [0, 1, 0] }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
+            {/* Skill nodes */}
+            <g>
+              {skills.map((skill, index) => {
+                const position = getNodePosition(skill);
+                const centerX = position.x;
+                const centerY = position.y;
+                const dimensions = getNodeDimensions(skill);
+                const isHovered = hoveredSkill === skill.id;
+                const isSelected = selectedSkill === skill.id;
+                const isHighlighted =
+                  !algorithmState.isRunning && !algorithmState.mstEdges.length
+                    ? shouldHighlightNode(skill.id)
+                    : true;
+                const isActive = isHovered || isSelected;
+                const isInMST = algorithmState.visitedNodes.has(skill.id);
+                const isMSTActive =
+                  algorithmState.isRunning ||
+                  algorithmState.mstEdges.length > 0;
+
+                return (
+                  <g key={skill.id}>
+                    {/* Node background with glow effect */}
+                    <motion.g
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{
+                        scale: 1,
+                        opacity: isMSTActive
+                          ? isInMST
+                            ? 1
+                            : 0.3
+                          : isHighlighted
+                          ? 1
+                          : 0.4,
+                      }}
+                      transition={{ duration: 0.5, delay: index * 0.05 }}
+                      whileHover={{ scale: isMSTActive ? 1 : 1.1 }}
+                      whileTap={{ scale: isMSTActive ? 1 : 0.95 }}
+                      className={
+                        isMSTActive ? "cursor-default" : "cursor-pointer"
+                      }
+                      onMouseEnter={() =>
+                        !isMSTActive && setHoveredSkill(skill.id)
+                      }
+                      onMouseLeave={() => !isMSTActive && setHoveredSkill(null)}
+                      onClick={() =>
+                        !isMSTActive &&
+                        setSelectedSkill(
+                          selectedSkill === skill.id ? null : skill.id
+                        )
+                      }
+                    >
+                      {/* Outer glow */}
+                      {isActive && (
+                        <motion.rect
+                          x={centerX - dimensions.width / 2 - 4}
+                          y={centerY - dimensions.height / 2 - 4}
+                          width={dimensions.width + 8}
+                          height={dimensions.height + 8}
+                          rx={dimensions.rx + 2}
+                          fill="none"
+                          stroke={categoryColors[skill.category]}
+                          strokeWidth={2}
+                          strokeOpacity={0.6}
+                          className="animate-pulse"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 0.6 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      )}
+
+                      {/* Main node */}
+                      <motion.rect
+                        x={centerX - dimensions.width / 2}
+                        y={centerY - dimensions.height / 2}
+                        width={dimensions.width}
+                        height={dimensions.height}
+                        rx={dimensions.rx}
+                        fill={
+                          isMSTActive && isInMST
+                            ? `rgba(${
+                                algorithmState.type === "prim"
+                                  ? "255, 203, 5"
+                                  : "0, 255, 148"
+                              }, 0.3)`
+                            : isActive && !isMSTActive
+                            ? `rgba(${
+                                skill.category === "language"
+                                  ? "51, 153, 255"
+                                  : skill.category === "framework"
+                                  ? "255, 203, 5"
+                                  : skill.category === "tool"
+                                  ? "0, 255, 148"
+                                  : "255, 107, 157"
+                              }, 0.2)`
+                            : "rgba(255, 255, 255, 0.05)"
+                        }
+                        stroke={
+                          isMSTActive && isInMST
+                            ? algorithmState.type === "prim"
+                              ? "#FFCB05"
+                              : "#00FF94"
+                            : isActive && !isMSTActive
+                            ? categoryColors[skill.category]
+                            : "rgba(255, 255, 255, 0.2)"
+                        }
+                        strokeWidth={
+                          isMSTActive && isInMST
+                            ? 3
+                            : isActive && !isMSTActive
+                            ? 3
+                            : 2
+                        }
+                        strokeOpacity={
+                          isMSTActive && isInMST
+                            ? 0.9
+                            : isActive && !isMSTActive
+                            ? 0.8
+                            : 0.3
+                        }
+                        className="transition-all duration-300"
+                        whileHover={{
+                          fill: `rgba(${
+                            skill.category === "language"
+                              ? "51, 153, 255"
+                              : skill.category === "framework"
+                              ? "255, 203, 5"
+                              : skill.category === "tool"
+                              ? "0, 255, 148"
+                              : "255, 107, 157"
+                          }, 0.3)`,
                         }}
                       />
-                    )}
-                  </motion.g>
 
-                  {/* Skill text - full name */}
-                  <motion.text
-                    x={centerX}
-                    y={centerY}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    className="font-tech font-bold pointer-events-none select-none"
-                    fontSize={
-                      typeof window !== "undefined" && window.innerWidth < 768
-                        ? "48"
-                        : "20"
-                    }
-                    fill="#FFFFFF"
-                    fillOpacity={0.95}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.95 }}
-                    transition={{ delay: 0.3 + index * 0.05 }}
+                      {/* Inner scan line effect */}
+                      {isActive && (
+                        <motion.line
+                          x1={centerX - dimensions.width / 2 + 4}
+                          y1={centerY}
+                          x2={centerX + dimensions.width / 2 - 4}
+                          y2={centerY}
+                          stroke={categoryColors[skill.category]}
+                          strokeWidth={1}
+                          strokeOpacity={0.6}
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: [0, 1, 0] }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        />
+                      )}
+                    </motion.g>
+
+                    {/* Skill text - full name */}
+                    <motion.text
+                      x={centerX}
+                      y={centerY}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      className="font-tech font-bold pointer-events-none select-none"
+                      fontSize={
+                        typeof window !== "undefined" && window.innerWidth < 768
+                          ? "48"
+                          : "20"
+                      }
+                      fill="#FFFFFF"
+                      fillOpacity={0.95}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.95 }}
+                      transition={{ delay: 0.3 + index * 0.05 }}
+                    >
+                      {skill.name}
+                    </motion.text>
+
+                    {/* Category indicator dot */}
+                    <circle
+                      cx={centerX + dimensions.width / 2 - 6}
+                      cy={centerY - dimensions.height / 2 + 6}
+                      r={3}
+                      fill={categoryColors[skill.category]}
+                      fillOpacity={0.8}
+                      className="pointer-events-none"
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          </svg>
+        ) : (
+          /* List View */
+          <div className="absolute top-44 md:top-40 inset-x-0 bottom-0 p-4 md:p-6 overflow-y-auto">
+            <div className="max-w-7xl mx-auto">
+              {Object.entries(groupedSkills).map(
+                ([category, categorySkills]) => (
+                  <motion.div
+                    key={category}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="mb-8"
                   >
-                    {skill.name}
-                  </motion.text>
+                    <h3
+                      className="text-xl md:text-2xl font-tech font-bold mb-4 capitalize"
+                      style={{
+                        color:
+                          categoryColors[
+                            category as keyof typeof categoryColors
+                          ],
+                      }}
+                    >
+                      {category}s
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                      {categorySkills.map((skill) => (
+                        <motion.div
+                          key={skill.id}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          className="bg-cyber-black/50 border border-cyber-white/20 rounded-lg p-4 cursor-pointer hover:border-neon-blue/50 transition-all duration-300"
+                          onClick={() => setSelectedSkill(skill.id)}
+                          onMouseEnter={() => setHoveredSkill(skill.id)}
+                          onMouseLeave={() => setHoveredSkill(null)}
+                        >
+                          {/* Skill Header */}
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                              <span className="text-2xl">
+                                {getSkillIcon(skill.id)}
+                              </span>
+                              <h4 className="font-tech font-semibold text-cyber-white text-sm md:text-base">
+                                {skill.name}
+                              </h4>
+                            </div>
+                          </div>
 
-                  {/* Category indicator dot */}
-                  <circle
-                    cx={centerX + dimensions.width / 2 - 6}
-                    cy={centerY - dimensions.height / 2 + 6}
-                    r={3}
-                    fill={categoryColors[skill.category]}
-                    fillOpacity={0.8}
-                    className="pointer-events-none"
-                  />
-                </g>
-              );
-            })}
-          </g>
-        </svg>
+                          {/* Quick Stats */}
+                          <div className="flex flex-wrap gap-2 text-xs">
+                            {skill.usedIn.projects &&
+                              skill.usedIn.projects.length > 0 && (
+                                <span className="px-2 py-1 bg-michigan-maize/20 text-michigan-maize rounded border border-michigan-maize/30">
+                                  {skill.usedIn.projects.length} Projects
+                                </span>
+                              )}
+                            {skill.usedIn.jobs &&
+                              skill.usedIn.jobs.length > 0 && (
+                                <span className="px-2 py-1 bg-cyber-green/20 text-cyber-green rounded border border-cyber-green/30">
+                                  {skill.usedIn.jobs.length} Jobs
+                                </span>
+                              )}
+                            {skill.usedIn.classes &&
+                              skill.usedIn.classes.length > 0 && (
+                                <span className="px-2 py-1 bg-neon-blue/20 text-neon-blue rounded border border-neon-blue/30">
+                                  {skill.usedIn.classes.length} Classes
+                                </span>
+                              )}
+                          </div>
+
+                          {/* Connections indicator */}
+                          {skill.connections.length > 0 && (
+                            <div className="mt-2 pt-2 border-t border-cyber-white/10">
+                              <span className="text-xs text-cyber-white/60 font-tech">
+                                Connected to {skill.connections.length}{" "}
+                                technologies
+                              </span>
+                            </div>
+                          )}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

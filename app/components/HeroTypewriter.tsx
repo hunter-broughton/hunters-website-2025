@@ -39,7 +39,6 @@ const HeroTypewriter = () => {
         setPhase(1);
       }
     } else if (phase === 1) {
-      // Type "Ryan Kaelle"
       if (displayText.length < (prefix + secondPart).length) {
         timeout = setTimeout(() => {
           setDisplayText(
