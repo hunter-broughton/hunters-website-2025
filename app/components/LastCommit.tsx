@@ -15,36 +15,77 @@ const LastCommit = () => {
   useEffect(() => {
     const fetchLastCommit = async () => {
       try {
-        const response = await fetch(
-          "https://api.github.com/users/hunter-broughton/events"
+        // First, get the user's repositories
+        const reposResponse = await fetch(
+          "https://api.github.com/users/hunter-broughton/repos?sort=pushed&per_page=10"
         );
-        const events = await response.json();
+        const repos = await reposResponse.json();
 
-        // Find the most recent PushEvent
-        const lastPush = events.find(
-          (event: any) => event.type === "PushEvent"
-        );
+        if (repos.length > 0) {
+          // Get the most recently pushed repository
+          const latestRepo = repos[0];
 
-        if (lastPush) {
-          const repo = lastPush.repo.name.split("/")[1];
-          const repoUrl = `https://github.com/${lastPush.repo.name}`;
-          const dateObj = new Date(lastPush.created_at);
+          // Fetch the latest commit from that repository
+          const commitsResponse = await fetch(
+            `https://api.github.com/repos/${latestRepo.full_name}/commits?per_page=1`
+          );
+          const commits = await commitsResponse.json();
 
-          const time = dateObj.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          });
+          if (commits.length > 0) {
+            const latestCommit = commits[0];
+            const repo = latestRepo.name;
+            const repoUrl = latestRepo.html_url;
+            const dateObj = new Date(latestCommit.commit.committer.date);
 
-          const date = dateObj.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          });
+            const time = dateObj.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            });
 
-          setCommitInfo({ repo, repoUrl, time, date });
+            const date = dateObj.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            });
+
+            setCommitInfo({ repo, repoUrl, time, date });
+          }
         }
       } catch (error) {
         console.error("Error fetching commit info:", error);
+
+        // Fallback to the original method if the new approach fails
+        try {
+          const response = await fetch(
+            "https://api.github.com/users/hunter-broughton/events"
+          );
+          const events = await response.json();
+
+          const lastPush = events.find(
+            (event: any) => event.type === "PushEvent"
+          );
+
+          if (lastPush) {
+            const repo = lastPush.repo.name.split("/")[1];
+            const repoUrl = `https://github.com/${lastPush.repo.name}`;
+            const dateObj = new Date(lastPush.created_at);
+
+            const time = dateObj.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            });
+
+            const date = dateObj.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            });
+
+            setCommitInfo({ repo, repoUrl, time, date });
+          }
+        } catch (fallbackError) {
+          console.error("Fallback method also failed:", fallbackError);
+        }
       } finally {
         setLoading(false);
       }

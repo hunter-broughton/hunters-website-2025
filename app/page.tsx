@@ -29,6 +29,89 @@ import DataStream, {
 } from "./components/CyberpunkEffects";
 import PageLoader from "./components/PageLoader";
 
+// Component for daily commits
+const DailyCommits = () => {
+  const [commitCount, setCommitCount] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDailyCommits = async () => {
+      try {
+        const today = new Date();
+        const startOfDay = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        ).toISOString();
+        const endOfDay = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + 1
+        ).toISOString();
+
+        const response = await fetch(
+          `https://api.github.com/search/commits?q=author:hunter-broughton+committer-date:${
+            startOfDay.split("T")[0]
+          }..${endOfDay.split("T")[0]}`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setCommitCount(data.total_count);
+        } else {
+          // Fallback: try events API for today's activity
+          const eventsResponse = await fetch(
+            "https://api.github.com/users/hunter-broughton/events"
+          );
+          const events = await eventsResponse.json();
+
+          const todayEvents = events.filter((event: any) => {
+            const eventDate = new Date(event.created_at);
+            return (
+              eventDate.toDateString() === today.toDateString() &&
+              event.type === "PushEvent"
+            );
+          });
+
+          // Count commits from push events
+          let todayCommits = 0;
+          todayEvents.forEach((event: any) => {
+            if (event.payload && event.payload.commits) {
+              todayCommits += event.payload.commits.length;
+            }
+          });
+
+          setCommitCount(todayCommits);
+        }
+      } catch (error) {
+        console.error("Error fetching daily commits:", error);
+        setCommitCount(0);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDailyCommits();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-michigan-maize font-tech text-sm md:text-base">
+        <span className="text-cyber-white/40">commits today:</span>{" "}
+        <span className="animate-pulse text-matrix-green">loading...</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="text-michigan-maize font-tech text-sm md:text-base">
+      <span className="text-cyber-white/40">commits today:</span>{" "}
+      <span className="text-matrix-green">{commitCount}</span>
+      {commitCount === 1 ? " commit" : " commits"}
+    </div>
+  );
+};
+
 const techStack = [
   "Full-Stack Development",
   "Machine Learning",
@@ -430,10 +513,7 @@ const Home = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1 }}
                     >
-                      <div className="text-michigan-maize font-tech text-sm md:text-base">
-                        <span className="text-cyber-white/40">status:</span>{" "}
-                        online
-                      </div>
+                      <DailyCommits />
                       <div className="text-neon-blue font-tech text-sm md:text-base">
                         <span className="text-cyber-white/40">
                           current location:
@@ -507,8 +587,7 @@ const Home = () => {
                   into something that piques my interest in tech. I thrive on
                   challenges and enjoy creating software that makes a
                   difference. Whether it's a web app, a machine learning model,
-                  or firmware for embedded systems, I'm always eager to learn
-                  and grow in my craft.
+                  or firmware, I'm always eager to learn and grow in my craft.
                 </p>
 
                 <p className="text-cyber-white/80 text-base leading-relaxed">
@@ -803,31 +882,62 @@ const Home = () => {
       >
         <motion.a
           href="/socials"
-          className="py-3 px-6 bg-neon-blue/10 border border-neon-blue/30 rounded-sm text-neon-blue font-tech items-center gap-3 hover:bg-neon-blue/20 hover:border-neon-blue/60 hover:shadow-[0_0_20px_rgba(51,153,255,0.3)] transition-all duration-300 flex group"
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
+          className="relative py-4 px-8 bg-cyber-black/80 border-2 border-neon-blue/40 rounded-sm text-neon-blue font-tech items-center gap-3 hover:border-neon-blue/80 transition-all duration-300 flex group overflow-hidden backdrop-blur-sm"
+          whileHover={{ scale: 1.02, y: -3 }}
+          whileTap={{ scale: 0.98 }}
         >
+          {/* Background scan line effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neon-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+
+          {/* Glitch border effect */}
+          <div
+            className="absolute inset-0 border-2 border-michigan-maize/30 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 animate-pulse"
+            style={{ animationDelay: "0.1s" }}
+          />
+
+          {/* Terminal prompt indicator */}
+          <div className="flex items-center gap-2 text-matrix-green">
+            <span className="text-sm font-tech">$</span>
+            <CommandLineIcon className="w-4 h-4 animate-pulse" />
+          </div>
+
+          {/* Social icons with enhanced hover effects */}
           <div className="flex items-center gap-3">
             <svg
-              className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
+              className="w-5 h-5 group-hover:scale-110 group-hover:text-michigan-maize transition-all duration-300"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
             </svg>
             <svg
-              className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
+              className="w-5 h-5 group-hover:scale-110 group-hover:text-michigan-maize transition-all duration-300"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
             </svg>
-            <EnvelopeIcon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-            <ChatBubbleLeftRightIcon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+            <EnvelopeIcon className="w-5 h-5 group-hover:scale-110 group-hover:text-michigan-maize transition-all duration-300" />
+            <ChatBubbleLeftRightIcon className="w-5 h-5 group-hover:scale-110 group-hover:text-michigan-maize transition-all duration-300" />
           </div>
-          <span className="ml-2 group-hover:text-michigan-maize transition-colors duration-300">
-            Get in Touch →
-          </span>
+
+          {/* Enhanced text with terminal styling */}
+          <div className="flex items-center gap-2">
+            <span className="group-hover:text-michigan-maize transition-colors duration-300 font-tech font-semibold tracking-wide">
+              ./initiate_contact
+            </span>
+            <motion.div
+              className="text-matrix-green"
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+            >
+              _
+            </motion.div>
+            <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 group-hover:text-michigan-maize transition-all duration-300" />
+          </div>
+
+          {/* Holographic overlay effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none animate-pulse" />
         </motion.a>
       </motion.div>
     </main>

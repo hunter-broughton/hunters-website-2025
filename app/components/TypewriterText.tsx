@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface TypewriterTextProps {
   text: string;
@@ -8,7 +8,11 @@ interface TypewriterTextProps {
   suffix?: string;
 }
 
-export default function TypewriterText({ text, prefix = '', suffix = '' }: TypewriterTextProps) {
+export default function TypewriterText({
+  text,
+  prefix = "",
+  suffix = "",
+}: TypewriterTextProps) {
   const [displayText, setDisplayText] = useState(text);
   const [currentIndex, setCurrentIndex] = useState(text.length);
   const [mounted, setMounted] = useState(false);
@@ -16,23 +20,29 @@ export default function TypewriterText({ text, prefix = '', suffix = '' }: Typew
   useEffect(() => {
     setMounted(true);
     if (mounted) {
-      setDisplayText('');
+      setDisplayText("");
       setCurrentIndex(0);
     }
   }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
+        setDisplayText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
       }, 100);
 
       return () => clearTimeout(timeout);
     }
   }, [currentIndex, text, mounted]);
 
-  return <span className="whitespace-nowrap -ml-2">{prefix}{displayText}{suffix}</span>;
-} 
+  return (
+    <span className="whitespace-nowrap -ml-2">
+      {prefix}
+      {displayText}
+      {suffix}
+    </span>
+  );
+}

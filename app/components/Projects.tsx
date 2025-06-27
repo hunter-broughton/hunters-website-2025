@@ -74,7 +74,7 @@ const projects = {
     link: "",
     open: "",
   },
-  ChromeDinoTimeTravel: {
+  "Chrome Dino Time Travel": {
     title: "Chrome Dino Time Travel - Video Game",
     desc: "Worked with a team to create a level based parody of Chrome's Dino game featuring different time periods. ",
     techStack: "PyGame, Python",
@@ -86,6 +86,13 @@ const projects = {
     techStack: "Python, PyTest, JavaScript, React",
     link: "https://github.com/hunter-broughton/cli",
     open: "https://httpie.io/",
+  },
+  "This Website!": {
+    title: "This Website!",
+    desc: "The website you are currently viewing, built with Next.js, Tailwind CSS, and TypeScript.",
+    techStack: "Next.js, Tailwind CSS, TypeScript, React",
+    link: "https://github.com/hunter-broughton/hunters-website-2025",
+    open: "https://hunterbroughton.com",
   },
 };
 

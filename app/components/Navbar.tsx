@@ -69,10 +69,11 @@ const Navbar = () => {
               className="hidden md:block text-xl md:text-2xl font-cyber tracking-wider"
               whileHover={{ scale: 1.05 }}
             >
-              <span className="text-neon-blue">Hunter</span>
-              <span className="text-matrix-green/50">&lt;</span>
-              <span className="text-michigan-maize">Developer</span>
-              <span className="text-matrix-green/50">/&gt;</span>
+              <span className="text-matrix-green">&lt;</span>
+              <span className="text-neon-blue">FullStack</span>
+              <span className="text-cyber-white/50 mx-1">/</span>
+              <span className="text-michigan-maize">Engineer</span>
+              <span className="text-matrix-green">&gt;</span>
             </motion.div>
             <div className="flex gap-3 md:gap-8 text-xs md:text-sm tracking-widest font-tech flex-wrap justify-center">
               {navItems.map((item) => (

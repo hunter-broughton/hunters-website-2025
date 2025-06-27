@@ -62,6 +62,8 @@ const SkillsConstellation = () => {
     highlightedEdge: null,
   });
   const containerRef = useRef<HTMLDivElement>(null);
+  const algorithmTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isAbortedRef = useRef<boolean>(false);
 
   // Handle click outside to deselect skill
   useEffect(() => {
@@ -759,6 +761,9 @@ const SkillsConstellation = () => {
       return;
     }
 
+    // Reset abort flag
+    isAbortedRef.current = false;
+
     setAlgorithmState((prev) => ({
       ...prev,
       isRunning: true,
@@ -778,8 +783,12 @@ const SkillsConstellation = () => {
 
     while (
       visitedNodes.size < skills.length &&
-      mstEdges.length < skills.length - 1
+      mstEdges.length < skills.length - 1 &&
+      !isAbortedRef.current
     ) {
+      // Check for abort before each iteration
+      if (isAbortedRef.current) break;
+
       // Find minimum weight edge connecting visited to unvisited nodes
       let minEdge: (typeof allEdges)[0] | null = null;
 
@@ -795,13 +804,19 @@ const SkillsConstellation = () => {
         }
       }
 
-      if (minEdge) {
+      if (minEdge && !isAbortedRef.current) {
         // Highlight the edge being added
         setAlgorithmState((prev) => ({
           ...prev,
           highlightedEdge: { from: minEdge!.from, to: minEdge!.to },
         }));
-        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        await new Promise((resolve) => {
+          algorithmTimeoutRef.current = setTimeout(resolve, 500);
+        });
+
+        // Check for abort after timeout
+        if (isAbortedRef.current) break;
 
         // Add edge to MST
         mstEdges.push({
@@ -819,22 +834,31 @@ const SkillsConstellation = () => {
           highlightedEdge: null,
         }));
 
-        await new Promise((resolve) => setTimeout(resolve, 400));
+        await new Promise((resolve) => {
+          algorithmTimeoutRef.current = setTimeout(resolve, 400);
+        });
       } else {
         break;
       }
     }
 
-    // Algorithm complete
-    setTimeout(() => {
-      setAlgorithmState((prev) => ({ ...prev, isRunning: false }));
-    }, 1500);
+    // Algorithm complete - only if not aborted
+    if (!isAbortedRef.current) {
+      algorithmTimeoutRef.current = setTimeout(() => {
+        if (!isAbortedRef.current) {
+          setAlgorithmState((prev) => ({ ...prev, isRunning: false }));
+        }
+      }, 1500);
+    }
   };
 
   const runKruskalAlgorithm = async () => {
     if (algorithmState.isRunning) {
       return;
     }
+
+    // Reset abort flag
+    isAbortedRef.current = false;
 
     setAlgorithmState((prev) => ({
       ...prev,
@@ -889,14 +913,23 @@ const SkillsConstellation = () => {
 
     // Process edges in order of weight
     for (const edge of allEdges) {
-      if (mstEdges.length >= skills.length - 1) break;
+      if (mstEdges.length >= skills.length - 1 || isAbortedRef.current) break;
+
+      // Check for abort before each iteration
+      if (isAbortedRef.current) break;
 
       // Highlight the edge being considered
       setAlgorithmState((prev) => ({
         ...prev,
         highlightedEdge: { from: edge.from, to: edge.to },
       }));
-      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      await new Promise((resolve) => {
+        algorithmTimeoutRef.current = setTimeout(resolve, 400);
+      });
+
+      // Check for abort after timeout
+      if (isAbortedRef.current) break;
 
       // Check if adding this edge creates a cycle
       if (union(edge.from, edge.to)) {
@@ -916,21 +949,50 @@ const SkillsConstellation = () => {
           highlightedEdge: null,
         }));
 
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => {
+          algorithmTimeoutRef.current = setTimeout(resolve, 500);
+        });
       } else {
         // Edge rejected - creates cycle
         setAlgorithmState((prev) => ({ ...prev, highlightedEdge: null }));
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise((resolve) => {
+          algorithmTimeoutRef.current = setTimeout(resolve, 300);
+        });
       }
     }
 
-    // Algorithm complete
-    setTimeout(() => {
-      setAlgorithmState((prev) => ({ ...prev, isRunning: false }));
-    }, 1500);
+    // Algorithm complete - only if not aborted
+    if (!isAbortedRef.current) {
+      algorithmTimeoutRef.current = setTimeout(() => {
+        if (!isAbortedRef.current) {
+          setAlgorithmState((prev) => ({ ...prev, isRunning: false }));
+        }
+      }, 1500);
+    }
   };
 
   const resetAlgorithm = () => {
+    setAlgorithmState({
+      isRunning: false,
+      type: null,
+      step: 0,
+      mstEdges: [],
+      visitedNodes: new Set(),
+      highlightedEdge: null,
+    });
+  };
+
+  const abortAlgorithm = () => {
+    // Set abort flag
+    isAbortedRef.current = true;
+
+    // Clear any running timeout
+    if (algorithmTimeoutRef.current) {
+      clearTimeout(algorithmTimeoutRef.current);
+      algorithmTimeoutRef.current = null;
+    }
+
+    // Reset algorithm state completely
     setAlgorithmState({
       isRunning: false,
       type: null,
@@ -1067,9 +1129,18 @@ const SkillsConstellation = () => {
                     Algorithm...
                   </span>
                 </div>
-                <div className="text-neon-blue font-tech text-xs">
-                  MST Edges: {algorithmState.mstEdges.length}/
-                  {skills.length - 1}
+                <div className="flex items-center gap-3">
+                  <div className="text-neon-blue font-tech text-xs">
+                    {algorithmState.type === "prim"
+                      ? "Time: O(E log V) | Space: O(V)"
+                      : "Time: O(E log E) | Space: O(V)"}
+                  </div>
+                  <button
+                    onClick={abortAlgorithm}
+                    className="px-2 py-1 bg-red-500/20 border border-red-500/50 rounded text-red-400 font-tech text-xs hover:bg-red-500/30 hover:border-red-500/80 transition-all duration-300"
+                  >
+                    Abort
+                  </button>
                 </div>
               </div>
             </motion.div>

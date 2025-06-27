@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     "https://hunter-broughton.github.io/hunters-website-2025"
   ),
-  title: "Hunter Broughton • Bay Area Hardware Hacker & Full-Stack Dev",
+  title: "Hunter Broughton",
   description:
-    "Hey, I'm Hunter — a Bay-Area-based junior at UMich who builds hardware, full-stack apps & blockchain infra.",
+    "Hey, I'm Hunter — a CS Major at the University of Michigan building full-stack apps, efficient firmware, and ML systems. Based in Seattle, currently in the Bay Area.",
   keywords: [
     "Hunter Broughton",
     "Software Engineer",

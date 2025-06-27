@@ -11,15 +11,32 @@ const HeroImage = () => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.6, duration: 0.8 }}
+      style={
+        {
+          // Improve rendering on high-DPI displays
+          imageRendering: "-webkit-optimize-contrast",
+          backfaceVisibility: "hidden",
+          transform: "translateZ(0)",
+        } as React.CSSProperties
+      }
     >
-      {/* Hero image */}
+      {/* Hero image with responsive optimization */}
       <Image
         src="/assets/headshot.jpeg"
         alt="Hunter Broughton"
         fill
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        className="object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
         priority
-        quality={90}
+        quality={95}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+        style={{
+          objectFit: "cover",
+          // Force hardware acceleration for smoother rendering
+          transform: "translate3d(0, 0, 0)",
+        }}
+        // Add placeholder for better loading experience
+        placeholder="blur"
+        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8A0XqoqiIqLFWystbXNloLvbvLUQpb3EiNZdNANwuLlsMAz6EfTaGYIhPQTKQ="
       />
 
       {/* Subtle gradient overlay for better integration with the theme */}
