@@ -102,7 +102,7 @@ const projects: Project[] = [
     id: "run-club",
     title: "1012 Run Club Website",
     description:
-      "As VP of Communications for the 1012 Run Club at UMich, developing a website to promote the club and its events. Features interest forms, event calendar, and membership database.",
+      "As VP of Communications for the 1012 Run Club at UMich, I'm developing a website to promote the club and its events. Features interest forms, event calendar, and membership database.",
     techStack: ["Next.js", "Tailwind CSS", "SQLite", "Node.js", "TypeScript"],
     githubLink: "https://github.com/hunter-broughton/1012-Run-Club",
     image: "/assets/HillStreetRunClub.PNG",
