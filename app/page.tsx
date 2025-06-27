@@ -11,7 +11,7 @@ import {
   ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import JobList from "./components/JobList";
-import Projects from "./components/Projects";
+import Projects from "./components/Projects_New";
 import CypherText from "./components/CypherText";
 import HeroTypewriter from "./components/HeroTypewriter";
 import Navbar from "./components/Navbar";
