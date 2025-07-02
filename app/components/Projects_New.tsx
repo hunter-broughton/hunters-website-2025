@@ -287,15 +287,9 @@ const InteractiveProjectShowcase = () => {
                     )}
                   </div>
 
-                  {/* Quick Actions */}
-                  <div className="flex items-center gap-3">
-                    {project.githubLink && (
-                      <CodeBracketIcon className="w-5 h-5 text-cyber-white/60 hover:text-neon-blue transition-colors" />
-                    )}
-                    {project.liveLink && (
-                      <ArrowTopRightOnSquareIcon className="w-5 h-5 text-cyber-white/60 hover:text-matrix-green transition-colors" />
-                    )}
-                    <EyeIcon className="w-5 h-5 text-cyber-white/60 hover:text-michigan-maize transition-colors" />
+                  {/* Click anywhere on card to view details */}
+                  <div className="text-xs text-cyber-white/50 mt-2">
+                    Click to view details
                   </div>
                 </div>
               </div>

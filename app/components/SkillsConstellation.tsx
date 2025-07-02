@@ -46,6 +46,7 @@ const SkillsConstellation = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"constellation" | "list">("list");
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [algorithmState, setAlgorithmState] = useState<{
     isRunning: boolean;
     type: "prim" | "kruskal" | null;
@@ -538,8 +539,8 @@ const SkillsConstellation = () => {
                 onClick={() =>
                   setSelectedSkill(selectedSkill === skill.id ? null : skill.id)
                 }
-                onMouseEnter={() => setHoveredSkill(skill.id)}
-                onMouseLeave={() => setHoveredSkill(null)}
+                onMouseEnter={() => handleMouseEnter(skill.id)}
+                onMouseLeave={handleMouseLeave}
               >
                 {/* Skill Header */}
                 <div className="flex items-center gap-3 mb-3">
@@ -1003,6 +1004,32 @@ const SkillsConstellation = () => {
     });
   };
 
+  // Debounced hover handlers to prevent glitching
+  const handleMouseEnter = (skillId: string) => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    setHoveredSkill(skillId);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredSkill(null);
+    }, 150); // Small delay to prevent rapid toggling
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="w-full space-y-8" ref={containerRef}>
       {/* Main Skills Constellation Component - Adjusted for better mobile view */}
@@ -1186,55 +1213,23 @@ const SkillsConstellation = () => {
               initial={{ opacity: 0, y: -10, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.9 }}
-              className={`absolute ${(() => {
+              className={`fixed pointer-events-none z-50 ${(() => {
                 const skill = skills.find(
                   (s) => s.id === (hoveredSkill || selectedSkill)
                 );
-                if (!skill) return "top-1 left-1 right-1";
+                if (!skill) return "top-4 right-4 max-w-sm";
 
                 const isMobile =
                   typeof window !== "undefined" && window.innerWidth < 768;
 
-                // For list view, check if skill is likely to be on the right edge
-                if (viewMode === "list") {
-                  if (isMobile) {
-                    return "top-48 left-2 right-2";
-                  } else {
-                    // Get the skill's position in its category array to determine grid position
-                    const category = skill.category;
-                    const categorySkills = groupedSkills[category] || [];
-                    const skillIndex = categorySkills.findIndex(
-                      (s) => s.id === skill.id
-                    );
-
-                    // Check screen size and grid columns
-                    const screenWidth =
-                      typeof window !== "undefined" ? window.innerWidth : 1200;
-                    let gridCols = 1;
-                    if (screenWidth >= 1280) gridCols = 4; // xl:grid-cols-4
-                    else if (screenWidth >= 1024)
-                      gridCols = 3; // lg:grid-cols-3
-                    else if (screenWidth >= 640) gridCols = 2; // sm:grid-cols-2
-
-                    // If skill is in rightmost column, position tooltip on left
-                    const isRightColumn =
-                      skillIndex % gridCols === gridCols - 1;
-
-                    return isRightColumn
-                      ? "top-4 left-4 max-w-sm"
-                      : "top-4 right-4 max-w-sm";
-                  }
-                }
-
-                // For constellation view, use consistent top-right positioning
+                // Simplified positioning logic to prevent glitching
                 if (isMobile) {
-                  // On mobile, position below header to avoid algorithm controls
-                  return "top-40 left-2 right-2";
+                  return "top-16 left-4 right-4 max-w-none";
                 } else {
-                  // Desktop positioning - always top-right for constellation view
-                  return "top-4 right-4 max-w-sm";
+                  // Always position on the right side with consistent spacing
+                  return "top-20 right-4 max-w-sm";
                 }
-              })()} bg-cyber-black/95 border border-neon-blue/50 rounded-lg p-3 md:p-4 backdrop-blur-sm z-20 text-xs md:text-sm`}
+              })()} bg-cyber-black/95 border border-neon-blue/50 rounded-lg p-3 md:p-4 backdrop-blur-sm shadow-2xl`}
             >
               {(() => {
                 // Priority: hoveredSkill takes precedence over selectedSkill
@@ -1562,9 +1557,9 @@ const SkillsConstellation = () => {
                         isMSTActive ? "cursor-default" : "cursor-pointer"
                       }
                       onMouseEnter={() =>
-                        !isMSTActive && setHoveredSkill(skill.id)
+                        !isMSTActive && handleMouseEnter(skill.id)
                       }
-                      onMouseLeave={() => !isMSTActive && setHoveredSkill(null)}
+                      onMouseLeave={() => !isMSTActive && handleMouseLeave()}
                       onClick={() =>
                         !isMSTActive &&
                         setSelectedSkill(
@@ -1743,8 +1738,8 @@ const SkillsConstellation = () => {
                           whileHover={{ scale: 1.05, y: -2 }}
                           className="bg-cyber-black/50 border border-cyber-white/20 rounded-lg p-4 cursor-pointer hover:border-neon-blue/50 transition-all duration-300"
                           onClick={() => setSelectedSkill(skill.id)}
-                          onMouseEnter={() => setHoveredSkill(skill.id)}
-                          onMouseLeave={() => setHoveredSkill(null)}
+                          onMouseEnter={() => handleMouseEnter(skill.id)}
+                          onMouseLeave={handleMouseLeave}
                         >
                           {/* Skill Header */}
                           <div className="flex items-center justify-between mb-3">
