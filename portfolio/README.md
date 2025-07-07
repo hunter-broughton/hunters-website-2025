@@ -2,28 +2,64 @@
   hunterbroughton.com
 </h1>
 <p align="center">
-  The new <a href="https://hunter-broughton.com" target="_blank">hunterbroughton.com</a> built with React.js.
+  The new <a href="https://hunterbroughton.com" target="_blank">hunterbroughton.com</a> built with Next.js and TypeScript.
 </p>
 
+## 🚀 Portfolio Website
 
-## set-up
+This is the frontend portfolio website featuring:
 
-1. Install the dependencies
+- **Next.js 14** with TypeScript
+- **Tailwind CSS** for styling
+- **Framer Motion** for animations
+- **Cyberpunk theme** with interactive components
+- **AI Chatbot integration** (connects to separate backend)
+
+## 📁 Project Structure
+
+```
+hunters-website-2025/
+├── portfolio/          # Frontend (this folder)
+└── portfolio-chatbot/  # Backend API
+```
+
+## 🛠️ Development Setup
+
+1. Navigate to the portfolio directory:
 
    ```sh
-   yarn
+   cd portfolio
    ```
 
-2. Start the development server
+2. Install dependencies:
 
-   ```
-   yarn start
+   ```sh
+   npm install
    ```
 
-## build and run for production
+3. Start the development server:
 
-1. Generate a full static production build
+   ```sh
+   npm run dev
+   ```
 
-   ```
-   npm build
-   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## 🌐 Deployment
+
+### Frontend (GitHub Pages)
+
+```sh
+npm run deploy
+```
+
+### Backend (Separate deployment required)
+
+The chatbot backend needs to be deployed separately. See `../portfolio-chatbot/README.md` for backend deployment instructions.
+
+## 📦 Build Commands
+
+- **Development**: `npm run dev`
+- **Production Build**: `npm run build`
+- **Production Server**: `npm run start`
+- **Deploy to GitHub Pages**: `npm run deploy`
