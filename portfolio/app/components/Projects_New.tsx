@@ -140,6 +140,49 @@ const projects: Project[] = [
     impact: "Open source contribution",
     year: 2023,
   },
+  {
+    id: "maze-search",
+    title: "Maze Search Algorithms",
+    description:
+      "Implemented various search algorithms to solve mazes, including DFS, BFS, A*, and Dijkstra's algorithm. Developed a visualizer to compare algorithm performance on different maze structures.",
+    techStack: ["Java"],
+    githubLink: "https://github.com/hunter-broughton/maze-search-algorithms",
+    image: "/assets/MazeSearch.png",
+    featured: false,
+    category: "tool",
+    status: "completed",
+    impact: "Algorithm visualization and comparison",
+    year: 2023,
+  },
+  {
+    id: "Reddit-Word-Frequency-Analysis",
+    title: "Reddit Word Frequency Analysis",
+    description:
+      "Developed a tool to analyze word frequency in Reddit comments using Java using a custom-built HashMap implementation. The tool processes large datasets to identify common words and their frequencies, providing insights into user discussions.",
+    techStack: ["Java"],
+    githubLink: "https://github.com/hunter-broughton/Reddit-Frequency-Analyzer",
+    image: "/assets/reddit.png",
+    featured: false,
+    category: "tool",
+    status: "completed",
+    impact: "Social media analysis",
+    year: 2023,
+  },
+  {
+    id: "Pursuit-Evasion-Simulator",
+    title: "Pursuit-Evasion Simulator",
+    description:
+      "Developed a simulation of Dijkstra's Pursuit-Evasion problem using Java. The simulation models the interactions between pursuers and evaders in a graph.",
+    techStack: ["Java"],
+    githubLink:
+      "https://github.com/hunter-broughton/Pursuit-Evasion-Game-Simulation",
+    image: "/assets/graphSim.png",
+    featured: false,
+    category: "tool",
+    status: "completed",
+    impact: "Graph theory simulation",
+    year: 2023,
+  },
 ];
 
 const categoryColors = {
