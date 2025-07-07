@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const CHATBOT_API_URL = process.env.CHATBOT_API_URL || "http://localhost:8000";
+// For static exports, we need to hardcode the production URL
+const CHATBOT_API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://hunters-website-2025-production.up.railway.app"
+    : process.env.CHATBOT_API_URL || "http://localhost:8000";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+
+    // Debug logging
+    console.log("CHATBOT_API_URL:", CHATBOT_API_URL);
+    console.log("NODE_ENV:", process.env.NODE_ENV);
 
     // Validate request body
     if (!body.message || typeof body.message !== "string") {
