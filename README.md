@@ -7,7 +7,7 @@
 > System Status: ONLINE
 ```
 
-**A cyberpunk-inspired portfolio showcasing full-stack development, AI integration, and cutting-edge web technologies.**
+**My portfolio showcasing my experience, skills/technologies, and academic achievements.**
 
 ## SYSTEM ARCHITECTURE
 
@@ -28,12 +28,12 @@ hunters-website-2025/
 ### Frontend: Neural Interface
 
 - **Framework**: Next.js 14 with TypeScript
-- **Styling**: Tailwind CSS with custom cyberpunk theme
+- **Styling**: Tailwind CSS with Maize and Blue cyberpunk theme
 - **Animations**: Framer Motion for fluid interactions
 - **Components**: Modular React architecture
 - **Deployment**: Static export to GitHub Pages
 
-### Backend: AI Processing Unit
+### Backend: AI Chatbot
 
 - **Runtime**: Python FastAPI server
 - **AI Engine**: Groq (llama-3.1-8b-instant)
@@ -202,8 +202,6 @@ GitHub Repository
 
 - **Node.js**: 18.x or higher
 - **Python**: 3.8 or higher
-- **Memory**: 4GB RAM minimum
-- **Storage**: 1GB available space
 
 ### Production Environment
 
@@ -211,61 +209,10 @@ GitHub Repository
 - **Backend**: Cloud platform with Python support
 - **API Keys**: Groq account for LLM access
 
-## TROUBLESHOOTING PROTOCOLS
-
-### Common Issues
-
-```bash
-# Frontend build failures
-npm run build --verbose
-
-# Backend connection errors
-curl https://your-backend-url/
-
-# Environment variable issues
-echo $GROQ_API_KEY
 ```
-
-### Debug Mode
-
-```bash
-# Enable verbose logging
-LOG_LEVEL=DEBUG python main.py
-
-# Check knowledge base stats
-curl https://your-backend-url/ | jq .knowledge_base_stats
-```
-
-## CONTRIBUTING
-
-### Code Standards
-
-- **Frontend**: ESLint + Prettier
-- **Backend**: Black + isort
-- **Commits**: Conventional commit format
-- **Testing**: Jest (frontend) + pytest (backend)
-
-### Development Process
-
-1. Fork repository
-2. Create feature branch
-3. Implement changes
-4. Test thoroughly
-5. Submit pull request
-
 ## LICENSE
 
 This project is available under the MIT License. See LICENSE file for details.
-
-## CONTACT INTERFACE
-
-**Hunter Broughton**  
-Computer Science & Economics Student  
-University of Michigan
-
-- **Portfolio**: https://hunterbroughton.com
-- **Repository**: https://github.com/hunter-broughton/hunters-website-2025
-- **Connect**: Available via website contact form
 
 ---
 
