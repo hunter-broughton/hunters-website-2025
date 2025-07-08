@@ -2,7 +2,7 @@
 
 # Portfolio Chatbot Setup Script
 
-echo "🤖 Setting up Hunter's Portfolio Chatbot..."
+echo "Setting up Hunter's Portfolio Chatbot..."
 
 # Check if Python is installed
 if ! command -v python3 &> /dev/null; then
