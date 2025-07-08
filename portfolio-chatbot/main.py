@@ -26,9 +26,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Log LLM system status on startup
-groq_status = "✅ Available" if llm_manager.groq_client.available else "❌ Not Available"
+groq_status = "Available" if llm_manager.groq_client.available else "Not Available"
 logger.info(f"Groq LLM: {groq_status}")
-logger.info(f"Smart fallback system: ✅ Active")
+logger.info(f"Smart fallback system: Active")
 if not llm_manager.groq_client.available:
     logger.warning("Groq not available - will use intelligent fallback responses")
 

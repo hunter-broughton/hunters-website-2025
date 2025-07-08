@@ -17,7 +17,7 @@ class GroqClient:
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.getenv("GROQ_API_KEY")
         self.base_url = "https://api.groq.com/openai/v1/chat/completions"
-        self.model = "llama-3.1-8b-instant"  # Fast, high-quality model
+        self.model = "llama-3.1-8b-instant"  
         self.available = bool(self.api_key)
         
         if self.available:
@@ -72,7 +72,6 @@ class GroqClient:
         
         for message in messages:
             if message["role"] == "system":
-                # Enhance the system prompt for better responses
                 enhanced_content = self._enhance_system_prompt(message["content"])
                 optimized.append({"role": "system", "content": enhanced_content})
             else:
@@ -82,6 +81,7 @@ class GroqClient:
     
     def _enhance_system_prompt(self, original_prompt: str) -> str:
         """Enhance the system prompt for more conversational responses"""
+
         return f"""{original_prompt}
 
 IMPORTANT RESPONSE GUIDELINES:
@@ -100,7 +100,7 @@ RESPONSE STYLE:
 - Make the conversation feel natural and flowing"""
 
 class SmartFallbackManager:
-    """Smart fallback system that tries Groq first, then provides intelligent contextual responses"""
+    """Smart fallback system """
     
     def __init__(self):
         self.groq_client = GroqClient()
@@ -114,7 +114,7 @@ class SmartFallbackManager:
     def chat_completion(self, messages: List[Dict[str, str]], max_tokens: int = 300, temperature: float = 0.7) -> str:
         """Try Groq first, then fall back to intelligent context-based responses"""
         
-        # Try Groq first
+        
         if self.available:
             try:
                 logger.info("Trying Groq for completion")
@@ -141,7 +141,7 @@ class SmartFallbackManager:
             elif message["role"] == "system" or "Hunter" in message.get("content", ""):
                 context = message["content"]
         
-        # Detect intent from the user message
+        
         intent = self._detect_intent(user_message)
         
         # Generate response based on intent and available context
@@ -251,5 +251,4 @@ class SmartFallbackManager:
         return True
 
 
-# For backward compatibility, alias the manager
 FreeLLMManager = SmartFallbackManager
