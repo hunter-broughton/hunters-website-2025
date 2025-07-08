@@ -87,7 +87,13 @@ const PortfolioChatbot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/chat", {
+      // Call Railway backend directly in production, or local API in development
+      const apiUrl =
+        process.env.NODE_ENV === "production"
+          ? "https://hunters-website-2025-production.up.railway.app/chat"
+          : "/api/chat";
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

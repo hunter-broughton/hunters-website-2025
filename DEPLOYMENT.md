@@ -173,15 +173,23 @@ curl -X POST https://your-backend-url.railway.app/chat \
    Solution: Add frontend domain to CORS_ORIGINS in backend
    ```
 
-2. **Chatbot Not Responding**
+2. **Chatbot Not Responding / Goes to Fallback**
 
    ```
    Check: Backend health endpoint
    Check: Environment variables
    Check: API key validity
+   Check: Frontend is using correct backend URL in production
    ```
 
-3. **404 on API Calls**
+3. **Static Export Environment Variables Not Working**
+
+   ```
+   Issue: GitHub Pages static export doesn't process .env files
+   Solution: Hardcode production URL in chat/route.ts
+   ```
+
+4. **404 on API Calls**
    ```
    Check: CHATBOT_API_URL in frontend .env.local
    Check: Backend deployment status
