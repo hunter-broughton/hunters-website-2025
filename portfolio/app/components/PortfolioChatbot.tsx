@@ -197,6 +197,9 @@ const PortfolioChatbot: React.FC = () => {
                   <p className="text-cyber-white/60 text-xs font-tech">
                     Ask me about Hunter's portfolio
                   </p>
+                  <p className="text-michigan-maize/70 text-xs font-tech mt-1">
+                    Built with Groq, FAISS, Sentence Transformers & Railway
+                  </p>
                 </div>
               </div>
               <button
