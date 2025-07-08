@@ -6,7 +6,7 @@ echo "🤖 Setting up Hunter's Portfolio Chatbot..."
 
 # Check if Python is installed
 if ! command -v python3 &> /dev/null; then
-    echo "❌ Python 3 is required but not installed."
+    echo "Python 3 is required but not installed."
     echo "Please install Python 3.8+ and try again."
     exit 1
 fi
@@ -14,48 +14,48 @@ fi
 # Navigate to chatbot directory
 cd "$(dirname "$0")"
 
-echo "📁 Current directory: $(pwd)"
+echo "Current directory: $(pwd)"
 
 # Create virtual environment
-echo "🐍 Creating Python virtual environment..."
+echo "Creating Python virtual environment..."
 python3 -m venv venv
 
 # Activate virtual environment
-echo "🔄 Activating virtual environment..."
+echo "Activating virtual environment..."
 source venv/bin/activate
 
 # Upgrade pip
-echo "⬆️ Upgrading pip..."
+echo "⬆Upgrading pip..."
 pip install --upgrade pip
 
 # Install dependencies
-echo "📦 Installing Python dependencies..."
+echo "Installing Python dependencies..."
 pip install -r requirements.txt
 
 # Create environment file
 if [ ! -f .env ]; then
-    echo "⚙️ Creating environment file..."
+    echo "⚙Creating environment file..."
     cp .env.example .env
-    echo "✅ Created .env file. Please review and update if needed."
+    echo "Created .env file. Please review and update if needed."
 else
-    echo "ℹ️ .env file already exists."
+    echo "ℹ.env file already exists."
 fi
 
 # Initialize knowledge base
-echo "🧠 Initializing knowledge base..."
+echo "Initializing knowledge base..."
 python knowledge_base.py
 
 # Test the setup
-echo "🧪 Testing the setup..."
+echo "Testing the setup..."
 python -c "
 import fastapi
 import sentence_transformers
 import faiss
-print('✅ All dependencies imported successfully!')
+print('All dependencies imported successfully!')
 "
 
 echo ""
-echo "🎉 Setup complete!"
+echo "Setup complete!"
 echo ""
 echo "To start the chatbot API:"
 echo "1. source venv/bin/activate"
