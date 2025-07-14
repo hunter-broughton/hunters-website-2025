@@ -183,6 +183,27 @@ const projects: Project[] = [
     impact: "Graph theory simulation",
     year: 2023,
   },
+  {
+    id: "algo-trading-bot",
+    title: "Algorithmic Trading System",
+    description:
+      "Developed an algorithmic trading system using Python. The system analyzes market data and executes trades based on predefined strategies, and tests strategies using historical data.",
+    techStack: [
+      "Python",
+      "Matplotlib",
+      "Pandas",
+      "NumPy",
+      "ML",
+      "Scikit-learn",
+    ],
+    githubLink: "https://github.com/hunter-broughton/trading-bot",
+    image: "/assets/algotrading.jpeg",
+    featured: false,
+    category: "web",
+    status: "completed",
+    impact: "Financial market analysis and trading",
+    year: 2025,
+  },
 ];
 
 const categoryColors = {
