@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://hunterbroughton.com/sitemap.xml 

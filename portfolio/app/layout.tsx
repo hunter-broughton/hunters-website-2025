@@ -4,8 +4,6 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import React from "react";
 import { Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -102,9 +100,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Hunter Broughton",
-              jobTitle: "Hardware Engineer & Full-Stack Developer",
+              jobTitle: "Engineer & Full-Stack Developer",
               affiliation: "University of Michigan",
-              alumniOf: "University of Michigan",
               url: "https://hunter-broughton.github.io/hunters-website-2025",
               sameAs: [
                 "https://github.com/hunter-broughton",
@@ -123,8 +120,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="scanline" />
         {children}
-        <Analytics />
-        <GoogleAnalytics gaId="G-0EBMRW3QEB" />
       </body>
     </html>
   );
