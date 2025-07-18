@@ -29,16 +29,21 @@ const experienceItems: Job[] = [
         Developed features for the new{" "}
         <span className="text-neon-blue font-bold">PCIe</span> software: Pilot
         using <span className="text-neon-blue font-bold">Vue</span>,{" "}
-        <span className="text-neon-blue font-bold">Vuetify</span>,{" "}
+        <span className="text-neon-blue font-bold">Vite</span>,{" "}
         <span className="text-neon-blue font-bold">JavaScript</span>,{" "}
-        <span className="text-neon-blue font-bold">Python</span>, and{" "}
-        <span className="text-neon-blue font-bold">APIs</span>
+        <span className="text-neon-blue font-bold">Python</span>,{" "}
+        <span className="text-neon-blue font-bold">C</span>, and{" "}
+        <span className="text-neon-blue font-bold">Fast API</span>
       </>,
       <>
         Implemented efficient algorithms for{" "}
-        <span className="text-neon-blue font-bold">Linecard-SDK</span> with{" "}
-        <span className="text-neon-blue font-bold">Python</span> and{" "}
-        <span className="text-neon-blue font-bold">PyTest</span>
+        <span className="text-neon-blue font-bold">PCIe-SDK</span> with{" "}
+        <span className="text-neon-blue font-bold">Python</span>,{" "}
+        <span className="text-neon-blue font-bold">PyTest</span>,{" "}
+        <span className="text-neon-blue font-bold">Regex</span>, and{" "}
+        <span className="text-neon-blue font-bold">Multithreading</span>,
+        boosting throughput speed by{" "}
+        <span className="text-neon-blue font-bold">30%</span>
       </>,
       <>
         Programmed{" "}
@@ -47,17 +52,18 @@ const experienceItems: Job[] = [
         <span className="text-neon-blue font-bold">
           Proportional-Integral-Derivative Controllers
         </span>{" "}
-        for the optical team
+        to streamlinbe optical testing
       </>,
       <>
         Gained hands-on experience with{" "}
         <span className="text-neon-blue font-bold">
           Thermoelectric Temperature Controllers (TC-720)
-        </span>{" "}
-        and a{" "}
+        </span>
+        , a{" "}
         <span className="text-neon-blue font-bold">
           Vector Network Analyzer
         </span>
+        , and <span className="text-neon-blue font-bold">Grafana</span>
       </>,
     ],
   },
@@ -70,13 +76,15 @@ const experienceItems: Job[] = [
     logo: "/assets/Vloggi-logo-square.jpg",
     desc: [
       <>
-        Engineered full-stack features for Vloggi, a platform that offers{" "}
+        Engineered full-stack features for Vloggi: a platform that offers{" "}
         <span className="text-neon-blue font-bold">MP4</span> data collection
         and management for companies
       </>,
       <>
         Developed and optimized web interfaces to optimize product usage using{" "}
-        <span className="text-neon-blue font-bold">React</span> and{" "}
+        <span className="text-neon-blue font-bold">React</span>,{" "}
+        <span className="text-neon-blue font-bold">Tailwind CSS</span>,
+         and{" "}
         <span className="text-neon-blue font-bold">TypeScript</span>
       </>,
       <>
