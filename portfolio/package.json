@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "npm run build && cp CNAME out/ && touch out/.nojekyll && cd .. && git add -f portfolio/out/ && git commit -m \"Deploy to gh-pages\" && git subtree push --prefix portfolio/out origin gh-pages"
+    "deploy": "npm run build && cp CNAME out/ && touch out/.nojekyll && cd .. && git add -f portfolio/out/ && git commit -m \"Deploy to gh-pages\" && git push origin --delete gh-pages 2>/dev/null || true && git subtree push --prefix portfolio/out origin gh-pages && git reset --hard HEAD~1"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
