@@ -45,7 +45,12 @@ interface SkillNode {
 const SkillsConstellation = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<"constellation" | "list">("list");
+  const [viewMode, setViewMode] = useState<"constellation" | "list">(() => {
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+      return "constellation"; // Default to constellation view on desktop
+    }
+    return "list"; // Default to list view on mobile
+  });
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [algorithmState, setAlgorithmState] = useState<{
     isRunning: boolean;
