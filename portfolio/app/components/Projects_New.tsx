@@ -29,6 +29,20 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: "thriftswipe",
+    title: "ThriftSwipe",
+    description:
+      "AI-powered online marketplace for thrift clothing. Our algorithm matches users with clothing based on their preferences and style, making sustainable fashion discovery effortless.",
+    techStack: ["Express", "MongoDB", "React", "Tailwind", "Python", "AI/ML"],
+    githubLink: "https://github.com/hunter-broughton/ThriftSwipe",
+    image: "/assets/ThriftSwipe.jpg",
+    featured: true,
+    category: "web",
+    status: "in-progress",
+    impact: "Scaling with UMich students",
+    year: 2024,
+  },
+  {
     id: "algo-trading-bot",
     title: "Algorithmic Trading System",
     description:
@@ -50,18 +64,18 @@ const projects: Project[] = [
     year: 2025,
   },
   {
-    id: "thriftswipe",
-    title: "ThriftSwipe",
+    id: "compression-algorithm",
+    title: "Rust Compression Algorithms",
     description:
-      "AI-powered online marketplace for thrift clothing. Our algorithm matches users with clothing based on their preferences and style, making sustainable fashion discovery effortless.",
-    techStack: ["Express", "MongoDB", "React", "Tailwind", "Python", "AI/ML"],
-    githubLink: "https://github.com/hunter-broughton/ThriftSwipe",
-    image: "/assets/ThriftSwipe.jpg",
+      "Inspired by Silicon Valley and Pied Piper. Implemented various compression algorithms in Rust such as Huffman coding, LZ77, and RLE. Tested and managed with a CLI.",
+    techStack: ["Rust"],
+    githubLink: "https://github.com/hunter-broughton/compression_algorithm",
+    image: "/assets/pied_piper.jpg",
     featured: true,
-    category: "web",
+    category: "tool",
     status: "in-progress",
-    impact: "Scaling with UMich students",
-    year: 2024,
+    impact: "Improved data storage and transmission",
+    year: 2025,
   },
   {
     id: "s-parameter-analysis",
@@ -131,20 +145,7 @@ const projects: Project[] = [
     category: "web",
     status: "completed",
     impact: "Connecting students nationwide",
-    year: 2023,
-  },
-  {
-    id: "chrome-dino",
-    title: "Chrome Dino Time Travel",
-    description:
-      "Level-based parody of Chrome's Dino game featuring different time periods. Collaborative game development with immersive time-travel mechanics.",
-    techStack: ["PyGame", "Python", "Game Dev"],
-    githubLink: "https://github.com/mkPuzon/CS269DinoGame",
-    image: "/assets/chromeDino.png",
-    featured: true,
-    category: "game",
-    status: "completed",
-    year: 2023,
+    year: 2024,
   },
   {
     id: "httpie-contributions",
@@ -159,6 +160,19 @@ const projects: Project[] = [
     category: "tool",
     status: "completed",
     impact: "Open source contribution",
+    year: 2025,
+  },
+  {
+    id: "chrome-dino",
+    title: "Chrome Dino Time Travel",
+    description:
+      "Level-based parody of Chrome's Dino game featuring different time periods. Collaborative game development with immersive time-travel mechanics.",
+    techStack: ["PyGame", "Python", "Game Dev"],
+    githubLink: "https://github.com/mkPuzon/CS269DinoGame",
+    image: "/assets/chromeDino.png",
+    featured: true,
+    category: "game",
+    status: "completed",
     year: 2023,
   },
   {
