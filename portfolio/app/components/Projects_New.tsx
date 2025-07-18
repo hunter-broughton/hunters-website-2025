@@ -312,7 +312,16 @@ const InteractiveProjectShowcase = () => {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className={`${
+                      project.image.includes("pied_piper")
+                        ? "object-contain bg-cyber-black/20"
+                        : "object-cover"
+                    } group-hover:scale-105 transition-transform duration-500`}
+                    style={
+                      project.image.includes("pied_piper")
+                        ? { objectPosition: "center" }
+                        : {}
+                    }
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-cyber-black via-transparent to-transparent" />
 
@@ -441,7 +450,8 @@ const InteractiveProjectShowcase = () => {
                     src={selectedProject.image}
                     alt={selectedProject.title}
                     fill
-                    className="object-cover"
+                    className="object-contain bg-cyber-black/20"
+                    style={{ objectPosition: "center" }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-cyber-black via-cyber-black/50 to-transparent" />
 
