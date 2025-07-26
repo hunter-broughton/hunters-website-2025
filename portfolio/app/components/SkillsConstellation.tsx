@@ -23,8 +23,10 @@ import {
   SiPytest,
   SiDocker,
   SiGithub,
+  SiRust,
+  SiNextdotjs,
 } from "react-icons/si";
-import { FaJava, FaRobot } from "react-icons/fa";
+import { FaJava, FaRobot, FaMicrochip } from "react-icons/fa";
 import { TbDeviceDesktopAnalytics } from "react-icons/tb";
 
 interface SkillNode {
@@ -103,7 +105,15 @@ const SkillsConstellation = () => {
       category: "language",
       x: 12,
       y: 12,
-      connections: ["react", "node", "express", "ts", "tailwind", "vue"],
+      connections: [
+        "react",
+        "node",
+        "express",
+        "ts",
+        "tailwind",
+        "vue",
+        "nextjs",
+      ],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
         jobs: ["Credo Semiconductor", "Vloggi"],
@@ -135,7 +145,7 @@ const SkillsConstellation = () => {
       category: "language",
       x: 58,
       y: 12,
-      connections: ["js", "react", "vue"],
+      connections: ["js", "react", "vue", "nextjs"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
         jobs: ["Credo Semiconductor", "Vloggi"],
@@ -149,7 +159,7 @@ const SkillsConstellation = () => {
       category: "language",
       x: 80,
       y: 8,
-      connections: ["C"],
+      connections: ["C", "hardware"],
       usedIn: {
         projects: [],
         jobs: ["Credo Semiconductor", "SparkRacing"],
@@ -165,7 +175,7 @@ const SkillsConstellation = () => {
       category: "language",
       x: 12,
       y: 28,
-      connections: ["cpp"],
+      connections: ["cpp", "hardware"],
       usedIn: {
         projects: [],
         jobs: ["Credo Semiconductor", "SparkRacing"],
@@ -207,7 +217,7 @@ const SkillsConstellation = () => {
       category: "framework",
       x: 80,
       y: 32,
-      connections: ["python"],
+      connections: ["python", "hardware"],
       usedIn: {
         projects: ["S-Parameter Automation"],
         jobs: ["Credo Semiconductor"],
@@ -223,7 +233,7 @@ const SkillsConstellation = () => {
       category: "framework",
       x: 12,
       y: 48,
-      connections: ["js", "ts", "tailwind"],
+      connections: ["js", "ts", "tailwind", "nextjs"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
         jobs: ["Credo Semiconductor", "Vloggi"],
@@ -281,7 +291,7 @@ const SkillsConstellation = () => {
       category: "framework",
       x: 12,
       y: 68,
-      connections: ["react"],
+      connections: ["react", "nextjs"],
       usedIn: {
         projects: ["ThriftSwipe", "GreekLink"],
         jobs: ["Credo Semiconductor", "Vloggi"],
@@ -430,6 +440,67 @@ const SkillsConstellation = () => {
         classes: ["EECS 492", "EECS 298"],
       },
     },
+    {
+      id: "rust",
+      name: "Rust",
+      level: 75,
+      category: "language",
+      x: 58,
+      y: 82,
+      connections: ["leptos"],
+      usedIn: {
+        projects: ["Rust Compression Algorithms"],
+        jobs: [],
+        classes: [],
+      },
+    },
+    {
+      id: "leptos",
+      name: "Leptos",
+      level: 70,
+      category: "framework",
+      x: 80,
+      y: 88,
+      connections: ["rust"],
+      usedIn: {
+        projects: ["Rust Compression Algorithms"],
+        jobs: [],
+        classes: [],
+      },
+    },
+    {
+      id: "nextjs",
+      name: "Next.js",
+      level: 90,
+      category: "framework",
+      x: 12,
+      y: 88,
+      connections: ["react", "js", "ts", "tailwind"],
+      usedIn: {
+        projects: [
+          "This Website!",
+          "Hill Street Run Club Website",
+          "GreekLink",
+          "Creo EV Charger System",
+        ],
+        jobs: ["Credo Semiconductor", "Vloggi"],
+        classes: [],
+      },
+    },
+    {
+      id: "hardware",
+      name: "Hardware",
+      level: 70,
+      category: "concept",
+      x: 5,
+      y: 75,
+      connections: ["C", "cpp", "pyvisa"],
+      usedIn: {
+        projects: ["S-Parameter Analysis Automation"],
+        jobs: ["Credo Semiconductor", "SparkRacing"],
+        classes: ["EECS 370"],
+      },
+    },
   ];
 
   const categoryColors = {
@@ -495,6 +566,14 @@ const SkillsConstellation = () => {
         return <SiGithub {...iconProps} className="text-gray-300" />;
       case "ai":
         return <FaRobot {...iconProps} className="text-purple-500" />;
+      case "rust":
+        return <SiRust {...iconProps} className="text-orange-600" />;
+      case "leptos":
+        return <SiRust {...iconProps} className="text-red-500" />;
+      case "nextjs":
+        return <SiNextdotjs {...iconProps} className="text-white" />;
+      case "hardware":
+        return <FaMicrochip {...iconProps} className="text-green-400" />;
       default:
         return <SiJavascript {...iconProps} className="text-gray-400" />;
     }
@@ -675,6 +754,12 @@ const SkillsConstellation = () => {
       // Final section - Concepts (bottom row)
       pytest: { x: 15, y: 90 },
       ai: { x: 50, y: 92 },
+
+      // New skills - continuing the layout
+      rust: { x: 85, y: 90 },
+      leptos: { x: 15, y: 102 },
+      nextjs: { x: 50, y: 104 },
+      hardware: { x: 85, y: 102 },
     };
 
     return mobileCoords[skillId] || { x: 50, y: 50 };
@@ -1406,15 +1491,15 @@ const SkillsConstellation = () => {
           <svg
             viewBox={
               typeof window !== "undefined" && window.innerWidth < 768
-                ? "0 0 1200 1200" // Reduced viewBox for mobile with tighter spacing
-                : "0 0 1200 1000" // Standard viewBox for desktop
+                ? "0 0 1200 1400" // Expanded viewBox for mobile to accommodate bottom skills
+                : "0 0 1200 1100" // Expanded viewBox for desktop to accommodate bottom skills
             }
             className="w-full h-full absolute top-36 md:top-32 inset-x-0 bottom-0"
             style={{
               minHeight:
                 typeof window !== "undefined" && window.innerWidth < 768
-                  ? "600px" // Reduced height for mobile with tighter spacing
-                  : "400px",
+                  ? "700px" // Increased height for mobile to show bottom skills
+                  : "500px", // Increased height for desktop to show bottom skills
             }}
             onClick={(e) => {
               // Clear selection when clicking on empty SVG area
