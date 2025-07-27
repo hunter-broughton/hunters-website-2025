@@ -65,6 +65,12 @@ const experienceItems: Job[] = [
         </span>
         , and <span className="text-neon-blue font-bold">Grafana</span>
       </>,
+      <>
+        Won{" "}
+        <span className="text-neon-blue font-bold">best implementation</span> at
+        company <span className="text-neon-blue font-bold">Hackathon</span> for{" "}
+        EV-Charger management system.
+      </>,
     ],
   },
   {
@@ -83,8 +89,7 @@ const experienceItems: Job[] = [
       <>
         Developed and optimized web interfaces to optimize product usage using{" "}
         <span className="text-neon-blue font-bold">React</span>,{" "}
-        <span className="text-neon-blue font-bold">Tailwind CSS</span>,
-         and{" "}
+        <span className="text-neon-blue font-bold">Tailwind CSS</span>, and{" "}
         <span className="text-neon-blue font-bold">TypeScript</span>
       </>,
       <>
@@ -117,15 +122,16 @@ const experienceItems: Job[] = [
         the driver
       </>,
       <>
-        Coded the{" "}
-        <span className="text-neon-blue font-bold">Bike Diagnostic system</span>{" "}
-        using <span className="text-neon-blue font-bold">Python</span> and the{" "}
-        <span className="text-neon-blue font-bold">Pandas</span> library
+        Programmed the Bike Diagnostic system using{" "}
+        <span className="text-neon-blue font-bold">Python</span>,{" "}
+        <span className="text-neon-blue font-bold">Pandas</span>, and{" "}
+        <span className="text-neon-blue font-bold">NumPy</span>, reducing
+        diagnostic cycle time by{" "}
+        <span className="text-neon-blue font-bold">40%</span>
       </>,
       <>
-        Tested the software by implementing{" "}
-        <span className="text-neon-blue font-bold">unit tests</span> and program
-        test files
+        Built a <span className="text-neon-blue font-bold">PyTest</span>-based
+        deployment pipeline, streamlining releases and ensuring stability
       </>,
       <>
         Implemented the software into our{" "}
