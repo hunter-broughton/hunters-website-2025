@@ -38,51 +38,38 @@ const DailyCommits = () => {
   useEffect(() => {
     const fetchDailyCommits = async () => {
       try {
-        const today = new Date();
-        const startOfDay = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate()
-        ).toISOString();
-        const endOfDay = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() + 1
-        ).toISOString();
-
-        const response = await fetch(
-          `https://api.github.com/search/commits?q=author:hunter-broughton+committer-date:${
-            startOfDay.split("T")[0]
-          }..${endOfDay.split("T")[0]}`
-        );
-
+        // Use our new API route that can access private repos
+        const response = await fetch('/api/github/daily-commits');
+        
         if (response.ok) {
           const data = await response.json();
-          setCommitCount(data.total_count);
+          setCommitCount(data.count);
         } else {
-          // Fallback: try events API for today's activity
-          const eventsResponse = await fetch(
-            "https://api.github.com/users/hunter-broughton/events"
+          // Fallback to original method if API route fails
+          const today = new Date();
+          const startOfDay = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+          ).toISOString();
+          const endOfDay = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate() + 1
+          ).toISOString();
+
+          const searchResponse = await fetch(
+            `https://api.github.com/search/commits?q=author:hunter-broughton+committer-date:${
+              startOfDay.split("T")[0]
+            }..${endOfDay.split("T")[0]}`
           );
-          const events = await eventsResponse.json();
 
-          const todayEvents = events.filter((event: any) => {
-            const eventDate = new Date(event.created_at);
-            return (
-              eventDate.toDateString() === today.toDateString() &&
-              event.type === "PushEvent"
-            );
-          });
-
-          // Count commits from push events
-          let todayCommits = 0;
-          todayEvents.forEach((event: any) => {
-            if (event.payload && event.payload.commits) {
-              todayCommits += event.payload.commits.length;
-            }
-          });
-
-          setCommitCount(todayCommits);
+          if (searchResponse.ok) {
+            const searchData = await searchResponse.json();
+            setCommitCount(searchData.total_count);
+          } else {
+            setCommitCount(0);
+          }
         }
       } catch (error) {
         console.error("Error fetching daily commits:", error);

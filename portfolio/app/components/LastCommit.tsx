@@ -9,33 +9,22 @@ const LastCommit = () => {
     repoUrl: string;
     time: string;
     date: string;
+    isPrivate?: boolean;
+    message?: string;
   } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLastCommit = async () => {
       try {
-        // First, get the user's repositories
-        const reposResponse = await fetch(
-          "https://api.github.com/users/hunter-broughton/repos?sort=pushed&per_page=10"
-        );
-        const repos = await reposResponse.json();
+        // Use our API route that can access private repos if token is available
+        const response = await fetch("/api/github/latest-commit");
 
-        if (repos.length > 0) {
-          // Get the most recently pushed repository
-          const latestRepo = repos[0];
+        if (response.ok) {
+          const data = await response.json();
 
-          // Fetch the latest commit from that repository
-          const commitsResponse = await fetch(
-            `https://api.github.com/repos/${latestRepo.full_name}/commits?per_page=1`
-          );
-          const commits = await commitsResponse.json();
-
-          if (commits.length > 0) {
-            const latestCommit = commits[0];
-            const repo = latestRepo.name;
-            const repoUrl = latestRepo.html_url;
-            const dateObj = new Date(latestCommit.commit.committer.date);
+          if (data.repo) {
+            const dateObj = new Date(data.time);
 
             const time = dateObj.toLocaleTimeString("en-US", {
               hour: "2-digit",
@@ -48,18 +37,21 @@ const LastCommit = () => {
               day: "numeric",
             });
 
-            setCommitInfo({ repo, repoUrl, time, date });
+            setCommitInfo({
+              repo: data.repo,
+              repoUrl: data.repoUrl,
+              time,
+              date,
+              isPrivate: data.isPrivate,
+              message: data.message,
+            });
           }
-        }
-      } catch (error) {
-        console.error("Error fetching commit info:", error);
-
-        // Fallback to the original method if the new approach fails
-        try {
-          const response = await fetch(
-            "https://api.github.com/users/hunter-broughton/events"
+        } else {
+          // Fallback to public API if our API route fails
+          const fallbackResponse = await fetch(
+            "https://api.github.com/users/hunter-broughton/events?per_page=20"
           );
-          const events = await response.json();
+          const events = await fallbackResponse.json();
 
           const lastPush = events.find(
             (event: any) => event.type === "PushEvent"
@@ -83,9 +75,9 @@ const LastCommit = () => {
 
             setCommitInfo({ repo, repoUrl, time, date });
           }
-        } catch (fallbackError) {
-          console.error("Fallback method also failed:", fallbackError);
         }
+      } catch (error) {
+        console.error("Error fetching commit info:", error);
       } finally {
         setLoading(false);
       }
@@ -125,6 +117,11 @@ const LastCommit = () => {
       @ <span className="text-neon-blue">{commitInfo.time}</span>{" "}
       <span className="text-cyber-white/40">on</span>{" "}
       <span className="text-matrix-green">{commitInfo.date}</span>
+      {commitInfo.message && (
+        <div className="text-cyber-white/30 text-xs mt-1 truncate max-w-xs">
+          "{commitInfo.message}"
+        </div>
+      )}
     </motion.div>
   );
 };
