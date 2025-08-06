@@ -4,17 +4,21 @@ export async function GET() {
   try {
     const token = process.env.GITHUB_TOKEN;
     
-    // Get today's date range
+    // Get today's date range in your local timezone (PST/PDT)
     const today = new Date();
+    const userTimezone = 'America/Los_Angeles'; // Adjust if needed
+    
+    // Create date in user's timezone
+    const todayInUserTZ = new Date(today.toLocaleString("en-US", {timeZone: userTimezone}));
     const startOfDay = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
+      todayInUserTZ.getFullYear(),
+      todayInUserTZ.getMonth(),
+      todayInUserTZ.getDate()
     ).toISOString();
     const endOfDay = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() + 1
+      todayInUserTZ.getFullYear(),
+      todayInUserTZ.getMonth(),
+      todayInUserTZ.getDate() + 1
     ).toISOString();
 
     if (!token) {
@@ -36,8 +40,9 @@ export async function GET() {
       const events = await response.json();
       const todayEvents = events.filter((event: any) => {
         const eventDate = new Date(event.created_at);
+        const eventInUserTZ = new Date(eventDate.toLocaleString("en-US", {timeZone: userTimezone}));
         return (
-          eventDate.toDateString() === today.toDateString() &&
+          eventInUserTZ.toDateString() === todayInUserTZ.toDateString() &&
           event.type === "PushEvent"
         );
       });
