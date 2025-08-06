@@ -93,7 +93,7 @@ export default function RootLayout({
               name: "Hunter Broughton",
               jobTitle: "Engineer & Full-Stack Developer",
               affiliation: "University of Michigan",
-              url: "https://hunter-broughton.github.io/hunters-website-2025",
+              url: "https://hunterbroughton.com",
               sameAs: [
                 "https://github.com/hunter-broughton",
                 "https://www.linkedin.com/in/hunter-broughton/",
