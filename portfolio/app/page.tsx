@@ -39,8 +39,8 @@ const DailyCommits = () => {
     const fetchDailyCommits = async () => {
       try {
         // Use our new API route that can access private repos
-        const response = await fetch('/api/github/daily-commits');
-        
+        const response = await fetch("/api/github/daily-commits");
+
         if (response.ok) {
           const data = await response.json();
           setCommitCount(data.count);

@@ -15,7 +15,7 @@ export const viewport: Viewport = {
 /*  -- SEO / SOCIAL -------------------------------------------------- */
 export const metadata: Metadata = {
   metadataBase: new URL(
-    "https://hunter-broughton.github.io/hunters-website-2025"
+    "https://hunterbroughton.com"
   ),
   title: "Hunter Broughton",
   description:
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Hunter Broughton",
-      url: "https://hunter-broughton.github.io/hunters-website-2025",
+      url: "https://hunterbroughton.com",
     },
   ],
   creator: "Hunter Broughton",
   manifest: "/manifest.json",
   alternates: {
-    canonical: "https://hunter-broughton.github.io/hunters-website-2025",
+    canonical: "https://hunterbroughton.com",
   },
 
   /* -- Open Graph (Facebook/LinkedIn etc.) -- */
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: "Hunter Broughton • Full-Stack Developer and Engineer",
     description:
       "CS Major at University of Michigan building full-stack apps, efficient firmware, and ML systems.",
-    url: "https://hunter-broughton.github.io/hunters-website-2025",
+    url: "https://hunterbroughton.com",
     siteName: "Hunter Broughton",
     images: [
       {
@@ -61,15 +61,6 @@ export const metadata: Metadata = {
     type: "profile",
   },
 
-  /* -- Twitter / X Card -- */
-  twitter: {
-    card: "summary_large_image",
-    title: "Hunter Broughton • Full-Stack Developer and Engineer",
-    description:
-      "Hey, I'm Hunter — CS Major at University of Michigan building full-stack apps, efficient firmware, and ML systems.",
-    images: ["/assets/headshot.jpeg"],
-    creator: "@your_handle", // optional: add if you have one
-  },
 
   /* -- Favicon bundle -- */
   icons: {

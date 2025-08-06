@@ -20,24 +20,24 @@ async function processRepos(repos: any[], headers: any) {
 
     if (commits.length > 0) {
       const latestCommit = commits[0];
-      
+
       return NextResponse.json({
         repo: latestRepo.name,
         repoUrl: latestRepo.html_url,
         time: latestCommit.commit.committer.date,
         isPrivate: latestRepo.private,
-        message: latestCommit.commit.message.split('\n')[0] // First line of commit message
+        message: latestCommit.commit.message.split("\n")[0], // First line of commit message
       });
     }
   }
-  
-  return NextResponse.json({ error: 'No commits found' }, { status: 404 });
+
+  return NextResponse.json({ error: "No commits found" }, { status: 404 });
 }
 
 export async function GET() {
   try {
     const token = process.env.GITHUB_TOKEN;
-    
+
     if (!token) {
       // Fallback to public API if no token is provided
       const response = await fetch(
@@ -81,17 +81,19 @@ export async function GET() {
 
       if (!reposResponse.ok) {
         const errorText = await reposResponse.text();
-        
+
         // Try alternative endpoint
         const altResponse = await fetch(
           "https://api.github.com/user/repos?sort=pushed&per_page=50&type=all",
           { headers }
         );
-        
+
         if (!altResponse.ok) {
-          throw new Error(`Failed to fetch repositories: ${reposResponse.status} - ${errorText}`);
+          throw new Error(
+            `Failed to fetch repositories: ${reposResponse.status} - ${errorText}`
+          );
         }
-        
+
         const altRepos = await altResponse.json();
         return processRepos(altRepos, headers);
       }
