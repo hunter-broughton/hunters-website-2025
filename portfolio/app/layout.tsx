@@ -14,9 +14,7 @@ export const viewport: Viewport = {
 
 /*  -- SEO / SOCIAL -------------------------------------------------- */
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://hunterbroughton.com"
-  ),
+  metadataBase: new URL("https://hunterbroughton.com"),
   title: "Hunter Broughton",
   description:
     "Hey, I'm Hunter — a CS Major at the University of Michigan building full-stack apps, efficient firmware, and ML systems. Based in Seattle, currently in the Bay Area.",
@@ -60,7 +58,6 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "profile",
   },
-
 
   /* -- Favicon bundle -- */
   icons: {
