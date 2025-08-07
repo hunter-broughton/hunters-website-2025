@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// For static exports, we need to hardcode the production URL
-const CHATBOT_API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://hunters-website-2025-production.up.railway.app"
-    : process.env.CHATBOT_API_URL || "http://localhost:8000";
+// Always use Railway backend - works for both local dev and Vercel production
+const CHATBOT_API_URL = "https://hunters-website-2025-production.up.railway.app";
+
+export async function OPTIONS(request: NextRequest) {
+  // Handle CORS preflight requests
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     // Debug logging
     console.log("CHATBOT_API_URL:", CHATBOT_API_URL);
-    console.log("NODE_ENV:", process.env.NODE_ENV);
+    console.log("Request body:", body);
 
     // Validate request body
     if (!body.message || typeof body.message !== "string") {
@@ -35,11 +44,22 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
+      console.error(`Chatbot API responded with status: ${response.status}`);
+      const errorText = await response.text();
+      console.error("Error response:", errorText);
       throw new Error(`Chatbot API responded with status: ${response.status}`);
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    
+    // Return response with CORS headers
+    return NextResponse.json(data, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    });
   } catch (error) {
     console.error("Chat API error:", error);
 
@@ -56,6 +76,12 @@ export async function POST(request: NextRequest) {
         "Visit Hunter's skills constellation",
         "Go to the contact page",
       ],
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
     });
   }
 }

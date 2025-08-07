@@ -87,11 +87,8 @@ const PortfolioChatbot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Call Railway backend directly in production, or local API in development
-      const apiUrl =
-        process.env.NODE_ENV === "production"
-          ? "https://hunters-website-2025-production.up.railway.app/chat"
-          : "/api/chat";
+      // Use Next.js API route in all environments (local proxy to Railway)
+      const apiUrl = "/api/chat";
 
       const response = await fetch(apiUrl, {
         method: "POST",
