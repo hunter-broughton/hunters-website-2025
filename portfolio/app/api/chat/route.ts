@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Always use Railway backend - works for both local dev and Vercel production
-const CHATBOT_API_URL = "https://hunters-website-2025-production.up.railway.app";
+const CHATBOT_API_URL =
+  "https://hunters-website-2025-production.up.railway.app";
 
 export async function OPTIONS(request: NextRequest) {
   // Handle CORS preflight requests
   return new NextResponse(null, {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
     },
   });
 }
@@ -51,38 +52,41 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    
+
     // Return response with CORS headers
     return NextResponse.json(data, {
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     });
   } catch (error) {
     console.error("Chat API error:", error);
 
     // Return a fallback response
-    return NextResponse.json({
-      response:
-        "I'm sorry, I'm currently offline. Please explore Hunter's portfolio directly or try contacting him through the links in the contact section!",
-      sources: [],
-      conversation_id: `fallback-${Date.now()}`,
-      timestamp: new Date().toISOString(),
-      confidence: 0.0,
-      suggested_questions: [
-        "Check out Hunter's projects section",
-        "Visit Hunter's skills constellation",
-        "Go to the contact page",
-      ],
-    }, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    return NextResponse.json(
+      {
+        response:
+          "I'm sorry, I'm currently offline. Please explore Hunter's portfolio directly or try contacting him through the links in the contact section!",
+        sources: [],
+        conversation_id: `fallback-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        confidence: 0.0,
+        suggested_questions: [
+          "Check out Hunter's projects section",
+          "Visit Hunter's skills constellation",
+          "Go to the contact page",
+        ],
       },
-    });
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      }
+    );
   }
 }
 

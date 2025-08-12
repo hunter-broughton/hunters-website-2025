@@ -38,8 +38,9 @@ const DailyCommits = () => {
   useEffect(() => {
     const fetchDailyCommits = async () => {
       try {
-        // Use our new API route that can access private repos
-        const response = await fetch("/api/github/daily-commits");
+        const response = await fetch("/api/github/daily-commits", {
+          cache: "no-store",
+        });
 
         if (response.ok) {
           const data = await response.json();
@@ -80,6 +81,8 @@ const DailyCommits = () => {
     };
 
     fetchDailyCommits();
+    const id = setInterval(fetchDailyCommits, 60_000);
+    return () => clearInterval(id);
   }, []);
 
   if (loading) {
