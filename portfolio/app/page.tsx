@@ -510,7 +510,7 @@ const Home = () => {
                           <span className="text-cyber-white/40">
                             current location:
                           </span>{" "}
-                          Palo Alto, CA
+                          Ann Arbor, MI
                         </div>
                       </motion.div>
                     </div>
