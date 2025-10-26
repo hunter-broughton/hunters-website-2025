@@ -18,6 +18,21 @@ interface Job {
 
 const experienceItems: Job[] = [
   {
+    company: "Microsoft",
+    jobTitle: "Incoming Software Engineering Intern",
+    duration: "May 2026 - August 2026",
+    location: "Redmond, WA",
+    companyLink: "https://Microsoft.com/",
+    logo: "/assets/Mircrosoft.png",
+    desc: [
+      <>
+        Excited to be joining the{" "}
+        <span className="text-neon-blue font-bold">Microsoft Azure</span>{" "}
+        Fullstack Software Engineering team for Summer 2026!
+      </>,
+    ],
+  },
+  {
     company: "Credo Semiconductor",
     jobTitle: "System and Software Engineering Intern",
     duration: "May 2025 - August 2025",

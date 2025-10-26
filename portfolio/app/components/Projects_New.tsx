@@ -29,13 +29,20 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "thriftswipe",
-    title: "ThriftSwipe",
+    id: "anywear",
+    title: "Anywear",
     description:
-      "AI-powered online marketplace for thrift clothing. Our algorithm matches users with clothing based on their preferences and style, making sustainable fashion discovery effortless.",
-    techStack: ["Express", "MongoDB", "React", "Tailwind", "Python", "AI/ML"],
+      "AI-powered online marketplace for clothing. Our algorithm matches users with clothing based on their preferences and style, making fashion discovery effortless.",
+    techStack: [
+      "Express",
+      "PostgreSQL",
+      "React",
+      "Tailwind",
+      "Python",
+      "AI/ML",
+    ],
     githubLink: "https://github.com/hunter-broughton/ThriftSwipe",
-    image: "/assets/ThriftSwipe.jpg",
+    image: "/assets/anywear.jpeg",
     featured: true,
     category: "web",
     status: "in-progress",
@@ -328,12 +335,14 @@ const InteractiveProjectShowcase = () => {
                     alt={project.title}
                     fill
                     className={`${
-                      project.image.includes("pied_piper")
+                      project.image.includes("pied_piper") ||
+                      project.image.includes("anywear")
                         ? "object-contain bg-cyber-black/20"
                         : "object-cover"
                     } group-hover:scale-105 transition-transform duration-500`}
                     style={
-                      project.image.includes("pied_piper")
+                      project.image.includes("pied_piper") ||
+                      project.image.includes("anywear")
                         ? { objectPosition: "center" }
                         : {}
                     }

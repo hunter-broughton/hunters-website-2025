@@ -492,9 +492,8 @@ const Home = () => {
                       and ready to scale.{" "}
                       <span className="text-neon-blue">
                         {" "}
-                        I'm currently searching for an internship opportunity
-                        for Summer 2026, and a full-time position starting
-                        December 2026.{" "}
+                        Incoming summer 2026 full-stack SWE Intern for Microsoft
+                        Azure.{" "}
                       </span>
                     </p>
 
