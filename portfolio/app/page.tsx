@@ -267,7 +267,7 @@ const Home = () => {
   // Course data organized by category
   const coursework: Record<
     "CS" | "ECON",
-    Array<{ name: string; number: string; link: string }>
+    Array<{ name: string; number: string; link?: string }>
   > = {
     CS: [
       {
@@ -276,9 +276,17 @@ const Home = () => {
         link: "https://web.eecs.umich.edu/~kuipers/teaching/eecs492-F11.html",
       },
       {
+        name: "Distributed Systems",
+        number: "EECS 491",
+      },
+      {
         name: "Software Engineering",
         number: "EECS 481",
         link: "https://eecs481.org/",
+      },
+      {
+        name: "Intro to ML",
+        number: "EECS 445",
       },
       {
         name: "Mathematics of Machine Learning",
@@ -321,6 +329,10 @@ const Home = () => {
         name: "Game Theory",
         number: "ECON 398",
         link: "https://www.coursicle.com/umich/courses/ECON/398/",
+      },
+      {
+        name: "Economic Development",
+        number: "ECON 461",
       },
       {
         name: "Intermediate Microeconomics",
@@ -777,6 +789,36 @@ const Home = () => {
                       Academic Highlights
                     </h3>
                     <div className="space-y-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-neon-blue font-tech">
+                            Convolutional Neural Network
+                          </h4>
+                          <ExternalLinks githubLink="https://github.com/hunter-broughton/LC2K-Cache" />
+                        </div>
+                        <p className="text-cyber-white/70 text-base">
+                          Throughout EECS 370 (Computer Organization), I
+                          developed an ISA simulator for the LC2K architecture
+                          in C. This project deepened my understanding of
+                          low-level programming, instruction sets, and computer
+                          architecture concepts. I implemented a simulator,
+                          assembler, a pipeline, and a cache to optimize
+                          performance.
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-neon-blue font-tech">LC2K ISA</h4>
+                          <ExternalLinks githubLink="https://github.com/hunter-broughton/492-CNN" />
+                        </div>
+                        <p className="text-cyber-white/70 text-base">
+                          Developed a Convolutional Neural Network from scratch
+                          in Python for EECS 492 (Intro to AI). The CNN
+                          classifies what is seen in images from the CIFAR-10
+                          dataset. Implemented with a hyperparameter grid serach
+                          to optimize model performance.
+                        </p>
+                      </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-neon-blue font-tech">
