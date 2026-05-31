@@ -3,7 +3,7 @@ const nextConfig = {
   // Remove output: "export" to enable API routes on Vercel
   trailingSlash: true,
   images: {
-    domains: ["firebasestorage.googleapis.com"],
+    domains: [`images.unsplash.com`, `cdn.sanity.io`],
     unoptimized: true,
   },
   basePath: "",
