@@ -591,39 +591,41 @@ const Home = () => {
                 </h2>
                 <div className="space-y-6 max-w-none">
                   <p className="text-cyber-white/80 text-base leading-relaxed">
-                    Hey, I'm <span className="text-neon-blue">Hunter</span> — a
-                    passionate developer who loves building innovative
-                    solutions. I'm a CS and Econ major at the University of
-                    Michigan and most days you'll find me coding, building side
-                    projects, and diving into something that piques my interest
-                    in tech. I thrive on challenges and enjoy creating software
-                    that makes a difference. Whether it's a web app, a machine
-                    learning model, or firmware, I'm always eager to learn and
-                    grow in my craft.
-                  </p>
-
-                  <p className="text-cyber-white/80 text-base leading-relaxed">
-                    I'm interested in{" "}
+                    Hey, I'm <span className="text-neon-blue">Hunter</span>, a CS
+                    and Econ major at the University of Michigan. What I really
+                    care about is{" "}
                     <span className="text-neon-blue">
-                      full-stack development
-                    </span>
-                    , AI/ML, computing hardware, and leveraging all of them to
-                    create user experiences that matter. I enjoy working on
-                    projects that combine <em>creativity</em> and{" "}
-                    <em>purpose</em> with <em>technical rigor</em>, and I'm
-                    always searching for new challenges.
+                      AI infrastructure and the cloud
+                    </span>{" "}
+                    that powers it. The models getting all the attention right
+                    now only work because of the systems running underneath them,
+                    and I find that layer fascinating. Figuring out how to make
+                    distributed compute, cluster orchestration, and deployment
+                    pipelines actually hold up at scale is the kind of problem I
+                    genuinely enjoy sitting with.
                   </p>
 
                   <p className="text-cyber-white/80 text-base leading-relaxed">
-                    Outside of work, I'm usually backpacking in Washington,
-                    playing guitar, or trying to fix my golf swing.{" "}
+                    That said, my love for{" "}
+                    <span className="text-neon-blue">software engineering</span>{" "}
+                    runs broader than any one area. I got into this because
+                    building things is fun, and that curiosity has taken me
+                    across full-stack apps, machine learning, and even firmware.
+                    I like working close to the hard parts of a system, writing
+                    code that is clean and fast, and learning whatever I need to
+                    in order to ship something that works.
+                  </p>
+
+                  <p className="text-cyber-white/80 text-base leading-relaxed">
+                    When I'm not building, you'll find me backpacking in
+                    Washington, playing guitar, or trying to fix my golf swing.{" "}
                     <a
                       href="/socials"
                       className="text-neon-blue hover:text-michigan-maize transition-colors hover:no-underline"
                     >
                       Let's connect
                     </a>{" "}
-                    if you want to build something together.
+                    if you're working on something interesting.
                   </p>
                 </div>
 
