@@ -615,20 +615,15 @@ const Home = () => {
                   </p>
 
                   <p className="text-cyber-white/80 text-base leading-relaxed">
-                    When I'm not coding, you can find me backpacking in
-                    Washington, playing the guitar, struggling to learn how to
-                    love running, or constantly tweaking my golf swing. From big
-                    ideas, to clean execution, I love turning a vision into
-                    reality.{" "}
-                    <span className="text-michigan-maize">
-                      Hiring? Collaborating? Just Curious?
-                    </span>{" "}
+                    Outside of work, I'm usually backpacking in Washington,
+                    playing guitar, or trying to fix my golf swing.{" "}
                     <a
                       href="/socials"
                       className="text-neon-blue hover:text-michigan-maize transition-colors hover:no-underline"
                     >
-                      Lets connect!
-                    </a>
+                      Let's connect
+                    </a>{" "}
+                    if you want to build something together.
                   </p>
                 </div>
 
