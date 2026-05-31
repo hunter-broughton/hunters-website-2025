@@ -4,164 +4,108 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET() {
+const USERNAME = "hunter-broughton";
+const USER_TIMEZONE = "America/Los_Angeles";
+const ZERO_SHA = "0000000000000000000000000000000000000000";
+
+function buildHeaders(token?: string): Record<string, string> {
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github.v3+json",
+    "User-Agent": "hunters-website",
+  };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+}
+
+function isToday(iso: string, nowInTZ: Date): boolean {
+  const eventInTZ = new Date(
+    new Date(iso).toLocaleString("en-US", { timeZone: USER_TIMEZONE })
+  );
+  return eventInTZ.toDateString() === nowInTZ.toDateString();
+}
+
+// Count the commits contained in a single push using the compare API.
+// This works for PRIVATE repos when an auth token is supplied. The events
+// API no longer includes commit counts in its payload, so we derive the
+// count from the before/head SHAs instead.
+async function countPushCommits(
+  repo: string,
+  before: string | undefined,
+  head: string | undefined,
+  headers: Record<string, string>
+): Promise<number> {
+  // Brand-new branch (no prior SHA) can't be compared; count the head commit.
+  if (!before || before === ZERO_SHA) {
+    return head ? 1 : 0;
+  }
+  if (!head) return 0;
+
   try {
-    const token = process.env.GITHUB_TOKEN;
-
-    // Get today's date range in Pacific Time (adjust if needed)
-    const userTimezone = "America/Los_Angeles";
-    const now = new Date();
-    const nowInTZ = new Date(
-      now.toLocaleString("en-US", { timeZone: userTimezone })
+    const res = await fetch(
+      `https://api.github.com/repos/${repo}/compare/${before}...${head}`,
+      { headers, cache: "no-store" }
     );
-    const startOfDayLocal = new Date(
-      nowInTZ.getFullYear(),
-      nowInTZ.getMonth(),
-      nowInTZ.getDate(),
-      0,
-      0,
-      0,
-      0
+    if (!res.ok) return 0;
+    const data = await res.json();
+    return typeof data.total_commits === "number" ? data.total_commits : 0;
+  } catch {
+    return 0;
+  }
+}
+
+export async function GET() {
+  // Today's date in Pacific Time
+  const now = new Date();
+  const nowInTZ = new Date(
+    now.toLocaleString("en-US", { timeZone: USER_TIMEZONE })
+  );
+
+  const token = process.env.GITHUB_TOKEN;
+  const headers = buildHeaders(token);
+
+  try {
+    // 1 call: the authenticated events feed includes private repo PushEvents.
+    // (Without a token, only public events are returned.)
+    const eventsRes = await fetch(
+      `https://api.github.com/users/${USERNAME}/events?per_page=100`,
+      { headers, cache: "no-store" }
     );
-    const endOfDayLocal = new Date(
-      startOfDayLocal.getTime() + 24 * 60 * 60 * 1000
-    );
 
-    // Convert to UTC ISO strings for GitHub API since/ until parameters
-    const startOfDay = startOfDayLocal.toISOString();
-    const endOfDay = endOfDayLocal.toISOString();
-
-    if (!token) {
-      // Fallback to public API if no token is provided (public events only)
-      const response = await fetch(
-        "https://api.github.com/users/hunter-broughton/events?per_page=100",
-        {
-          cache: "no-store",
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-            "User-Agent": "hunters-website",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch public events: ${response.status}`);
-      }
-
-      const events = await response.json();
-      const todayEvents = events.filter((event: any) => {
-        const eventDate = new Date(event.created_at);
-        const eventInUserTZ = new Date(
-          eventDate.toLocaleString("en-US", { timeZone: userTimezone })
-        );
-        return (
-          eventInUserTZ.toDateString() === nowInTZ.toDateString() &&
-          event.type === "PushEvent"
-        );
-      });
-
-      let todayCommits = 0;
-      todayEvents.forEach((event: any) => {
-        if (event.payload && event.payload.commits) {
-          todayCommits += event.payload.commits.length;
-        }
-      });
-
-      return NextResponse.json(
-        { count: todayCommits },
-        { headers: { "Cache-Control": "no-store" } }
-      );
-    } else {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/vnd.github.v3+json",
-        "User-Agent": "hunters-website",
-      };
-
-      // Get repositories sorted by most recent push (descending)
-      const reposResponse = await fetch(
-        "https://api.github.com/user/repos?sort=pushed&direction=desc&per_page=100&affiliation=owner,collaborator,organization_member&visibility=all",
-        { headers, cache: "no-store" }
-      );
-
-      if (!reposResponse.ok) {
-        // Fallback to authenticated events API if repos API fails
-        const eventsResponse = await fetch(
-          "https://api.github.com/user/events?per_page=100",
-          { headers, cache: "no-store" }
-        );
-
-        if (!eventsResponse.ok) {
-          throw new Error(`Failed to fetch events: ${eventsResponse.status}`);
-        }
-
-        const events = await eventsResponse.json();
-        const todayEvents = events.filter((event: any) => {
-          const eventDate = new Date(event.created_at);
-          const eventInUserTZ = new Date(
-            eventDate.toLocaleString("en-US", { timeZone: userTimezone })
-          );
-          return (
-            eventInUserTZ.toDateString() === nowInTZ.toDateString() &&
-            event.type === "PushEvent"
-          );
-        });
-
-        let todayCommits = 0;
-        todayEvents.forEach((event: any) => {
-          if (event.payload && event.payload.commits) {
-            todayCommits += event.payload.commits.length;
-          }
-        });
-
-        return NextResponse.json(
-          { count: todayCommits },
-          { headers: { "Cache-Control": "no-store" } }
-        );
-      }
-
-      const repos = await reposResponse.json();
-
-      // Fetch commits in parallel with limited concurrency to avoid rate limits
-      const concurrency = 8;
-      let index = 0;
-      let totalCommits = 0;
-
-      const worker = async () => {
-        while (index < repos.length) {
-          const i = index++;
-          const repo = repos[i];
-          try {
-            const commitsResponse = await fetch(
-              `https://api.github.com/repos/${repo.full_name}/commits?author=hunter-broughton&since=${startOfDay}&until=${endOfDay}&per_page=100`,
-              { headers, cache: "no-store" }
-            );
-            if (commitsResponse.status === 403) {
-              // Rate limited: break early and use what we have
-              return;
-            }
-            if (commitsResponse.ok) {
-              const commits = await commitsResponse.json();
-              totalCommits += commits.length;
-            }
-          } catch {
-            continue;
-          }
-        }
-      };
-
-      await Promise.all(Array.from({ length: concurrency }, () => worker()));
-
-      return NextResponse.json(
-        { count: totalCommits },
-        { headers: { "Cache-Control": "no-store" } }
-      );
+    if (!eventsRes.ok) {
+      throw new Error(`Failed to fetch events: ${eventsRes.status}`);
     }
+
+    const events = await eventsRes.json();
+    const todaysPushes = (Array.isArray(events) ? events : []).filter(
+      (e: any) => e.type === "PushEvent" && isToday(e.created_at, nowInTZ)
+    );
+
+    // One compare call per push today to count its commits. Pushes per day are
+    // few, so this stays well within rate limits (unlike scanning every repo).
+    const counts = await Promise.all(
+      todaysPushes.map((e: any) =>
+        countPushCommits(
+          e.repo.name,
+          e.payload?.before,
+          e.payload?.head,
+          headers
+        )
+      )
+    );
+
+    const count = counts.reduce((sum, n) => sum + n, 0);
+
+    return NextResponse.json(
+      { count },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     console.error("Error fetching daily commits:", error);
     return NextResponse.json(
-      { error: "Failed to fetch daily commits" },
-      { status: 500, headers: { "Cache-Control": "no-store" } }
+      { count: 0 },
+      { headers: { "Cache-Control": "no-store" } }
     );
   }
 }
