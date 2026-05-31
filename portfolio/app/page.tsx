@@ -51,18 +51,18 @@ const DailyCommits = () => {
           const startOfDay = new Date(
             today.getFullYear(),
             today.getMonth(),
-            today.getDate()
+            today.getDate(),
           ).toISOString();
           const endOfDay = new Date(
             today.getFullYear(),
             today.getMonth(),
-            today.getDate() + 1
+            today.getDate() + 1,
           ).toISOString();
 
           const searchResponse = await fetch(
             `https://api.github.com/search/commits?q=author:hunter-broughton+committer-date:${
               startOfDay.split("T")[0]
-            }..${endOfDay.split("T")[0]}`
+            }..${endOfDay.split("T")[0]}`,
           );
 
           if (searchResponse.ok) {
@@ -188,7 +188,7 @@ const SideNav = () => {
       {
         rootMargin: "-50% 0px -50% 0px", // Triggers when section is in middle of viewport
         threshold: 0,
-      }
+      },
     );
 
     // Observe all sections except contact
@@ -196,7 +196,7 @@ const SideNav = () => {
       (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) observer.observe(element);
-      }
+      },
     );
 
     return () => observer.disconnect();
@@ -529,7 +529,7 @@ const Home = () => {
                           <span className="text-cyber-white/40">
                             current location:
                           </span>{" "}
-                          Ann Arbor, MI
+                          Redmond, WA
                         </div>
                       </motion.div>
                     </div>
@@ -778,7 +778,7 @@ const Home = () => {
                                   {course.name}
                                 </div>
                               </motion.a>
-                            )
+                            ),
                           )}
                         </motion.div>
                       </div>
