@@ -280,18 +280,26 @@ const Home = () => {
         number: "EECS 491",
       },
       {
+        name: "Operating Systems",
+        number: "EECS 482",
+      },
+      {
         name: "Software Engineering",
         number: "EECS 481",
         link: "https://eecs481.org/",
+      },
+      {
+        name: "Conversational AI",
+        number: "EECS 449",
       },
       {
         name: "Intro to ML",
         number: "EECS 445",
       },
       {
-        name: "Mathematics of Machine Learning",
-        number: "EECS 298",
-        link: "https://rampure.org/math-for-ML/",
+        name: "Theory of Computation",
+        number: "EECS 376",
+        link: "https://eecs376.org/",
       },
       {
         name: "Computer Organization",
@@ -299,9 +307,9 @@ const Home = () => {
         link: "https://eecs370.github.io/",
       },
       {
-        name: "Theory of Computation",
-        number: "EECS 376",
-        link: "https://eecs376.org/",
+        name: "Mathematics of Machine Learning",
+        number: "EECS 298",
+        link: "https://rampure.org/math-for-ML/",
       },
       {
         name: "Data Structures and Algorithms",
@@ -326,13 +334,13 @@ const Home = () => {
     ],
     ECON: [
       {
-        name: "Game Theory",
-        number: "ECON 398",
-        link: "https://www.coursicle.com/umich/courses/ECON/398/",
-      },
-      {
         name: "Economic Development",
         number: "ECON 461",
+      },
+      {
+        name: "Intermediate Macroeconomics",
+        number: "ECON 402",
+        link: "https://secure.rackham.umich.edu/course-list/course-list.php?rackham=Y&program=Economics",
       },
       {
         name: "Intermediate Microeconomics",
@@ -340,9 +348,9 @@ const Home = () => {
         link: "https://secure.rackham.umich.edu/course-list/course-list.php?rackham=Y&program=Economics",
       },
       {
-        name: "Intermediate Macroeconomics",
-        number: "ECON 402",
-        link: "https://secure.rackham.umich.edu/course-list/course-list.php?rackham=Y&program=Economics",
+        name: "Game Theory",
+        number: "ECON 398",
+        link: "https://www.coursicle.com/umich/courses/ECON/398/",
       },
       {
         name: "Business Cycle Theory",
@@ -504,8 +512,8 @@ const Home = () => {
                       and ready to scale.{" "}
                       <span className="text-neon-blue">
                         {" "}
-                        Incoming summer 2026 full-stack SWE Intern for Microsoft
-                        Azure.{" "}
+                        Summer 2026 SWE Intern at Microsoft Azure Arc Enabled
+                        Kubernetes.{" "}
                       </span>
                     </p>
 
@@ -792,8 +800,35 @@ const Home = () => {
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-neon-blue font-tech">
-                            Convolutional Neural Network
+                            Paxos-Based Fault-Tolerant Key/Value Service
                           </h4>
+                        </div>
+                        <p className="text-cyber-white/70 text-base">
+                          Built a distributed key/value store for EECS 491
+                          (Distributed Systems) using the Paxos consensus
+                          protocol. The service tolerates node failures while
+                          guaranteeing linearizable reads and writes across a
+                          replicated state machine cluster.
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-neon-blue font-tech">
+                            Vision Transformer — Dog Breed Classifier
+                          </h4>
+                        </div>
+                        <p className="text-cyber-white/70 text-base">
+                          Designed and trained a Vision Transformer (ViT) in
+                          Python for EECS 445 (Intro to ML) to classify dog
+                          breeds from images. Applied patch embedding,
+                          multi-head self-attention, and fine-tuning techniques
+                          to maximize classification accuracy across a
+                          multi-class dataset.
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-neon-blue font-tech">LC2K ISA</h4>
                           <ExternalLinks githubLink="https://github.com/hunter-broughton/LC2K-Cache" />
                         </div>
                         <p className="text-cyber-white/70 text-base">
@@ -808,14 +843,16 @@ const Home = () => {
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <h4 className="text-neon-blue font-tech">LC2K ISA</h4>
+                          <h4 className="text-neon-blue font-tech">
+                            Convolutional Neural Network
+                          </h4>
                           <ExternalLinks githubLink="https://github.com/hunter-broughton/492-CNN" />
                         </div>
                         <p className="text-cyber-white/70 text-base">
                           Developed a Convolutional Neural Network from scratch
                           in Python for EECS 492 (Intro to AI). The CNN
                           classifies what is seen in images from the CIFAR-10
-                          dataset. Implemented with a hyperparameter grid serach
+                          dataset. Implemented with a hyperparameter grid search
                           to optimize model performance.
                         </p>
                       </div>
@@ -834,30 +871,6 @@ const Home = () => {
                           Engineering) by contributing to the HTTPie project,
                           enhancing its authentication, error handling, and test
                           suite.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="text-neon-blue font-tech mb-2">
-                          United States TSP Solver
-                        </h4>
-                        <p className="text-cyber-white/70 text-base">
-                          Implemented a C++ program that uses Prim and Kruksal's
-                          algorithm to solve the Traveling Salesman Problem for
-                          the United States. The program uses a custom-built
-                          data structure to store the cities and uses both
-                          algorithms to find the minimum spanning tree.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="text-neon-blue font-tech mb-2">
-                          Searching through a Grid
-                        </h4>
-                        <p className="text-cyber-white/70 text-base">
-                          A Java project that used the scientific method to test
-                          the efficiency of various search algorithms (BFS, DFS,
-                          and A*) on a grid. The program uses a custom-built
-                          data structures to store the grid and a GUI to
-                          visualize the search.
                         </p>
                       </div>
                     </div>

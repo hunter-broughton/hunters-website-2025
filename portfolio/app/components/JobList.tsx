@@ -19,16 +19,37 @@ interface Job {
 const experienceItems: Job[] = [
   {
     company: "Microsoft",
-    jobTitle: "Incoming Software Engineering Intern",
+    jobTitle: "Software Engineering Intern",
     duration: "May 2026 - August 2026",
     location: "Redmond, WA",
     companyLink: "https://Microsoft.com/",
     logo: "/assets/Mircrosoft.png",
     desc: [
       <>
-        Excited to be joining the{" "}
-        <span className="text-neon-blue font-bold">Microsoft Azure</span>{" "}
-        Fullstack Software Engineering team for Summer 2026!
+        Engineering{" "}
+        <span className="text-neon-blue font-bold">Cluster Extensions</span> for{" "}
+        <span className="text-neon-blue font-bold">Kubernetes</span> across AKS,
+        hybrid, and edge clusters, improving state reconciliation for hybrid and{" "}
+        <span className="text-neon-blue font-bold">GPU workloads</span>
+      </>,
+      <>
+        Automating{" "}
+        <span className="text-neon-blue font-bold">workload identity</span> and{" "}
+        <span className="text-neon-blue font-bold">federated credentials</span>{" "}
+        at scale, eliminating long-lived secret storage
+      </>,
+      <>
+        Integrating{" "}
+        <span className="text-neon-blue font-bold">Azure Monitor</span> with{" "}
+        <span className="text-neon-blue font-bold">Flux</span>-configured
+        clusters to optimize telemetry pipelines
+      </>,
+      <>
+        Abstracting{" "}
+        <span className="text-neon-blue font-bold">GitOps</span>, security, and
+        observability into a unified{" "}
+        <span className="text-neon-blue font-bold">Cluster Extension</span>{" "}
+        experience for multi-cluster environments
       </>,
     ],
   },
