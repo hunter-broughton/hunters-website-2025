@@ -142,40 +142,6 @@ const experienceItems: Job[] = [
       </>,
     ],
   },
-  {
-    company: "SparkRacing",
-    jobTitle: "Data Engineer",
-    duration: "January 2024 - May 2024",
-    location: "Ann Arbor, MI",
-    companyLink: "https://spark.engin.umich.edu/",
-    logo: "/assets/spark.png",
-    desc: [
-      <>
-        Created a system design to convert{" "}
-        <span className="text-neon-blue font-bold">16-bit diagnostic data</span>{" "}
-        into a readable,{" "}
-        <span className="text-neon-blue font-bold">real-time message</span> for
-        the driver
-      </>,
-      <>
-        Programmed the Bike Diagnostic system using{" "}
-        <span className="text-neon-blue font-bold">Python</span>,{" "}
-        <span className="text-neon-blue font-bold">Pandas</span>, and{" "}
-        <span className="text-neon-blue font-bold">NumPy</span>, reducing
-        diagnostic cycle time by{" "}
-        <span className="text-neon-blue font-bold">40%</span>
-      </>,
-      <>
-        Built a <span className="text-neon-blue font-bold">PyTest</span>-based
-        deployment pipeline, streamlining releases and ensuring stability
-      </>,
-      <>
-        Implemented the software into our{" "}
-        <span className="text-neon-blue font-bold">185+ MPH</span> race winning
-        bike
-      </>,
-    ],
-  },
 ];
 
 const JobList = () => {
