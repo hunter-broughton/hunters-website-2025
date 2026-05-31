@@ -320,11 +320,11 @@ Remember: You're not just providing information - you're having a friendly conve
     def _get_fallback_response(self, intent: str) -> str:
         """Fallback responses when no relevant information is found"""
         fallback_responses = {
-            "projects": "I'd be happy to tell you about Hunter's projects! He has worked on several interesting projects including ThriftSwipe (an AI-powered thrift marketplace), GreekLink (a social platform), and this portfolio website. Would you like to know more about any specific project?",
-            "skills": "Hunter has a diverse skill set including programming languages like JavaScript, Python, and TypeScript, as well as frameworks like React, Next.js, and various AI/ML technologies. What specific skills are you interested in?",
+            "projects": "I'd be happy to tell you about Hunter's projects! He has worked on several including Anywear (an AI-powered clothing marketplace), an Algorithmic Trading System, Rust compression algorithms, and this portfolio website. Would you like to know more about any specific project?",
+            "skills": "Hunter has a diverse skill set centered on AI infrastructure and cloud-native systems, including Kubernetes, Azure, Go, and distributed systems, alongside strong full-stack skills (JavaScript, Python, TypeScript, React, Next.js) and AI/ML technologies. What specific skills are you interested in?",
             "contact": "You can reach Hunter through his portfolio website at hunterbroughton.com/socials, where you'll find links to his LinkedIn, GitHub, and email contact information.",
-            "education": "Hunter is currently studying Computer Science at the University of Michigan. He's also involved in extracurricular activities like the Hill Street Run Club where he serves as VP of Communications.",
-            "personal": "Hunter Broughton is a Computer Science student at the University of Michigan with a passion for software engineering, web development, and AI/ML. He enjoys building innovative projects and contributing to open source.",
+            "education": "Hunter is studying Computer Science and Economics at the University of Michigan (graduating December 2026). He's also involved in extracurricular activities like the Hill Street Run Club where he serves as VP of Communications.",
+            "personal": "Hunter Broughton is a Computer Science and Economics student at the University of Michigan whose main focus is AI infrastructure and the cloud, alongside a broad love for software engineering. He currently works at Microsoft on Azure Arc Enabled Kubernetes.",
             "website": "This portfolio website showcases Hunter's work and skills. It features a cyberpunk theme with interactive components, built using Next.js, TypeScript, and modern web technologies.",
             "general": "I'm Hunter's AI assistant! I can help you learn about his projects, skills, education, and how to contact him. What would you like to know?"
         }
@@ -334,11 +334,11 @@ Remember: You're not just providing information - you're having a friendly conve
     def _get_conversational_fallback_response(self, intent: str) -> str:
         """More conversational fallback responses when no context is found"""
         fallback_responses = {
-            "projects": "Hunter has worked on some fascinating projects! He's built ThriftSwipe, an AI-powered thrift marketplace, GreekLink for social networking, and this very portfolio website you're on. Each project showcases different aspects of his skills. Which type of project interests you most?",
-            "skills": "Hunter's got a really diverse technical background! He's skilled in JavaScript, Python, TypeScript, React, Next.js, and has been diving into AI/ML technologies. Plus he knows his way around databases, cloud platforms, and more. What kind of technology stack are you curious about?",
+            "projects": "Hunter has worked on some fascinating projects! He's built Anywear, an AI-powered clothing marketplace, an Algorithmic Trading System, Rust compression algorithms, and this very portfolio website you're on. Each project showcases different aspects of his skills. Which type of project interests you most?",
+            "skills": "Hunter's got a really diverse technical background centered on AI infrastructure and the cloud! He works with Kubernetes, Azure, Go, and distributed systems, and is also strong in full-stack development (JavaScript, Python, TypeScript, React, Next.js) and AI/ML. What kind of technology stack are you curious about?",
             "contact": "You can definitely reach out to Hunter! Check out his socials page at hunterbroughton.com/socials where you'll find his LinkedIn, GitHub, and email. He's always excited to connect with fellow developers and discuss potential opportunities!",
-            "education": "Hunter's studying Computer Science at the University of Michigan, where he's been getting hands-on experience with everything from algorithms to real-world applications. He's also active in extracurriculars like the Hill Street Run Club. Want to know more about his academic journey?",
-            "personal": "Hunter's a Computer Science student at U of M who's passionate about building innovative software solutions. He loves working on projects that combine creativity with technical challenges, especially in the AI/ML space. What would you like to know about his background?",
+            "education": "Hunter's studying Computer Science and Economics at the University of Michigan, with coursework spanning distributed systems, machine learning, operating systems, and conversational AI. He's also active in extracurriculars like the Hill Street Run Club. Want to know more about his academic journey?",
+            "personal": "Hunter's a Computer Science and Economics student at U of M whose passion is AI infrastructure and cloud-native systems, backed by a broad love for software engineering. He currently works at Microsoft on Azure Arc Enabled Kubernetes. What would you like to know about his background?",
             "website": "This portfolio website is actually one of Hunter's projects! It features a cool cyberpunk theme with interactive components, built using Next.js and TypeScript. Pretty neat, right? Are you interested in the technical details of how it was built?",
             "general": "I'm here to help you learn about Hunter! He's a talented developer with experience in web development, AI/ML, and some really cool projects under his belt. What aspect of his work interests you most - his projects, technical skills, or maybe his background?"
         }
@@ -349,7 +349,7 @@ Remember: You're not just providing information - you're having a friendly conve
         """Generate suggested follow-up questions based on intent"""
         suggestions = {
             "projects": [
-                "Tell me more about ThriftSwipe",
+                "Tell me more about Anywear",
                 "What technologies does Hunter use?",
                 "What's Hunter's most recent project?"
             ],

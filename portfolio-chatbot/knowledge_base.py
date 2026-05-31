@@ -166,62 +166,99 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     
     # Personal Information & Bio
     kb.add_knowledge_item(
-        "Hunter Broughton is a Computer Science and Economics student at the University of Michigan, studying from August 2023 to December 2026. He is a developer who loves to learn and build, solving complex real-world problems using efficient, high-impact software. From machine learning and resilient web systems to financial modeling and forecasts, he develops innovative solutions that matter.",
+        "Hunter Broughton is a Computer Science and Economics student at the University of Michigan, studying from August 2023 to December 2026. What he cares about most is AI infrastructure and the cloud that powers it: the distributed systems, cluster orchestration, and deployment pipelines that let machine learning actually run reliably at scale. He's drawn to that layer because the models getting all the attention only work because of the infrastructure underneath them.",
         "personal",
-        {"type": "bio", "importance": "high", "school": "University of Michigan"}
+        {"type": "bio", "importance": "high", "school": "University of Michigan", "focus": ["AI infrastructure", "cloud", "distributed systems", "AI/ML"]}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter enjoys working on projects that combine creativity and purpose with technical rigor, and he's always searching for new challenges. When he's not coding, you can find him backpacking in Washington, playing the guitar, struggling to learn how to love running, or constantly tweaking his golf swing. From big ideas to clean execution, he loves turning a vision into reality.",
+        "While Hunter's focus is AI infrastructure and cloud-native systems, his love for software engineering is broad. He got into engineering because building things is fun, and that curiosity has taken him across full-stack development, machine learning, and even firmware. He likes working close to the hard parts of a system and writing code that is clean and fast. When he's not building, you can find him backpacking in Washington, playing the guitar, or trying to fix his golf swing.",
         "personal",
-        {"type": "interests", "hobbies": ["backpacking", "guitar", "running", "golf"]}
+        {"type": "interests", "hobbies": ["backpacking", "guitar", "golf"], "breadth": ["full-stack", "machine learning", "firmware"]}
     )
-    
+
     # Education Details
     kb.add_knowledge_item(
-        "Hunter Broughton is pursuing a Bachelor of Science in Computer Science and Economics at the University of Michigan from August 2023 to December 2026. His Computer Science coursework includes Intro to AI (EECS 492), Software Engineering (EECS 481), Mathematics of Machine Learning (EECS 298), Computer Organization (EECS 370), Data Structures and Algorithms (EECS 281), and Foundations of Computer Science (EECS 203).",
+        "Hunter Broughton is pursuing a Bachelor of Science in Computer Science and Economics at the University of Michigan from August 2023 to December 2026. His Computer Science coursework includes Intro to AI (EECS 492), Distributed Systems (EECS 491), Operating Systems (EECS 482), Software Engineering (EECS 481), Conversational AI (EECS 449), Intro to Machine Learning (EECS 445), Theory of Computation (EECS 376), Computer Organization (EECS 370), Mathematics of Machine Learning (EECS 298), Data Structures and Algorithms (EECS 281), and Discrete Math (EECS 203), along with Calculus 3 (MATH 215) and Intro to Data Science (STATS 206).",
         "education",
         {"school": "University of Michigan", "degree": "BS Computer Science and Economics", "status": "current", "graduation": "December 2026"}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter's Economics coursework at University of Michigan includes Intermediate Microeconomics (ECON 401), Intermediate Macroeconomics (ECON 402), Introduction to Statistics and Econometrics (ECON 452), Game Theory (ECON 409), and Money and Banking (ECON 340). He has made the HTTPie Open Source Contribution as an academic highlight.",
+        "Hunter's Economics coursework at University of Michigan includes Economic Development (ECON 461), Intermediate Macroeconomics (ECON 402), Intermediate Microeconomics (ECON 401), Game Theory (ECON 398), Business Cycle Theory (ECON 396), Macroeconomic Theory (ECON 102), and Microeconomic Theory (ECON 101).",
         "education",
-        {"type": "coursework", "field": "Economics", "achievement": "HTTPie Open Source Contribution"}
+        {"type": "coursework", "field": "Economics"}
     )
-    
+
+    # Academic Highlights / Project Coursework
+    kb.add_knowledge_item(
+        "For EECS 491 (Distributed Systems), Hunter built a Paxos-Based Fault-Tolerant Distributed Key/Value Service. The service uses the Paxos consensus protocol to tolerate node failures while guaranteeing linearizable reads and writes across a replicated state machine cluster. This is a core example of his interest in distributed systems and infrastructure.",
+        "education",
+        {"type": "academic_highlight", "course": "EECS 491", "name": "Paxos-Based Fault-Tolerant Key/Value Service", "topic": "distributed systems"}
+    )
+
+    kb.add_knowledge_item(
+        "For EECS 445 (Intro to Machine Learning), Hunter designed and trained a Vision Transformer (ViT) in Python to classify dog breeds from images. He applied patch embedding, multi-head self-attention, and fine-tuning techniques to maximize classification accuracy across a multi-class dataset.",
+        "education",
+        {"type": "academic_highlight", "course": "EECS 445", "name": "Vision Transformer Dog Breed Classifier", "topic": "machine learning"}
+    )
+
+    kb.add_knowledge_item(
+        "For EECS 370 (Computer Organization), Hunter developed an ISA simulator for the LC2K architecture in C, implementing a simulator, assembler, pipeline, and cache to optimize performance. For EECS 492 (Intro to AI), he built a Convolutional Neural Network from scratch in Python that classifies images from the CIFAR-10 dataset, using a hyperparameter grid search to optimize performance. For EECS 481 (Software Engineering), he contributed to the open-source HTTPie project, improving its authentication, error handling, and test suite.",
+        "education",
+        {"type": "academic_highlight", "courses": ["EECS 370", "EECS 492", "EECS 481"], "names": ["LC2K ISA", "CNN", "HTTPie Contribution"]}
+    )
+
     # Work Experience
     kb.add_knowledge_item(
-        "Hunter worked as a System and Software Engineering Intern at Credo Semiconductor in San Jose, CA from May 2025 to August 2025. He developed features for the new PCIe software called Pilot using Vue, Vuetify, JavaScript, Python, and APIs. He implemented efficient algorithms for Linecard-SDK with Python and PyTest, and programmed S-parameter analysis automation and Proportional-Integral-Derivative Controllers for the optical team.",
+        "Hunter is a Software Engineering Intern at Microsoft in Redmond, WA (May 2026 to August 2026), working on Azure Arc Enabled Kubernetes. He engineers Cluster Extensions for Kubernetes across AKS, hybrid, and edge clusters, improving state reconciliation for hybrid and GPU workloads. His work spans automating workload identity and federated credentials to eliminate long-lived secret storage, integrating Azure Monitor with Flux-configured clusters to optimize telemetry pipelines, and abstracting GitOps, security, and observability into a unified Cluster Extension experience for multi-cluster environments. This is his most recent and current role.",
+        "experience",
+        {"company": "Microsoft", "position": "Software Engineering Intern", "team": "Azure Arc Enabled Kubernetes", "location": "Redmond, WA", "duration": "May 2026 - August 2026", "current": True, "technologies": ["Kubernetes", "AKS", "Azure", "GitOps", "Flux", "Go"]}
+    )
+
+    kb.add_knowledge_item(
+        "Hunter worked as a System and Software Engineering Intern at Credo Semiconductor in San Jose, CA from May 2025 to August 2025. He developed features for the new PCIe software called Pilot using Vue, Vite, JavaScript, Python, C, and FastAPI. He implemented efficient algorithms for the PCIe-SDK with Python, PyTest, Regex, and multithreading, boosting throughput speed by 30%. He programmed S-parameter analysis automation and Proportional-Integral-Derivative Controllers to streamline optical testing, and won best implementation at the company hackathon for an EV-Charger management system.",
         "experience",
         {"company": "Credo Semiconductor", "position": "System and Software Engineering Intern", "location": "San Jose, CA", "duration": "May 2025 - August 2025"}
     )
-    
+
     kb.add_knowledge_item(
-        "At Credo Semiconductor, Hunter gained hands-on experience with Thermoelectric Temperature Controllers (TC-720) and a Vector Network Analyzer. He worked on PCIe software development and optical systems automation, combining both software and hardware engineering skills.",
+        "At Credo Semiconductor, Hunter gained hands-on experience with Thermoelectric Temperature Controllers (TC-720), a Vector Network Analyzer, and Grafana. He worked on PCIe software development and optical systems automation, combining both software and hardware engineering skills.",
         "experience",
-        {"company": "Credo Semiconductor", "type": "hardware_software", "technologies": ["TC-720", "Vector Network Analyzer", "PCIe"]}
+        {"company": "Credo Semiconductor", "type": "hardware_software", "technologies": ["TC-720", "Vector Network Analyzer", "PCIe", "Grafana"]}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter worked as a Software Developer Intern at Vloggi in Sydney, Australia from June 2024 to August 2024. He engineered full-stack features for Vloggi, a platform that offers MP4 data collection and management for companies. He developed and optimized web interfaces using React and TypeScript, integrated configurable CSS components for diverse client needs, and connected the front-end with a MySQL backend using Node.js, deploying it using AWS and Docker.",
+        "Hunter worked as a Software Developer Intern at Vloggi in Sydney, Australia from June 2024 to August 2024. He engineered full-stack features for Vloggi, a platform that offers MP4 data collection and management for companies. He developed and optimized web interfaces using React, Tailwind CSS, and TypeScript, integrated configurable CSS components for diverse client needs, and connected the front-end with a MySQL backend using Node.js, deploying it using AWS and Docker.",
         "experience",
         {"company": "Vloggi", "position": "Software Developer Intern", "location": "Sydney, Australia", "duration": "June 2024 - August 2024"}
     )
-    
-    kb.add_knowledge_item(
-        "Hunter worked as a Data Engineer at SparkRacing in Ann Arbor, MI from January 2024 to May 2024. SparkRacing is a University of Michigan student organization focused on racing and automotive technology.",
-        "experience",
-        {"company": "SparkRacing", "position": "Data Engineer", "location": "Ann Arbor, MI", "duration": "January 2024 - May 2024", "type": "student_organization"}
-    )
-    
+
     # Projects - Detailed Information
     kb.add_knowledge_item(
-        "ThriftSwipe is an AI-powered online marketplace for thrift clothing that Hunter is currently developing. The algorithm matches users with clothing based on their preferences and style, making sustainable fashion discovery effortless. It's built with Express, MongoDB, React, Tailwind, Python, and AI/ML technologies. The project is scaling with University of Michigan students and represents Hunter's work in combining AI/ML with practical applications.",
+        "Anywear is an AI-powered online marketplace for clothing that Hunter is currently developing (formerly called ThriftSwipe). The algorithm matches users with clothing based on their preferences and style, making fashion discovery effortless. It's built with Express, PostgreSQL, React, Tailwind, Python, and AI/ML technologies. The project is scaling with University of Michigan students and represents Hunter's work combining AI/ML with practical applications.",
         "projects",
-        {"name": "ThriftSwipe", "status": "in-progress", "year": 2024, "featured": True, "impact": "scaling with UMich students", "domain": "AI/ML + E-commerce"}
+        {"name": "Anywear", "aka": "ThriftSwipe", "status": "in-progress", "year": 2024, "featured": True, "impact": "scaling with UMich students", "domain": "AI/ML + E-commerce"}
     )
-    
+
+    kb.add_knowledge_item(
+        "Hunter built an Algorithmic Trading System in Python that analyzes market data and executes trades based on predefined strategies, backtesting them against historical data. It's built with Python, Matplotlib, Pandas, NumPy, Scikit-learn, and machine learning. The project reflects his interest in applying ML and his Economics background to financial markets.",
+        "projects",
+        {"name": "Algorithmic Trading System", "status": "completed", "year": 2025, "featured": True, "domain": "ML + Finance", "tech": ["Python", "Pandas", "NumPy", "Scikit-learn"]}
+    )
+
+    kb.add_knowledge_item(
+        "Inspired by Silicon Valley and Pied Piper, Hunter implemented various compression algorithms in Rust including Huffman coding, LZ77, and RLE, tested and managed through a CLI. It's built with Rust, WebAssembly, Leptos, Cargo, and Flask. The project demonstrates his systems programming skills and interest in low-level performance.",
+        "projects",
+        {"name": "Rust Compression Algorithms", "status": "completed", "year": 2025, "featured": True, "tech": ["Rust", "WebAssembly", "Leptos"]}
+    )
+
+    kb.add_knowledge_item(
+        "At the 2025 Credo company hackathon, Hunter built a Credo EV Charger Management and Queue System with real-time monitoring, queue management, and user-friendly interfaces to optimize charger usage. It's built with Next.js, Tailwind CSS, TypeScript, SQLite, and Node.js, and won best implementation and technical achievement.",
+        "projects",
+        {"name": "Credo EV Charger Management + Queue System", "status": "completed", "year": 2025, "featured": True, "achievement": "best implementation and technical achievement"}
+    )
+
     kb.add_knowledge_item(
         "GreekLink is an anonymous social media platform connecting Greek life communities nationwide that Hunter completed in 2023. He led both front-end and back-end development for this community-focused platform. It's built with Next.js, React, TypeScript, Tailwind, Firebase, and Firestore. The platform successfully connects students nationwide and is live at greeklink.xyz.",
         "projects",
@@ -235,9 +272,9 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
     
     kb.add_knowledge_item(
-        "Hunter's current portfolio website (the one you're viewing) is built with Next.js, Tailwind CSS, TypeScript, React, and Framer Motion. It features cyberpunk aesthetics, interactive components, responsive design, and showcases his technical skills through its implementation. The website includes features like a skills constellation, project showcase, dynamic GitHub integration, and this AI chatbot.",
+        "Hunter's current portfolio website (the one you're viewing) is built with Next.js, Tailwind CSS, TypeScript, React, and Framer Motion. It features cyberpunk aesthetics, interactive components, responsive design, and showcases his technical skills through its implementation. The website includes a categorized skills list, project showcase, dynamic GitHub commit integration, and this AI chatbot.",
         "projects",
-        {"name": "Portfolio Website", "status": "completed", "year": 2025, "featured": True, "url": "https://hunterbroughton.com", "features": ["cyberpunk design", "AI chatbot", "skills constellation"]}
+        {"name": "Portfolio Website", "status": "completed", "year": 2025, "featured": True, "url": "https://hunterbroughton.com", "features": ["cyberpunk design", "AI chatbot", "skills list", "GitHub integration"]}
     )
     
     kb.add_knowledge_item(
@@ -260,15 +297,21 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     
     # Technical Skills - Programming Languages
     kb.add_knowledge_item(
-        "Hunter is highly proficient in JavaScript and has used it extensively in projects like GreekLink, ThriftSwipe, his portfolio website, and HTTPie contributions. He has experience with modern ES6+ features, async/await, functional programming, and both frontend and backend JavaScript development.",
+        "Hunter is highly proficient in JavaScript and has used it extensively in projects like GreekLink, Anywear, his portfolio website, and HTTPie contributions. He has experience with modern ES6+ features, async/await, functional programming, and both frontend and backend JavaScript development.",
         "skills",
-        {"name": "JavaScript", "category": "language", "projects": ["GreekLink", "ThriftSwipe", "Portfolio", "HTTPie"], "proficiency": "high"}
+        {"name": "JavaScript", "category": "language", "projects": ["GreekLink", "Anywear", "Portfolio", "HTTPie"], "proficiency": "high"}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter has strong Python skills and has used Python for ThriftSwipe's AI/ML components, S-Parameter Analysis automation, HTTPie contributions, Chrome Dino game, and backend development. He's experienced with libraries like NumPy, Pandas, PyTorch, FastAPI, PyTest, and PyVisa for both data science and software engineering applications.",
+        "Hunter has strong Python skills and has used Python for Anywear's AI/ML components, his Algorithmic Trading System, machine learning coursework (EECS 445, EECS 492), S-Parameter Analysis automation, HTTPie contributions, and backend development. He's experienced with libraries like NumPy, Pandas, PyTorch, TensorFlow, FastAPI, PyTest, Scikit-learn, and PyVisa for both data science and software engineering applications.",
         "skills",
-        {"name": "Python", "category": "language", "libraries": ["NumPy", "Pandas", "PyTorch", "FastAPI", "PyTest", "PyVisa"], "proficiency": "high"}
+        {"name": "Python", "category": "language", "libraries": ["NumPy", "Pandas", "PyTorch", "TensorFlow", "FastAPI", "PyTest", "Scikit-learn", "PyVisa"], "proficiency": "high"}
+    )
+
+    kb.add_knowledge_item(
+        "Hunter is proficient in Go (Golang), which he uses in his work at Microsoft on Azure Arc Enabled Kubernetes. Go is central to cloud-native and Kubernetes development, and Hunter works with it on distributed infrastructure and Cluster Extensions.",
+        "skills",
+        {"name": "Go", "category": "language", "company": "Microsoft", "domain": "cloud-native / Kubernetes"}
     )
     
     kb.add_knowledge_item(
@@ -297,7 +340,7 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     
     # Frameworks & Libraries
     kb.add_knowledge_item(
-        "Hunter is highly skilled in React and has used it extensively in GreekLink, ThriftSwipe, his portfolio website, Vloggi projects, and HTTPie contributions. He's experienced with hooks, state management, component architecture, and modern React patterns for building scalable user interfaces.",
+        "Hunter is highly skilled in React and has used it extensively in GreekLink, Anywear, his portfolio website, Vloggi projects, and HTTPie contributions. He's experienced with hooks, state management, component architecture, and modern React patterns for building scalable user interfaces.",
         "skills",
         {"name": "React", "category": "framework", "concepts": ["hooks", "state management", "component architecture"], "proficiency": "high"}
     )
@@ -309,21 +352,27 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
     
     kb.add_knowledge_item(
-        "Hunter has strong Tailwind CSS skills and has used it for styling in GreekLink, ThriftSwipe, his portfolio website, Hill Street Run Club website, and Vloggi projects. He creates responsive, modern designs using utility-first CSS methodology.",
+        "Hunter has strong Tailwind CSS skills and has used it for styling in GreekLink, Anywear, his portfolio website, Hill Street Run Club website, and Vloggi projects. He creates responsive, modern designs using utility-first CSS methodology.",
         "skills",
         {"name": "Tailwind CSS", "category": "framework", "approach": "utility-first", "proficiency": "strong"}
     )
     
     kb.add_knowledge_item(
-        "Hunter has experience with Node.js and Express for backend development, particularly in ThriftSwipe and Vloggi projects. He builds RESTful APIs, handles server-side logic, and integrates with databases using these technologies.",
+        "Hunter has experience with Node.js and Express for backend development, particularly in Anywear and Vloggi projects. He builds RESTful APIs, handles server-side logic, and integrates with databases using these technologies.",
         "skills",
-        {"name": "Node.js/Express", "category": "framework", "type": "backend", "projects": ["ThriftSwipe", "Vloggi"]}
+        {"name": "Node.js/Express", "category": "framework", "type": "backend", "projects": ["Anywear", "Vloggi"]}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter has experience with PyTorch for machine learning applications, particularly in ThriftSwipe's AI/ML components. He uses PyTorch for building and training neural networks for the clothing recommendation system.",
+        "Hunter has experience with PyTorch and TensorFlow for machine learning, used across his ML coursework (EECS 445, EECS 492) and projects like Anywear. He has built neural networks from scratch, including a Convolutional Neural Network for image classification and a Vision Transformer for dog breed classification, working with patch embeddings, self-attention, and model fine-tuning.",
         "skills",
-        {"name": "PyTorch", "category": "framework", "type": "ML", "application": "recommendation systems"}
+        {"name": "PyTorch / TensorFlow", "category": "framework", "type": "ML", "courses": ["EECS 445", "EECS 492"], "concepts": ["CNNs", "Vision Transformers", "fine-tuning"]}
+    )
+
+    kb.add_knowledge_item(
+        "Hunter works with Transformers and modern deep learning architectures, including Vision Transformers (ViT) for image classification and the attention-based models studied in EECS 449 (Conversational AI). This ties into his broader interest in AI and the infrastructure that supports it.",
+        "skills",
+        {"name": "Transformers", "category": "framework", "type": "ML", "courses": ["EECS 449", "EECS 445"]}
     )
     
     # Tools & Technologies
@@ -334,29 +383,41 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
     
     kb.add_knowledge_item(
-        "Hunter has experience with MongoDB for database management, particularly in ThriftSwipe and other projects. He designs schemas, handles data operations, and integrates MongoDB with Node.js backends for scalable data storage.",
+        "Hunter works with databases including PostgreSQL (used in Anywear), MongoDB, MySQL (at Vloggi), SQLite, and Azure CosmosDB. He designs schemas, handles data operations, and integrates databases with Node.js and Python backends for scalable data storage.",
         "skills",
-        {"name": "MongoDB", "category": "tool", "type": "database", "projects": ["ThriftSwipe"]}
+        {"name": "Databases", "category": "tool", "type": "database", "systems": ["PostgreSQL", "MongoDB", "MySQL", "SQLite", "CosmosDB", "DynamoDB"]}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter has Firebase experience and has used Firebase and Firestore for GreekLink's backend services, authentication, and real-time database functionality. He leverages Firebase for rapid development of full-stack applications.",
+        "Hunter has strong experience with Kubernetes, the core of his work at Microsoft on Azure Arc Enabled Kubernetes. He builds Cluster Extensions that manage state across AKS, hybrid, and edge clusters, including GPU workloads. He works with cluster orchestration, multi-cluster environments, and the operational concerns of running containerized workloads at scale.",
         "skills",
-        {"name": "Firebase", "category": "tool", "services": ["authentication", "Firestore", "real-time database"], "projects": ["GreekLink"]}
+        {"name": "Kubernetes", "category": "tool", "company": "Microsoft", "concepts": ["AKS", "Cluster Extensions", "edge clusters", "GPU workloads"]}
     )
-    
+
     kb.add_knowledge_item(
-        "Hunter has experience with MySQL databases from his work at Vloggi, where he integrated front-end applications with MySQL backends for data management and storage in enterprise applications.",
+        "Hunter works extensively with Microsoft Azure, particularly Azure Arc, Azure Kubernetes Service (AKS), Azure Monitor, and Azure CosmosDB through his role at Microsoft. He focuses on cloud-native infrastructure and the systems that run AI and distributed workloads at scale.",
         "skills",
-        {"name": "MySQL", "category": "tool", "type": "database", "company": "Vloggi"}
+        {"name": "Azure", "category": "tool", "company": "Microsoft", "services": ["Azure Arc", "AKS", "Azure Monitor", "CosmosDB"]}
     )
-    
+
+    kb.add_knowledge_item(
+        "Hunter practices DevOps, GitOps, and CI/CD as core parts of his work on cloud infrastructure at Microsoft. He works with Flux for GitOps-driven cluster configuration, builds deployment pipelines, and integrates observability and security into unified workflows for multi-cluster environments. He also uses Docker for containerization (experience dating back to Vloggi).",
+        "skills",
+        {"name": "DevOps / GitOps / CI/CD", "category": "concept", "company": "Microsoft", "tools": ["Flux", "Docker", "GitOps", "CI/CD pipelines"]}
+    )
+
+    kb.add_knowledge_item(
+        "Hunter has hands-on experience with distributed systems and distributed state management, both academically (EECS 491, where he built a Paxos-based fault-tolerant key/value store) and professionally (state reconciliation across Kubernetes clusters at Microsoft). This is a central focus of his interest in AI infrastructure.",
+        "skills",
+        {"name": "Distributed Systems", "category": "concept", "context": ["EECS 491", "Microsoft"], "topics": ["Paxos", "consensus", "state reconciliation"]}
+    )
+
     kb.add_knowledge_item(
         "Hunter has experience with AWS and Docker from his work at Vloggi, where he deployed applications using cloud services and containerization technologies for scalable and reliable deployments.",
         "skills",
         {"name": "AWS/Docker", "category": "tool", "type": "deployment", "company": "Vloggi"}
     )
-    
+
     kb.add_knowledge_item(
         "Hunter has experience with hardware integration and test equipment, including Thermoelectric Temperature Controllers (TC-720) and Vector Network Analyzers from his work at Credo Semiconductor. He bridges software and hardware engineering through automation and control systems.",
         "skills",
@@ -372,22 +433,22 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     
     # Website & Portfolio Features
     kb.add_knowledge_item(
-        "Hunter's portfolio website features a cyberpunk theme with interactive components including a skills constellation, project showcase, dynamic GitHub integration, responsive design, and an AI-powered chatbot. It uses Next.js, TypeScript, Tailwind CSS, Framer Motion for animations, and includes features like particle systems, geometric backgrounds, and terminal-style interfaces.",
+        "Hunter's portfolio website features a cyberpunk theme with interactive components including a categorized skills list, project showcase, dynamic GitHub commit integration, responsive design, and an AI-powered chatbot. It uses Next.js, TypeScript, Tailwind CSS, Framer Motion for animations, and includes features like particle systems, geometric backgrounds, and terminal-style interfaces.",
         "website",
-        {"theme": "cyberpunk", "features": ["skills constellation", "AI chatbot", "GitHub integration", "particle systems"], "technologies": ["Next.js", "TypeScript", "Tailwind", "Framer Motion"]}
+        {"theme": "cyberpunk", "features": ["skills list", "AI chatbot", "GitHub integration", "particle systems"], "technologies": ["Next.js", "TypeScript", "Tailwind", "Framer Motion"]}
     )
-    
+
     kb.add_knowledge_item(
-        "The portfolio website includes several interactive sections: a hero section with terminal-style typewriter effects, an about section with personal photos slideshow, a skills constellation with MST algorithm visualization, experience timeline, education details with coursework tabs, and a comprehensive projects showcase. The site also features a newsletter signup and social links page.",
+        "The portfolio website includes several interactive sections: a hero section with terminal-style typewriter effects, an about section with personal photos slideshow, a categorized skills list (organized by languages, frameworks, tools, and concepts), an experience timeline, education details with coursework tabs, and a comprehensive projects showcase. The site also features a newsletter signup and social links page.",
         "website",
-        {"sections": ["hero", "about", "skills", "experience", "education", "projects"], "interactive_features": ["typewriter effects", "photo slideshow", "algorithm visualization"]}
+        {"sections": ["hero", "about", "skills", "experience", "education", "projects"], "interactive_features": ["typewriter effects", "photo slideshow", "categorized skills"]}
     )
-    
+
     # Leadership & Activities
     kb.add_knowledge_item(
-        "Hunter serves as VP of Communications for the Hill Street Run Club at University of Michigan, where he leads communication efforts and is developing the club's website. He's also been involved with SparkRacing, a student organization focused on racing and automotive technology.",
+        "Hunter serves as VP of Communications for the Hill Street Run Club at University of Michigan, where he leads communication efforts and is developing the club's website.",
         "activities",
-        {"role": "VP of Communications", "organization": "Hill Street Run Club", "school": "University of Michigan", "other_orgs": ["SparkRacing"]}
+        {"role": "VP of Communications", "organization": "Hill Street Run Club", "school": "University of Michigan"}
     )
     
     return kb
@@ -401,7 +462,8 @@ if __name__ == "__main__":
     test_queries = [
         "What projects has Hunter worked on?",
         "What programming languages does Hunter know?",
-        "Tell me about ThriftSwipe",
+        "Tell me about Hunter's work at Microsoft",
+        "What does Hunter know about AI infrastructure and Kubernetes?",
         "How can I contact Hunter?",
         "What is Hunter studying?"
     ]
