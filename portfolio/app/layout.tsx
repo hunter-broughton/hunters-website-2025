@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://hunterbroughton.com"),
   title: "Hunter Broughton",
   description:
-    "Hey, I'm Hunter — a CS Major at the University of Michigan building full-stack apps, efficient firmware, and ML systems. Based in Seattle, currently in the Bay Area.",
+    "Hey, I'm Hunter, a CS and Economics major at the University of Michigan and SWE intern at NeuroSpark AI working on AI inference infrastructure. Based in Ann Arbor, MI.",
   keywords: [
     "Hunter Broughton",
     "Software Engineer",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "Firmware Engineer",
     "full-stack developer",
     "University of Michigan",
-    "Seattle | Bay Area",
+    "Ann Arbor, MI",
   ],
   authors: [
     {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hunter Broughton • Full-Stack Developer and Engineer",
     description:
-      "CS Major at University of Michigan building full-stack apps, efficient firmware, and ML systems.",
+      "CS and Economics at the University of Michigan, working on AI infrastructure and ML systems.",
     url: "https://hunterbroughton.com",
     siteName: "Hunter Broughton",
     images: [
@@ -97,8 +97,8 @@ export default function RootLayout({
               ],
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Seattle",
-                addressRegion: "WA",
+                addressLocality: "Ann Arbor",
+                addressRegion: "MI",
                 addressCountry: "USA",
               },
             }),

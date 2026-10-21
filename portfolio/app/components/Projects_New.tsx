@@ -29,25 +29,81 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "anywear",
-    title: "Anywear",
+    id: "llm-inference-engine",
+    title: "GPU-Accelerated LLM Inference Engine",
     description:
-      "AI-powered online marketplace for clothing. Our algorithm matches users with clothing based on their preferences and style, making fashion discovery effortless.",
+      "LLM inference engine with hand-written CUDA/Triton kernels (tiled matmul, fused RMSNorm, attention), a paged KV cache, and a continuous-batching scheduler. Profiled the decode path with Nsight; the fused Triton attention kernel gave a ~16% throughput lift. Served as a streaming FastAPI service on Kubernetes with KEDA autoscaling on queue depth.",
     techStack: [
-      "Express",
-      "PostgreSQL",
-      "React",
-      "Tailwind",
       "Python",
-      "AI/ML",
+      "PyTorch",
+      "CUDA",
+      "Triton",
+      "FastAPI",
+      "Kubernetes",
     ],
-    githubLink: "https://github.com/hunter-broughton/ThriftSwipe",
-    image: "/assets/anywear.jpeg",
+    githubLink: "https://github.com/hunter-broughton/LLM-Inference-Engine",
+    image: "/assets/llm-inference-gpu.jpg",
+    featured: true,
+    category: "ai",
+    status: "completed",
+    impact: "~16% throughput lift from fused attention",
+    year: 2026,
+  },
+  {
+    id: "stack",
+    title: "Stack",
+    description:
+      "Team project: an iOS job-search app that ingests live listings from 8 job APIs. Multi-agent LLM pipelines handle job-fit scoring, LaTeX resume tailoring, and interview prep across 6 model providers. Agent actions are gated behind hash-bound human approvals and sandboxed Docker browsers.",
+    techStack: ["Jac", "React Native", "PostgreSQL", "LLM agents", "Docker"],
+    githubLink: "https://github.com/matthewkooy2/Stack",
+    image: "/assets/stack-iphone.jpg",
+    featured: true,
+    category: "mobile",
+    status: "in-progress",
+    impact: "Team project",
+    year: 2026,
+  },
+  {
+    id: "relapse-radar",
+    title: "Relapse Radar",
+    description:
+      "Microsoft hackathon project: a privacy-first early-warning app for people in addiction recovery. It learns a person's normal phone-behavior rhythm, flags a relapse spiral early, and reaches out through someone they chose. I built the live demo screen in React, with the phone UI, a Recharts risk chart, the sponsor's companion view, and a model monitor wired to the FastAPI backend.",
+    techStack: ["React", "Vite", "Tailwind", "Recharts", "FastAPI", "Leaflet"],
+    githubLink: "https://github.com/chhateauuu/Relapse-Radar",
+    image: "/assets/relapse-radar-phone.jpg",
     featured: true,
     category: "web",
-    status: "in-progress",
-    impact: "Scaling with UMich students",
-    year: 2024,
+    status: "completed",
+    impact: "Microsoft hackathon",
+    year: 2026,
+  },
+  {
+    id: "kv-store",
+    title: "Sharded, Linearizable Key-Value Store",
+    description:
+      "Implemented Paxos consensus from scratch in Go on a replicated log, then built a sharded, linearizable key-value store on top of it with live shard migration via logged ownership transfers. Added log compaction and garbage collection, and kept concurrency race-free with Go's confinement idiom.",
+    techStack: ["Go", "Paxos", "Distributed Systems"],
+    githubLink: "https://github.com/hunter-broughton/491-p4-resume-readme",
+    image: "/assets/kv-store-rack.jpg",
+    featured: true,
+    category: "tool",
+    status: "completed",
+    impact: "EECS 491 (Distributed Systems)",
+    year: 2026,
+  },
+  {
+    id: "image-classification",
+    title: "Deep Learning Image Classification Pipeline",
+    description:
+      "Compared CNNs, transfer learning, and a from-scratch Vision Transformer on 8,867 images. Raised test AUROC from 0.75 to 0.83 by pretraining a CNN on an auxiliary breed task and selectively freezing its layers. Built the ViT from multi-head attention and encoder blocks up, reaching 0.955 validation AUROC.",
+    techStack: ["Python", "PyTorch"],
+    githubLink: "https://github.com/hunter-broughton/eecs445-p2-results",
+    image: "/assets/eecs445-classifier.png",
+    featured: true,
+    category: "ai",
+    status: "completed",
+    impact: "0.83 test AUROC (EECS 445)",
+    year: 2026,
   },
   {
     id: "algo-trading-bot",
@@ -136,7 +192,7 @@ const projects: Project[] = [
     id: "run-club",
     title: "Hill Street Run Club Website",
     description:
-      "As VP of Communications for the Hill Street Run Club at UMich, I'm developing a website to promote the club and its events. Features interest forms, event calendar, and membership database.",
+      "As VP of Communications for the Hill Street Run Club at UMich, I built a website to promote the club and its events. Features interest forms, event calendar, and membership database.",
     techStack: ["Next.js", "Tailwind CSS", "SQLite", "Node.js", "TypeScript"],
     githubLink: "https://github.com/hunter-broughton/1012-Run-Club",
     liveLink: "https://hillstrunclub.com",
@@ -160,7 +216,6 @@ const projects: Project[] = [
       "Firebase",
       "Firestore",
     ],
-    githubLink: "https://github.com/rkaelle/greeklink",
     liveLink: "https://www.greeklink.xyz/",
     image: "/assets/GreekLink.jpeg",
     featured: true,
@@ -300,7 +355,7 @@ const InteractiveProjectShowcase = () => {
 
       {/* Category Filters */}
       <div className="flex flex-wrap gap-2">
-        {["all", "web", "game", "tool"].map((category) => (
+        {["all", "web", "ai", "mobile", "game", "tool"].map((category) => (
           <button
             key={category}
             onClick={() => setFilter(category)}

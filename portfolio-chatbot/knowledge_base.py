@@ -166,9 +166,9 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     
     # Personal Information & Bio
     kb.add_knowledge_item(
-        "Hunter Broughton is a Computer Science and Economics student at the University of Michigan, studying from August 2023 to December 2026. What he cares about most is AI infrastructure and the cloud that powers it: the distributed systems, cluster orchestration, and deployment pipelines that let machine learning actually run reliably at scale. He's drawn to that layer because the models getting all the attention only work because of the infrastructure underneath them.",
+        "Hunter Broughton is a Computer Science and Economics student at the University of Michigan, studying from August 2023 to December 2026. What he cares about most is AI infrastructure and the cloud that powers it: the distributed systems, cluster orchestration, and deployment pipelines that let machine learning actually run reliably at scale. He's drawn to that layer because the models getting all the attention only work because of the infrastructure underneath them. He is currently a Software Engineer Intern at NeuroSpark AI working on AI inference infrastructure, is based in Ann Arbor, MI, graduates in December 2026, and is looking for new grad roles in AI infrastructure and ML systems.",
         "personal",
-        {"type": "bio", "importance": "high", "school": "University of Michigan", "focus": ["AI infrastructure", "cloud", "distributed systems", "AI/ML"]}
+        {"type": "bio", "importance": "high", "school": "University of Michigan", "location": "Ann Arbor, MI", "current_role": "Software Engineer Intern at NeuroSpark AI", "seeking": "new grad roles in AI infrastructure and ML systems", "focus": ["AI infrastructure", "cloud", "distributed systems", "AI/ML"]}
     )
 
     kb.add_knowledge_item(
@@ -192,13 +192,13 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
 
     # Academic Highlights / Project Coursework
     kb.add_knowledge_item(
-        "For EECS 491 (Distributed Systems), Hunter built a Paxos-Based Fault-Tolerant Distributed Key/Value Service. The service uses the Paxos consensus protocol to tolerate node failures while guaranteeing linearizable reads and writes across a replicated state machine cluster. This is a core example of his interest in distributed systems and infrastructure.",
+        "For EECS 491 (Distributed Systems), Hunter built a sharded, linearizable key-value store in Go. He implemented Paxos consensus from scratch on a replicated log, then built a sharded store on top of it with live shard migration via logged ownership transfers, plus log compaction and garbage collection, keeping concurrency race-free with Go's confinement idiom. The write-up is at github.com/hunter-broughton/491-p4-resume-readme (no source code, per the UM honor code).",
         "education",
         {"type": "academic_highlight", "course": "EECS 491", "name": "Paxos-Based Fault-Tolerant Key/Value Service", "topic": "distributed systems"}
     )
 
     kb.add_knowledge_item(
-        "For EECS 445 (Intro to Machine Learning), Hunter designed and trained a Vision Transformer (ViT) in Python to classify dog breeds from images. He applied patch embedding, multi-head self-attention, and fine-tuning techniques to maximize classification accuracy across a multi-class dataset.",
+        "For EECS 445 (Intro to Machine Learning), Hunter built a deep learning image classification pipeline in PyTorch comparing CNNs, transfer learning, and a from-scratch Vision Transformer on 8,867 dog images. He raised test AUROC from 0.75 to 0.83 by pretraining a CNN on an auxiliary breed task and selectively freezing its layers, and built the ViT from multi-head attention and encoder blocks up, reaching 0.955 validation AUROC. Results are at github.com/hunter-broughton/eecs445-p2-results.",
         "education",
         {"type": "academic_highlight", "course": "EECS 445", "name": "Vision Transformer Dog Breed Classifier", "topic": "machine learning"}
     )
@@ -211,15 +211,21 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
 
     # Work Experience
     kb.add_knowledge_item(
-        "Hunter is a Software Engineering Intern at Microsoft in Redmond, WA (May 2026 to August 2026), working on Azure Arc Enabled Kubernetes. He engineers Cluster Extensions for Kubernetes across AKS, hybrid, and edge clusters, improving state reconciliation for hybrid and GPU workloads. His work spans automating workload identity and federated credentials to eliminate long-lived secret storage, integrating Azure Monitor with Flux-configured clusters to optimize telemetry pipelines, and abstracting GitOps, security, and observability into a unified Cluster Extension experience for multi-cluster environments. This is his most recent and current role.",
+        "Hunter is currently a Software Engineer Intern at NeuroSpark AI (remote, September 2026 to present), a fast-growing AI startup serving hundreds of GPUs. He owns the ground-up build of multi-tenant Kubernetes clusters, built a chip-level GPU reservation system, and tunes autoscaling and scheduling to maximize utilization at millions of tokens per day. He is cutting LLM cold-start times by optimizing model weight and image distribution with peer-to-peer transfer and R-Fork, hardening security with token federation, and building GPU telemetry with Slack alerts. He uses Claude Code daily. This is his current role.",
         "experience",
-        {"company": "Microsoft", "position": "Software Engineering Intern", "team": "Azure Arc Enabled Kubernetes", "location": "Redmond, WA", "duration": "May 2026 - August 2026", "current": True, "technologies": ["Kubernetes", "AKS", "Azure", "GitOps", "Flux", "Go"]}
+        {"company": "NeuroSpark AI", "position": "Software Engineer Intern", "location": "Remote", "duration": "September 2026 - Present", "current": True, "technologies": ["Kubernetes", "GPUs", "SGLang", "Go", "Claude Code"]}
     )
 
     kb.add_knowledge_item(
-        "Hunter worked as a System and Software Engineering Intern at Credo Semiconductor in San Jose, CA from May 2025 to August 2025. He developed features for the new PCIe software called Pilot using Vue, Vite, JavaScript, Python, C, and FastAPI. He implemented efficient algorithms for the PCIe-SDK with Python, PyTest, Regex, and multithreading, boosting throughput speed by 30%. He programmed S-parameter analysis automation and Proportional-Integral-Derivative Controllers to streamline optical testing, and won best implementation at the company hackathon for an EV-Charger management system.",
+        "Hunter was a Software Engineer Intern on the Azure Arc Kubernetes team at Microsoft in Redmond, WA from May 2026 to July 2026. He built an Azure Arc Kubernetes extension in Go that automates private container registry integration across 15K managed clusters, designed concurrent controllers and webhooks for workload-identity auth with mutex-safe caching to eliminate long-lived secrets, instrumented Azure Monitor telemetry for Argo and Flux clusters to surface GitOps sync failures and configuration drift, and built an agentic AI workflow that autonomously resolves engineering issues, cutting resolution time on a 15-issue benchmark.",
         "experience",
-        {"company": "Credo Semiconductor", "position": "System and Software Engineering Intern", "location": "San Jose, CA", "duration": "May 2025 - August 2025"}
+        {"company": "Microsoft", "position": "Software Engineer Intern", "team": "Azure Arc Kubernetes", "location": "Redmond, WA", "duration": "May 2026 - July 2026", "current": False, "technologies": ["Kubernetes", "Azure", "Go", "GitOps", "Flux", "Argo", "Azure Monitor"]}
+    )
+
+    kb.add_knowledge_item(
+        "Hunter worked as a System Software Engineer Intern at Credo Semiconductor in San Jose, CA from May 2025 to August 2025. He built features for PILOT, Credo's PCIe monitoring software, using Vue, Python, C, and FastAPI (REST/SSE). He implemented multithreaded test algorithms for PCIe lanes in Python, boosting lane-tuning throughput by about 30%, and automated S-parameter analysis and PID control loops in Python to streamline optical transceiver testing. He also won the company hackathon with an EV charger system built with Next.js, React, PostgreSQL, and APIs, deployed on the company intranet.",
+        "experience",
+        {"company": "Credo Semiconductor", "position": "System Software Engineer Intern", "location": "San Jose, CA", "duration": "May 2025 - August 2025"}
     )
 
     kb.add_knowledge_item(
@@ -229,16 +235,28 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
 
     kb.add_knowledge_item(
-        "Hunter worked as a Software Developer Intern at Vloggi in Sydney, Australia from June 2024 to August 2024. He engineered full-stack features for Vloggi, a platform that offers MP4 data collection and management for companies. He developed and optimized web interfaces using React, Tailwind CSS, and TypeScript, integrated configurable CSS components for diverse client needs, and connected the front-end with a MySQL backend using Node.js, deploying it using AWS and Docker.",
+        "Hunter worked as a Software Engineer Intern at Vloggi in Sydney, Australia from May 2024 to August 2024. He built React and TypeScript interfaces for enterprise video analytics, with lazy loading and pagination to cut page load times. He integrated a MySQL backend with Node.js REST APIs for efficient querying of large-scale MP4 datasets, and containerized services with Docker and deployed them on AWS, establishing a CI/CD pipeline for production releases.",
         "experience",
-        {"company": "Vloggi", "position": "Software Developer Intern", "location": "Sydney, Australia", "duration": "June 2024 - August 2024"}
+        {"company": "Vloggi", "position": "Software Engineer Intern", "location": "Sydney, Australia", "duration": "May 2024 - August 2024"}
     )
 
     # Projects - Detailed Information
     kb.add_knowledge_item(
-        "Anywear is an AI-powered online marketplace for clothing that Hunter is currently developing (formerly called ThriftSwipe). The algorithm matches users with clothing based on their preferences and style, making fashion discovery effortless. It's built with Express, PostgreSQL, React, Tailwind, Python, and AI/ML technologies. The project is scaling with University of Michigan students and represents Hunter's work combining AI/ML with practical applications.",
+        "Hunter built a GPU-accelerated LLM inference engine from scratch, a mini vLLM, with hand-written CUDA/Triton kernels (tiled matmul, fused RMSNorm, attention), a paged KV cache, and a continuous-batching scheduler. He profiled the decode path with Nsight; the fused Triton attention kernel gave a ~16% throughput lift. It runs as a streaming FastAPI service on Kubernetes with KEDA autoscaling on queue depth. Built with Python, PyTorch, CUDA, Triton, FastAPI, and Kubernetes. Code: github.com/hunter-broughton/LLM-Inference-Engine.",
         "projects",
-        {"name": "Anywear", "aka": "ThriftSwipe", "status": "in-progress", "year": 2024, "featured": True, "impact": "scaling with UMich students", "domain": "AI/ML + E-commerce"}
+        {"name": "GPU-Accelerated LLM Inference Engine", "status": "completed", "year": 2026, "featured": True, "url": "https://github.com/hunter-broughton/LLM-Inference-Engine", "tech": ["Python", "PyTorch", "CUDA", "Triton", "FastAPI", "Kubernetes", "KEDA"]}
+    )
+
+    kb.add_knowledge_item(
+        "Stack is a team project Hunter is working on: an iOS job-search app that ingests live listings from 8 job APIs. Multi-agent LLM pipelines handle job-fit scoring, LaTeX resume tailoring, and interview prep across 6 model providers, and agent actions are gated behind hash-bound human approvals and sandboxed Docker browsers. Built with Jac, React Native, PostgreSQL, LLM agents, and Docker. Code: github.com/matthewkooy2/Stack.",
+        "projects",
+        {"name": "Stack", "status": "in-progress", "year": 2026, "featured": True, "team": True, "url": "https://github.com/matthewkooy2/Stack", "tech": ["Jac", "React Native", "PostgreSQL", "LLM agents", "Docker"]}
+    )
+
+    kb.add_knowledge_item(
+        "Relapse Radar is a Microsoft hackathon project: a privacy-first early-warning app for people in addiction recovery. It learns a person's normal phone-behavior rhythm, flags a relapse spiral early, and reaches out through someone they chose. Hunter built the live demo screen in React, including the phone UI, a Recharts risk chart, the sponsor's companion view, and a model monitor wired to the FastAPI backend. Code: github.com/chhateauuu/Relapse-Radar.",
+        "projects",
+        {"name": "Relapse Radar", "status": "completed", "year": 2026, "featured": True, "event": "Microsoft hackathon", "url": "https://github.com/chhateauuu/Relapse-Radar", "tech": ["React", "Vite", "Tailwind", "Recharts", "FastAPI", "Leaflet"]}
     )
 
     kb.add_knowledge_item(
@@ -260,9 +278,9 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
 
     kb.add_knowledge_item(
-        "GreekLink is an anonymous social media platform connecting Greek life communities nationwide that Hunter completed in 2023. He led both front-end and back-end development for this community-focused platform. It's built with Next.js, React, TypeScript, Tailwind, Firebase, and Firestore. The platform successfully connects students nationwide and is live at greeklink.xyz.",
+        "GreekLink is an anonymous social media platform connecting Greek life communities nationwide that Hunter completed in 2024. He led both front-end and back-end development for this community-focused platform. It's built with Next.js, React, TypeScript, Tailwind, Firebase, and Firestore. The platform successfully connects students nationwide and is live at greeklink.xyz.",
         "projects",
-        {"name": "GreekLink", "status": "completed", "year": 2023, "featured": True, "url": "https://www.greeklink.xyz/", "impact": "connecting students nationwide"}
+        {"name": "GreekLink", "status": "completed", "year": 2024, "featured": True, "url": "https://www.greeklink.xyz/", "impact": "connecting students nationwide"}
     )
     
     kb.add_knowledge_item(
@@ -278,40 +296,40 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
     
     kb.add_knowledge_item(
-        "As VP of Communications for the Hill Street Run Club at University of Michigan, Hunter is developing a website to promote the club and its events. The website features interest forms, event calendar, and membership database, built with Next.js, Tailwind CSS, SQLite, Node.js, and TypeScript. This project demonstrates his leadership role and community involvement.",
+        "As VP of Communications for the Hill Street Run Club at University of Michigan, Hunter built a website to promote the club and its events, live at hillstrunclub.com. The website features interest forms, event calendar, and membership database, built with Next.js, Tailwind CSS, SQLite, Node.js, and TypeScript. This project demonstrates his leadership role and community involvement.",
         "projects",
-        {"name": "Hill Street Run Club Website", "status": "in-progress", "year": 2024, "role": "VP of Communications", "organization": "University of Michigan"}
+        {"name": "Hill Street Run Club Website", "status": "completed", "year": 2024, "url": "https://hillstrunclub.com", "role": "VP of Communications", "organization": "University of Michigan"}
     )
     
     kb.add_knowledge_item(
         "Hunter developed a Python program to automate S-parameter analysis using a TC-720 temperature controller and VNA (Vector Network Analyzer). The project includes an interactive GUI for data visualization and user-friendly analysis interface, built with Python, PyVisa, Tkinter, NumPy, and Matplotlib. This demonstrates his ability to bridge software and hardware engineering.",
         "projects",
-        {"name": "S-Parameter Analysis Automation", "status": "completed", "year": 2023, "type": "automation", "hardware_integration": True}
+        {"name": "S-Parameter Analysis Automation", "status": "completed", "year": 2025, "type": "automation", "hardware_integration": True}
     )
     
     kb.add_knowledge_item(
         "Hunter contributed to HTTPie, a popular command-line HTTP client, by adding a new authentication method. He implemented username/password authentication with proper parsing functionality using Python, PyTest, JavaScript, and React. This open-source contribution is available at httpie.io and demonstrates his ability to contribute to established projects.",
         "projects",
-        {"name": "HTTPie Authentication Contributions", "status": "completed", "year": 2023, "url": "https://httpie.io/", "type": "open_source", "achievement": "academic_highlight"}
+        {"name": "HTTPie Authentication Contributions", "status": "completed", "year": 2025, "url": "https://httpie.io/", "type": "open_source", "achievement": "academic_highlight"}
     )
     
     # Technical Skills - Programming Languages
     kb.add_knowledge_item(
-        "Hunter is highly proficient in JavaScript and has used it extensively in projects like GreekLink, Anywear, his portfolio website, and HTTPie contributions. He has experience with modern ES6+ features, async/await, functional programming, and both frontend and backend JavaScript development.",
+        "Hunter is highly proficient in JavaScript and has used it extensively in projects like GreekLink, his portfolio website, and HTTPie contributions. He has experience with modern ES6+ features, async/await, functional programming, and both frontend and backend JavaScript development.",
         "skills",
-        {"name": "JavaScript", "category": "language", "projects": ["GreekLink", "Anywear", "Portfolio", "HTTPie"], "proficiency": "high"}
+        {"name": "JavaScript", "category": "language", "projects": ["GreekLink", "Portfolio", "HTTPie"], "proficiency": "high"}
     )
 
     kb.add_knowledge_item(
-        "Hunter has strong Python skills and has used Python for Anywear's AI/ML components, his Algorithmic Trading System, machine learning coursework (EECS 445, EECS 492), S-Parameter Analysis automation, HTTPie contributions, and backend development. He's experienced with libraries like NumPy, Pandas, PyTorch, TensorFlow, FastAPI, PyTest, Scikit-learn, and PyVisa for both data science and software engineering applications.",
+        "Hunter has strong Python skills and has used Python for his LLM inference engine, his Algorithmic Trading System, PCIe test algorithms at Credo, machine learning coursework (EECS 445, EECS 492), S-Parameter Analysis automation, HTTPie contributions, and backend development. He's experienced with libraries like NumPy, Pandas, PyTorch, TensorFlow, FastAPI, PyTest, Scikit-learn, and PyVisa for both data science and software engineering applications.",
         "skills",
         {"name": "Python", "category": "language", "libraries": ["NumPy", "Pandas", "PyTorch", "TensorFlow", "FastAPI", "PyTest", "Scikit-learn", "PyVisa"], "proficiency": "high"}
     )
 
     kb.add_knowledge_item(
-        "Hunter is proficient in Go (Golang), which he uses in his work at Microsoft on Azure Arc Enabled Kubernetes. Go is central to cloud-native and Kubernetes development, and Hunter works with it on distributed infrastructure and Cluster Extensions.",
+        "Hunter is proficient in Go (Golang). He uses it at NeuroSpark AI, used it at Microsoft to build an Azure Arc Kubernetes extension with concurrent controllers and webhooks, and built his EECS 491 sharded, linearizable key-value store with Paxos in Go.",
         "skills",
-        {"name": "Go", "category": "language", "company": "Microsoft", "domain": "cloud-native / Kubernetes"}
+        {"name": "Go", "category": "language", "companies": ["NeuroSpark AI", "Microsoft"], "projects": ["Sharded KV Store"], "courses": ["EECS 491"], "domain": "cloud-native / Kubernetes / distributed systems"}
     )
     
     kb.add_knowledge_item(
@@ -340,7 +358,7 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     
     # Frameworks & Libraries
     kb.add_knowledge_item(
-        "Hunter is highly skilled in React and has used it extensively in GreekLink, Anywear, his portfolio website, Vloggi projects, and HTTPie contributions. He's experienced with hooks, state management, component architecture, and modern React patterns for building scalable user interfaces.",
+        "Hunter is highly skilled in React and has used it extensively in GreekLink, Relapse Radar, his portfolio website, Vloggi projects, the Credo hackathon EV charger system, and HTTPie contributions. He's experienced with hooks, state management, component architecture, and modern React patterns for building scalable user interfaces.",
         "skills",
         {"name": "React", "category": "framework", "concepts": ["hooks", "state management", "component architecture"], "proficiency": "high"}
     )
@@ -352,19 +370,19 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
     
     kb.add_knowledge_item(
-        "Hunter has strong Tailwind CSS skills and has used it for styling in GreekLink, Anywear, his portfolio website, Hill Street Run Club website, and Vloggi projects. He creates responsive, modern designs using utility-first CSS methodology.",
+        "Hunter has strong Tailwind CSS skills and has used it for styling in GreekLink, Relapse Radar, his portfolio website, Hill Street Run Club website, and Vloggi projects. He creates responsive, modern designs using utility-first CSS methodology.",
         "skills",
         {"name": "Tailwind CSS", "category": "framework", "approach": "utility-first", "proficiency": "strong"}
     )
     
     kb.add_knowledge_item(
-        "Hunter has experience with Node.js and Express for backend development, particularly in Anywear and Vloggi projects. He builds RESTful APIs, handles server-side logic, and integrates with databases using these technologies.",
+        "Hunter has experience with Node.js and Express for backend development, particularly at Vloggi, where he built Node.js REST APIs on a MySQL backend. He builds RESTful APIs, handles server-side logic, and integrates with databases using these technologies.",
         "skills",
-        {"name": "Node.js/Express", "category": "framework", "type": "backend", "projects": ["Anywear", "Vloggi"]}
+        {"name": "Node.js/Express", "category": "framework", "type": "backend", "companies": ["Vloggi"]}
     )
 
     kb.add_knowledge_item(
-        "Hunter has experience with PyTorch and TensorFlow for machine learning, used across his ML coursework (EECS 445, EECS 492) and projects like Anywear. He has built neural networks from scratch, including a Convolutional Neural Network for image classification and a Vision Transformer for dog breed classification, working with patch embeddings, self-attention, and model fine-tuning.",
+        "Hunter has experience with PyTorch and TensorFlow for machine learning, used across his ML coursework (EECS 445, EECS 492) and his LLM inference engine. He has built neural networks from scratch, including a Convolutional Neural Network for image classification and a Vision Transformer for dog breed classification, working with patch embeddings, self-attention, and model fine-tuning.",
         "skills",
         {"name": "PyTorch / TensorFlow", "category": "framework", "type": "ML", "courses": ["EECS 445", "EECS 492"], "concepts": ["CNNs", "Vision Transformers", "fine-tuning"]}
     )
@@ -375,6 +393,18 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
         {"name": "Transformers", "category": "framework", "type": "ML", "courses": ["EECS 449", "EECS 445"]}
     )
     
+    kb.add_knowledge_item(
+        "Hunter works with AI inference infrastructure tools. He uses SGLang for LLM serving at NeuroSpark AI, wrote CUDA and Triton GPU kernels (tiled matmul, fused RMSNorm, fused attention) for his LLM inference engine, and uses Claude Code daily in his work at NeuroSpark AI.",
+        "skills",
+        {"names": ["SGLang", "CUDA/Triton", "Claude Code"], "category": "framework", "type": "AI infrastructure", "company": "NeuroSpark AI", "projects": ["LLM Inference Engine"]}
+    )
+
+    kb.add_knowledge_item(
+        "Hunter has used the Jac programming language in Stack (an iOS job-search app) and in EECS 449 (Conversational AI).",
+        "skills",
+        {"name": "Jac", "category": "language", "projects": ["Stack"], "courses": ["EECS 449"]}
+    )
+
     # Tools & Technologies
     kb.add_knowledge_item(
         "Hunter is proficient with Git version control and uses it for all his projects. He's experienced with branching, merging, collaborative development workflows, and maintains active repositories on GitHub showcasing his work.",
@@ -383,15 +413,15 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
     
     kb.add_knowledge_item(
-        "Hunter works with databases including PostgreSQL (used in Anywear), MongoDB, MySQL (at Vloggi), SQLite, and Azure CosmosDB. He designs schemas, handles data operations, and integrates databases with Node.js and Python backends for scalable data storage.",
+        "Hunter works with databases including PostgreSQL (used in Stack and the Credo hackathon EV charger system), MongoDB, MySQL (at Vloggi), SQLite, and Azure CosmosDB. He designs schemas, handles data operations, and integrates databases with Node.js and Python backends for scalable data storage.",
         "skills",
         {"name": "Databases", "category": "tool", "type": "database", "systems": ["PostgreSQL", "MongoDB", "MySQL", "SQLite", "CosmosDB", "DynamoDB"]}
     )
 
     kb.add_knowledge_item(
-        "Hunter has strong experience with Kubernetes, the core of his work at Microsoft on Azure Arc Enabled Kubernetes. He builds Cluster Extensions that manage state across AKS, hybrid, and edge clusters, including GPU workloads. He works with cluster orchestration, multi-cluster environments, and the operational concerns of running containerized workloads at scale.",
+        "Hunter has strong experience with Kubernetes. At NeuroSpark AI he owns the ground-up build of multi-tenant Kubernetes clusters serving hundreds of GPUs, including GPU reservation, autoscaling, and scheduling. At Microsoft he built an Azure Arc Kubernetes extension used across 15K managed clusters. His LLM inference engine also runs on Kubernetes with KEDA autoscaling on queue depth.",
         "skills",
-        {"name": "Kubernetes", "category": "tool", "company": "Microsoft", "concepts": ["AKS", "Cluster Extensions", "edge clusters", "GPU workloads"]}
+        {"name": "Kubernetes", "category": "tool", "companies": ["NeuroSpark AI", "Microsoft"], "projects": ["LLM Inference Engine"], "concepts": ["multi-tenant clusters", "GPU scheduling", "autoscaling", "KEDA", "Arc extensions"]}
     )
 
     kb.add_knowledge_item(
@@ -401,13 +431,13 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
     )
 
     kb.add_knowledge_item(
-        "Hunter practices DevOps, GitOps, and CI/CD as core parts of his work on cloud infrastructure at Microsoft. He works with Flux for GitOps-driven cluster configuration, builds deployment pipelines, and integrates observability and security into unified workflows for multi-cluster environments. He also uses Docker for containerization (experience dating back to Vloggi).",
+        "Hunter practices DevOps, GitOps, and CI/CD as core parts of his cloud infrastructure work. At Microsoft he worked with FluxCD and Argo for GitOps-driven cluster configuration and instrumented Azure Monitor telemetry to surface GitOps sync failures and configuration drift. He also uses Docker for containerization (experience dating back to Vloggi).",
         "skills",
         {"name": "DevOps / GitOps / CI/CD", "category": "concept", "company": "Microsoft", "tools": ["Flux", "Docker", "GitOps", "CI/CD pipelines"]}
     )
 
     kb.add_knowledge_item(
-        "Hunter has hands-on experience with distributed systems and distributed state management, both academically (EECS 491, where he built a Paxos-based fault-tolerant key/value store) and professionally (state reconciliation across Kubernetes clusters at Microsoft). This is a central focus of his interest in AI infrastructure.",
+        "Hunter has hands-on experience with distributed systems and distributed state management, both academically (EECS 491, where he built a sharded, linearizable key-value store on Paxos) and professionally (multi-tenant GPU clusters at NeuroSpark AI and Kubernetes extensions at Microsoft). This is a central focus of his interest in AI infrastructure.",
         "skills",
         {"name": "Distributed Systems", "category": "concept", "context": ["EECS 491", "Microsoft"], "topics": ["Paxos", "consensus", "state reconciliation"]}
     )
@@ -446,7 +476,7 @@ def create_hunter_knowledge_base() -> PortfolioKnowledgeBase:
 
     # Leadership & Activities
     kb.add_knowledge_item(
-        "Hunter serves as VP of Communications for the Hill Street Run Club at University of Michigan, where he leads communication efforts and is developing the club's website.",
+        "Hunter serves as VP of Communications for the Hill Street Run Club at University of Michigan, where he leads communication efforts and built the club's website (hillstrunclub.com).",
         "activities",
         {"role": "VP of Communications", "organization": "Hill Street Run Club", "school": "University of Michigan"}
     )
@@ -462,7 +492,7 @@ if __name__ == "__main__":
     test_queries = [
         "What projects has Hunter worked on?",
         "What programming languages does Hunter know?",
-        "Tell me about Hunter's work at Microsoft",
+        "Tell me about Hunter's work at NeuroSpark AI",
         "What does Hunter know about AI infrastructure and Kubernetes?",
         "How can I contact Hunter?",
         "What is Hunter studying?"

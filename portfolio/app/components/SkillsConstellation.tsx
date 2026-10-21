@@ -31,8 +31,12 @@ import {
   SiGithubactions,
   SiAmazondynamodb,
   SiHuggingface,
+  SiPostgresql,
+  SiFlux,
+  SiNvidia,
+  SiClaude,
 } from "react-icons/si";
-import { FaJava, FaRobot, FaMicrochip, FaDatabase, FaInfinity } from "react-icons/fa";
+import { FaJava, FaRobot, FaMicrochip, FaDatabase, FaInfinity, FaCode } from "react-icons/fa";
 import { TbDeviceDesktopAnalytics } from "react-icons/tb";
 import { BiCloud } from "react-icons/bi";
 
@@ -61,7 +65,7 @@ const skills: Skill[] = [
     name: "JavaScript",
     category: "language",
     usedIn: {
-      projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
+      projects: ["GreekLink", "HTTPie Authentication"],
       jobs: ["Credo Semiconductor", "Vloggi"],
       classes: ["EECS 481"],
     },
@@ -71,7 +75,7 @@ const skills: Skill[] = [
     name: "Python",
     category: "language",
     usedIn: {
-      projects: ["ThriftSwipe", "Chrome Dino Video Game", "S-Parameter Automation"],
+      projects: ["Chrome Dino Video Game", "S-Parameter Automation", "LLM Inference Engine", "Image Classification Pipeline"],
       jobs: ["Credo Semiconductor"],
       classes: ["EECS 492", "EECS 445", "EECS 481", "EECS 298", "STATS 206"],
     },
@@ -81,7 +85,7 @@ const skills: Skill[] = [
     name: "TypeScript",
     category: "language",
     usedIn: {
-      projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
+      projects: ["GreekLink", "HTTPie Authentication"],
       jobs: ["Credo Semiconductor", "Vloggi"],
       classes: ["EECS 481"],
     },
@@ -111,8 +115,28 @@ const skills: Skill[] = [
     name: "Go",
     category: "language",
     usedIn: {
-      projects: [],
-      jobs: ["Microsoft"],
+      projects: ["Sharded KV Store"],
+      jobs: ["NeuroSpark AI", "Microsoft"],
+      classes: ["EECS 491"],
+    },
+  },
+  {
+    id: "jac",
+    name: "Jac",
+    category: "language",
+    usedIn: {
+      projects: ["Stack"],
+      jobs: [],
+      classes: ["EECS 449"],
+    },
+  },
+  {
+    id: "cuda-triton",
+    name: "CUDA/Triton",
+    category: "language",
+    usedIn: {
+      projects: ["LLM Inference Engine"],
+      jobs: [],
       classes: [],
     },
   },
@@ -142,7 +166,7 @@ const skills: Skill[] = [
     name: "React",
     category: "framework",
     usedIn: {
-      projects: ["ThriftSwipe", "GreekLink", "HTTPie Authentication"],
+      projects: ["GreekLink", "HTTPie Authentication", "Relapse Radar"],
       jobs: ["Credo Semiconductor", "Vloggi"],
       classes: ["EECS 481"],
     },
@@ -162,7 +186,7 @@ const skills: Skill[] = [
     name: "Node.js",
     category: "framework",
     usedIn: {
-      projects: ["ThriftSwipe", "GreekLink"],
+      projects: ["GreekLink"],
       jobs: ["Credo Semiconductor", "Vloggi"],
       classes: [],
     },
@@ -172,7 +196,7 @@ const skills: Skill[] = [
     name: "Express",
     category: "framework",
     usedIn: {
-      projects: ["ThriftSwipe"],
+      projects: [],
       jobs: ["Credo Semiconductor"],
       classes: [],
     },
@@ -192,7 +216,7 @@ const skills: Skill[] = [
     name: "PyTorch",
     category: "framework",
     usedIn: {
-      projects: [],
+      projects: ["LLM Inference Engine", "Image Classification Pipeline"],
       jobs: [],
       classes: ["EECS 492", "EECS 445", "EECS 298", "STATS 206"],
     },
@@ -222,7 +246,7 @@ const skills: Skill[] = [
     name: "Tailwind",
     category: "framework",
     usedIn: {
-      projects: ["ThriftSwipe", "GreekLink"],
+      projects: ["GreekLink"],
       jobs: ["Credo Semiconductor", "Vloggi"],
       classes: [],
     },
@@ -232,7 +256,7 @@ const skills: Skill[] = [
     name: "FastAPI",
     category: "framework",
     usedIn: {
-      projects: [],
+      projects: ["LLM Inference Engine", "Relapse Radar"],
       jobs: ["Credo Semiconductor"],
       classes: [],
     },
@@ -255,6 +279,16 @@ const skills: Skill[] = [
       projects: ["S-Parameter Automation", "HTTPie Authentication"],
       jobs: ["Credo Semiconductor"],
       classes: ["EECS 481"],
+    },
+  },
+  {
+    id: "sglang",
+    name: "SGLang",
+    category: "framework",
+    usedIn: {
+      projects: [],
+      jobs: ["NeuroSpark AI"],
+      classes: [],
     },
   },
   {
@@ -293,8 +327,38 @@ const skills: Skill[] = [
     name: "Kubernetes",
     category: "tool",
     usedIn: {
+      projects: ["LLM Inference Engine"],
+      jobs: ["NeuroSpark AI", "Microsoft"],
+      classes: [],
+    },
+  },
+  {
+    id: "fluxcd",
+    name: "FluxCD",
+    category: "tool",
+    usedIn: {
       projects: [],
       jobs: ["Microsoft"],
+      classes: [],
+    },
+  },
+  {
+    id: "claude-code",
+    name: "Claude Code",
+    category: "tool",
+    usedIn: {
+      projects: [],
+      jobs: ["NeuroSpark AI"],
+      classes: [],
+    },
+  },
+  {
+    id: "postgresql",
+    name: "PostgreSQL",
+    category: "tool",
+    usedIn: {
+      projects: ["Stack"],
+      jobs: ["Credo Semiconductor"],
       classes: [],
     },
   },
@@ -313,7 +377,7 @@ const skills: Skill[] = [
     name: "Docker",
     category: "tool",
     usedIn: {
-      projects: [],
+      projects: ["Stack"],
       jobs: ["Credo Semiconductor", "Vloggi", "Microsoft"],
       classes: [],
     },
@@ -343,7 +407,7 @@ const skills: Skill[] = [
     name: "MongoDB",
     category: "tool",
     usedIn: {
-      projects: ["ThriftSwipe"],
+      projects: [],
       jobs: [],
       classes: [],
     },
@@ -394,7 +458,7 @@ const skills: Skill[] = [
     name: "Distributed State",
     category: "concept",
     usedIn: {
-      projects: [],
+      projects: ["Sharded KV Store"],
       jobs: ["Microsoft"],
       classes: ["EECS 491"],
     },
@@ -424,8 +488,8 @@ const skills: Skill[] = [
     name: "ML/AI",
     category: "concept",
     usedIn: {
-      projects: ["ThriftSwipe"],
-      jobs: [],
+      projects: ["LLM Inference Engine", "Image Classification Pipeline", "Stack"],
+      jobs: ["NeuroSpark AI"],
       classes: ["EECS 492", "EECS 445", "EECS 449", "EECS 298"],
     },
   },
@@ -450,6 +514,8 @@ const getSkillIcon = (skillId: string) => {
     case "cpp":       return <SiCplusplus {...iconProps} className="text-blue-500" />;
     case "C":         return <SiC {...iconProps} className="text-blue-600" />;
     case "golang":    return <SiGo {...iconProps} className="text-cyan-400" />;
+    case "jac":       return <FaCode {...iconProps} className="text-orange-400" />;
+    case "cuda-triton": return <SiNvidia {...iconProps} className="text-green-500" />;
     case "java":      return <FaJava {...iconProps} className="text-red-500" />;
     case "rust":      return <SiRust {...iconProps} className="text-orange-600" />;
     case "react":     return <SiReact {...iconProps} className="text-cyan-400" />;
@@ -464,10 +530,14 @@ const getSkillIcon = (skillId: string) => {
     case "fastapi":   return <SiFastapi {...iconProps} className="text-green-400" />;
     case "vuetify":   return <SiVuetify {...iconProps} className="text-blue-400" />;
     case "pytest":    return <SiPytest {...iconProps} className="text-yellow-500" />;
+    case "sglang":    return <FaRobot {...iconProps} className="text-red-400" />;
     case "leptos":    return <SiRust {...iconProps} className="text-red-500" />;
     case "pyvisa":    return <TbDeviceDesktopAnalytics {...iconProps} className="text-purple-400" />;
     case "azure":     return <BiCloud {...iconProps} className="text-blue-400" />;
     case "kubernetes":return <SiKubernetes {...iconProps} className="text-blue-500" />;
+    case "fluxcd":    return <SiFlux {...iconProps} className="text-blue-400" />;
+    case "claude-code": return <SiClaude {...iconProps} className="text-orange-400" />;
+    case "postgresql": return <SiPostgresql {...iconProps} className="text-blue-400" />;
     case "cicd":      return <SiGithubactions {...iconProps} className="text-orange-400" />;
     case "docker":    return <SiDocker {...iconProps} className="text-blue-400" />;
     case "git":       return <SiGit {...iconProps} className="text-orange-600" />;

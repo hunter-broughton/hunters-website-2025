@@ -512,8 +512,9 @@ const Home = () => {
                       and ready to scale.{" "}
                       <span className="text-neon-blue">
                         {" "}
-                        Summer 2026 SWE Intern at Microsoft Azure Arc Enabled
-                        Kubernetes.{" "}
+                        SWE Intern at NeuroSpark AI working on AI inference
+                        infrastructure. Graduating December 2026 and looking for
+                        new grad roles in AI infrastructure and ML systems.{" "}
                       </span>
                     </p>
 
@@ -529,7 +530,7 @@ const Home = () => {
                           <span className="text-cyber-white/40">
                             current location:
                           </span>{" "}
-                          Redmond, WA
+                          Ann Arbor, MI
                         </div>
                       </motion.div>
                     </div>
@@ -592,7 +593,7 @@ const Home = () => {
                 <div className="space-y-6 max-w-none">
                   <p className="text-cyber-white/80 text-base leading-relaxed">
                     Hey, I'm <span className="text-neon-blue">Hunter</span>, a CS
-                    and Econ major at the University of Michigan. What I really
+                    and Economics major at the University of Michigan. What I really
                     care about is{" "}
                     <span className="text-neon-blue">
                       AI infrastructure and the cloud
@@ -799,6 +800,7 @@ const Home = () => {
                           <h4 className="text-neon-blue font-tech">
                             Paxos-Based Fault-Tolerant Key/Value Service
                           </h4>
+                          <ExternalLinks githubLink="https://github.com/hunter-broughton/491-p4-resume-readme" />
                         </div>
                         <p className="text-cyber-white/70 text-base">
                           Built a distributed key/value store for EECS 491
@@ -811,8 +813,9 @@ const Home = () => {
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-neon-blue font-tech">
-                            Vision Transformer — Dog Breed Classifier
+                            Vision Transformer Dog Breed Classifier
                           </h4>
+                          <ExternalLinks githubLink="https://github.com/hunter-broughton/eecs445-p2-results" />
                         </div>
                         <p className="text-cyber-white/70 text-base">
                           Designed and trained a Vision Transformer (ViT) in
@@ -826,7 +829,6 @@ const Home = () => {
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-neon-blue font-tech">LC2K ISA</h4>
-                          <ExternalLinks githubLink="https://github.com/hunter-broughton/LC2K-Cache" />
                         </div>
                         <p className="text-cyber-white/70 text-base">
                           Throughout EECS 370 (Computer Organization), I
@@ -843,7 +845,6 @@ const Home = () => {
                           <h4 className="text-neon-blue font-tech">
                             Convolutional Neural Network
                           </h4>
-                          <ExternalLinks githubLink="https://github.com/hunter-broughton/492-CNN" />
                         </div>
                         <p className="text-cyber-white/70 text-base">
                           Developed a Convolutional Neural Network from scratch

@@ -18,127 +18,145 @@ interface Job {
 
 const experienceItems: Job[] = [
   {
+    company: "NeuroSpark AI",
+    jobTitle: "Software Engineer Intern",
+    duration: "September 2026 - Present",
+    location: "Remote",
+    companyLink: "https://neuro-spark.ai/",
+    desc: [
+      <>
+        Owning the ground-up build of multi-tenant{" "}
+        <span className="text-neon-blue font-bold">Kubernetes</span> clusters at
+        a fast-growing AI startup serving{" "}
+        <span className="text-neon-blue font-bold">hundreds of GPUs</span>
+      </>,
+      <>
+        Built a chip-level{" "}
+        <span className="text-neon-blue font-bold">GPU reservation</span>{" "}
+        system, tuning{" "}
+        <span className="text-neon-blue font-bold">autoscaling</span> and
+        scheduling to maximize utilization at{" "}
+        <span className="text-neon-blue font-bold">millions of tokens/day</span>
+      </>,
+      <>
+        Cutting <span className="text-neon-blue font-bold">LLM cold-start</span>{" "}
+        times by optimizing model weight and image distribution with{" "}
+        <span className="text-neon-blue font-bold">peer-to-peer transfer</span>{" "}
+        and <span className="text-neon-blue font-bold">R-Fork</span>
+      </>,
+      <>
+        Hardening security with{" "}
+        <span className="text-neon-blue font-bold">token federation</span> and
+        building <span className="text-neon-blue font-bold">GPU telemetry</span>{" "}
+        with Slack alerts, using{" "}
+        <span className="text-neon-blue font-bold">Claude Code</span> daily
+      </>,
+    ],
+  },
+  {
     company: "Microsoft",
-    jobTitle: "Software Engineering Intern",
-    duration: "May 2026 - August 2026",
+    jobTitle: "Software Engineer Intern, Azure Arc Kubernetes",
+    duration: "May 2026 - July 2026",
     location: "Redmond, WA",
     companyLink: "https://Microsoft.com/",
     logo: "/assets/Mircrosoft.png",
     desc: [
       <>
-        Engineering{" "}
-        <span className="text-neon-blue font-bold">Cluster Extensions</span> for{" "}
-        <span className="text-neon-blue font-bold">Kubernetes</span> across AKS,
-        hybrid, and edge clusters, improving state reconciliation for hybrid and{" "}
-        <span className="text-neon-blue font-bold">GPU workloads</span>
+        Built an{" "}
+        <span className="text-neon-blue font-bold">Azure Arc Kubernetes</span>{" "}
+        extension using <span className="text-neon-blue font-bold">Go</span>,
+        automating private container registry integration across{" "}
+        <span className="text-neon-blue font-bold">15K managed clusters</span>
       </>,
       <>
-        Automating{" "}
-        <span className="text-neon-blue font-bold">workload identity</span> and{" "}
-        <span className="text-neon-blue font-bold">federated credentials</span>{" "}
-        at scale, eliminating long-lived secret storage
+        Designed concurrent{" "}
+        <span className="text-neon-blue font-bold">controllers</span> and{" "}
+        <span className="text-neon-blue font-bold">webhooks</span> for{" "}
+        <span className="text-neon-blue font-bold">workload-identity</span> auth
+        with mutex-safe caching, eliminating long-lived secrets
       </>,
       <>
-        Integrating{" "}
-        <span className="text-neon-blue font-bold">Azure Monitor</span> with{" "}
-        <span className="text-neon-blue font-bold">Flux</span>-configured
-        clusters to optimize telemetry pipelines
+        Instrumented{" "}
+        <span className="text-neon-blue font-bold">Azure Monitor</span> telemetry
+        for <span className="text-neon-blue font-bold">Argo</span> and{" "}
+        <span className="text-neon-blue font-bold">Flux</span> clusters,
+        surfacing GitOps sync failures and configuration drift
       </>,
       <>
-        Abstracting{" "}
-        <span className="text-neon-blue font-bold">GitOps</span>, security, and
-        observability into a unified{" "}
-        <span className="text-neon-blue font-bold">Cluster Extension</span>{" "}
-        experience for multi-cluster environments
+        Built an{" "}
+        <span className="text-neon-blue font-bold">agentic AI workflow</span>{" "}
+        autonomously resolving engineering issues, cutting resolution time on a
+        15-issue benchmark
       </>,
     ],
   },
   {
     company: "Credo Semiconductor",
-    jobTitle: "System and Software Engineering Intern",
+    jobTitle: "System Software Engineer Intern",
     duration: "May 2025 - August 2025",
     location: "San Jose, CA",
     companyLink: "https://credosemi.com/",
     logo: "/assets/credo.jpg",
     desc: [
       <>
-        Developed features for the new{" "}
-        <span className="text-neon-blue font-bold">PCIe</span> software: Pilot
-        using <span className="text-neon-blue font-bold">Vue</span>,{" "}
-        <span className="text-neon-blue font-bold">Vite</span>,{" "}
-        <span className="text-neon-blue font-bold">JavaScript</span>,{" "}
+        Built features for PILOT, Credo's{" "}
+        <span className="text-neon-blue font-bold">PCIe</span> monitoring
+        software, using <span className="text-neon-blue font-bold">Vue</span>,{" "}
         <span className="text-neon-blue font-bold">Python</span>,{" "}
         <span className="text-neon-blue font-bold">C</span>, and{" "}
-        <span className="text-neon-blue font-bold">Fast API</span>
+        <span className="text-neon-blue font-bold">FastAPI</span> (REST/SSE)
       </>,
       <>
-        Implemented efficient algorithms for{" "}
-        <span className="text-neon-blue font-bold">PCIe-SDK</span> with{" "}
-        <span className="text-neon-blue font-bold">Python</span>,{" "}
-        <span className="text-neon-blue font-bold">PyTest</span>,{" "}
-        <span className="text-neon-blue font-bold">Regex</span>, and{" "}
-        <span className="text-neon-blue font-bold">Multithreading</span>,
-        boosting throughput speed by{" "}
-        <span className="text-neon-blue font-bold">30%</span>
+        Implemented{" "}
+        <span className="text-neon-blue font-bold">multithreaded</span> test
+        algorithms for PCIe lanes in{" "}
+        <span className="text-neon-blue font-bold">Python</span>, boosting
+        lane-tuning throughput by{" "}
+        <span className="text-neon-blue font-bold">~30%</span>
       </>,
       <>
-        Programmed{" "}
+        Automated{" "}
         <span className="text-neon-blue font-bold">S-parameter analysis</span>{" "}
-        automation and{" "}
-        <span className="text-neon-blue font-bold">
-          Proportional-Integral-Derivative Controllers
-        </span>{" "}
-        to streamlinbe optical testing
+        and <span className="text-neon-blue font-bold">PID control loops</span>{" "}
+        in Python, streamlining optical transceiver testing
       </>,
       <>
-        Gained hands-on experience with{" "}
-        <span className="text-neon-blue font-bold">
-          Thermoelectric Temperature Controllers (TC-720)
-        </span>
-        , a{" "}
-        <span className="text-neon-blue font-bold">
-          Vector Network Analyzer
-        </span>
-        , and <span className="text-neon-blue font-bold">Grafana</span>
-      </>,
-      <>
-        Won{" "}
-        <span className="text-neon-blue font-bold">best implementation</span> at
-        company <span className="text-neon-blue font-bold">Hackathon</span> for{" "}
-        EV-Charger management system.
+        Won company{" "}
+        <span className="text-neon-blue font-bold">hackathon</span> with an EV
+        charger system using{" "}
+        <span className="text-neon-blue font-bold">Next.js</span>,{" "}
+        <span className="text-neon-blue font-bold">React</span>,{" "}
+        <span className="text-neon-blue font-bold">PostgreSQL</span>, and APIs;
+        deployed on company intranet
       </>,
     ],
   },
   {
     company: "Vloggi",
-    jobTitle: "Software Developer Intern",
-    duration: "June 2024 - August 2024",
+    jobTitle: "Software Engineer Intern",
+    duration: "May 2024 - August 2024",
     location: "Sydney, Australia",
     companyLink: "https://vloggi.com/",
     logo: "/assets/Vloggi-logo-square.jpg",
     desc: [
       <>
-        Engineered full-stack features for Vloggi: a platform that offers{" "}
-        <span className="text-neon-blue font-bold">MP4</span> data collection
-        and management for companies
+        Built <span className="text-neon-blue font-bold">React</span> +{" "}
+        <span className="text-neon-blue font-bold">TypeScript</span> interfaces
+        for enterprise video analytics, with lazy loading and pagination to cut
+        page load times
       </>,
       <>
-        Developed and optimized web interfaces to optimize product usage using{" "}
-        <span className="text-neon-blue font-bold">React</span>,{" "}
-        <span className="text-neon-blue font-bold">Tailwind CSS</span>, and{" "}
-        <span className="text-neon-blue font-bold">TypeScript</span>
+        Integrated a <span className="text-neon-blue font-bold">MySQL</span>{" "}
+        backend with{" "}
+        <span className="text-neon-blue font-bold">Node.js</span> REST APIs,
+        enabling efficient querying of large-scale MP4 datasets
       </>,
       <>
-        Integrated configurable{" "}
-        <span className="text-neon-blue font-bold">CSS</span> components to
-        address diverse client needs on the Vloggi platform
-      </>,
-      <>
-        Integrated Vloggi's front-end with a{" "}
-        <span className="text-neon-blue font-bold">MySQL</span> backend using{" "}
-        <span className="text-neon-blue font-bold">Node.js</span> and deployed
-        it using <span className="text-neon-blue font-bold">AWS</span> and{" "}
-        <span className="text-neon-blue font-bold">Docker</span>
+        Containerized services with{" "}
+        <span className="text-neon-blue font-bold">Docker</span> and deployed on{" "}
+        <span className="text-neon-blue font-bold">AWS</span>, establishing a{" "}
+        <span className="text-neon-blue font-bold">CI/CD</span> pipeline for
+        production releases
       </>,
     ],
   },

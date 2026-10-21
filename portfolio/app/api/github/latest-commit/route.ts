@@ -3,6 +3,26 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const USERNAME = "hunter-broughton";
+
+// Private repos are shown without their name or commit message so the
+// widget never leaks work from org/employer repos.
+function present(info: {
+  repo: string;
+  repoUrl: string;
+  time: string;
+  isPrivate: boolean;
+  message?: string;
+}) {
+  if (!info.isPrivate) return info;
+  return {
+    repo: "a private repo",
+    repoUrl: `https://github.com/${USERNAME}`,
+    time: info.time,
+    isPrivate: true,
+  };
+}
+
 // Helper to pick latest commit across repos
 async function findLatestCommit(repos: any[], headers: any) {
   let latest: any = null;
@@ -18,7 +38,7 @@ async function findLatestCommit(repos: any[], headers: any) {
       const repo = subset[i];
       try {
         const resp = await fetch(
-          `https://api.github.com/repos/${repo.full_name}/commits?per_page=1`,
+          `https://api.github.com/repos/${repo.full_name}/commits?author=${USERNAME}&per_page=1`,
           { headers, cache: "no-store" }
         );
         if (!resp.ok) continue;
@@ -46,7 +66,7 @@ async function findLatestCommit(repos: any[], headers: any) {
 
   if (latest) {
     const { dateMs, ...rest } = latest;
-    return NextResponse.json(rest, {
+    return NextResponse.json(present(rest), {
       headers: { "Cache-Control": "no-store" },
     });
   }
@@ -62,7 +82,7 @@ export async function GET() {
 
     if (!token) {
       const response = await fetch(
-        "https://api.github.com/users/hunter-broughton/events?per_page=50",
+        `https://api.github.com/users/${USERNAME}/events?per_page=50`,
         {
           cache: "no-store",
           headers: {
@@ -116,12 +136,12 @@ export async function GET() {
         const lastPush = events.find((e: any) => e.type === "PushEvent");
         if (lastPush) {
           return NextResponse.json(
-            {
+            present({
               repo: lastPush.repo.name.split("/")[1],
               repoUrl: `https://github.com/${lastPush.repo.name}`,
               time: lastPush.created_at,
-              isPrivate: false,
-            },
+              isPrivate: lastPush.public === false,
+            }),
             { headers: { "Cache-Control": "no-store" } }
           );
         }
